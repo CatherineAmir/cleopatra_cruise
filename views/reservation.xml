@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Reservation line list view -->
+    <record id="view_cruise_reservation_line_list" model="ir.ui.view">
+        <field name="name">cruise.reservation_line.list</field>
+        <field name="model">cruise.reservation_line</field>
+        <field name="arch" type="xml">
+            <list string="Reservation Lines" editable="bottom">
+                <field name="room_id"/>
+                <field name="number_of_rooms"/>
+                <field name="number_of_persons"/>
+                <field name="total_amount"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Reservation list view -->
+    <record id="view_cruise_reservation_list" model="ir.ui.view">
+        <field name="name">cruise.reservation.list</field>
+        <field name="model">cruise.reservation</field>
+        <field name="arch" type="xml">
+            <list string="Reservations">
+                <field name="ref"/>
+                <field name="cruise_id"/>
+                <field name="batch_id"/>
+                <field name="guest_id"/>
+                <field name="guest_email"/>
+                <field name="guest_phone"/>
+                <field name="guest_country"/>
+                <field name="reservation_state"/>
+                <field name="payment_state"/>
+                <field name="total_amount"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Reservation form view -->
+    <record id="view_cruise_reservation_form" model="ir.ui.view">
+        <field name="name">cruise.reservation.form</field>
+        <field name="model">cruise.reservation</field>
+        <field name="arch" type="xml">
+            <form string="Reservation">
+           
+                <sheet>
+                 <field name="reservation_state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"/>
+                   
+                    <h1>
+                        <field name="ref" readonly="1"/>
+                    </h1>
+                    <group>
+                        <field name="cruise_id"/>
+                        <field name="batch_id" readonly="1"/>
+                    </group>
+                    <group string="Guest Information">
+                        <field name="guest_id"/>
+                        <field name="guest_email" readonly="1"/>
+                        <field name="guest_phone" readonly="1"/>
+                        <field name="guest_country" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="reservation_state" invisible="1"/>
+                        <field name="payment_state"/>
+                        <field name="total_amount" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Reservation Lines">
+                            <field name="reservation_line_ids">
+                                <list editable="bottom">
+                                    <field name="room_id"/>
+                                    <field name="number_of_rooms"/>
+                                    <field name="number_of_persons"/>
+                                    <field name="total_amount"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Reservation search view -->
+    <record id="view_cruise_reservation_search" model="ir.ui.view">
+        <field name="name">cruise.reservation.search</field>
+        <field name="model">cruise.reservation</field>
+        <field name="arch" type="xml">
+            <search string="Reservations">
+                <field name="cruise_id"/>
+                <field name="guest_id"/>
+                <field name="guest_email"/>
+                <field name="guest_phone"/>
+                <field name="guest_country"/>
+                <field name="reservation_state"/>
+                <field name="payment_state"/>
+            </search>
+        </field>
+    </record>
+</odoo>

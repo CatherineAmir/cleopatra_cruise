@@ -27,6 +27,7 @@ class Cruise(models.Model):
     reservation_count = fields.Integer(string='Total Reservations', compute='_compute_reservation_count', store=True)
     fully_booked = fields.Boolean(string='Fully Booked', compute='_compute_fully_booked', store=True)
 
+    reservation_ids = fields.One2many("cruise.reservation","cruise_id", string='Reservations')
     @api.depends('start_date', 'city')
     def _compute_name(self):
         for record in self:

@@ -2,23 +2,25 @@
 {
     'name': 'Cleopatra Cruise',
     'version': '1.0',
-    'summary': 'Brief description of the module',
+    'summary': 'Cleopatra Cruise Reservation',
     'description': '''
-        Detailed description of the module
+       Cleopatra Cruise Reservation
     ''',
     'category': 'Uncategorized',
-    'author': 'Cybrosys Techno Solutions',
-    'company': 'Cybrosys Techno Solutions',
-    'maintainer': 'Cybrosys Techno Solutions',
-    'website': 'https://www.cybrosys.com',
+    'author': 'SITA-EGYPT',
+    'company': 'SITA-EGYPT',
+    'maintainer': 'SITA-EGYPT',
+    'website': 'https://www.sita-eg.com',
     'depends': ['base', 'mail'],
     'data': [
         'security/ir.model.access.csv',
+        'data/sequence.xml',
         'views/batch.xml',
         'views/facilities.xml',
         'views/room_type.xml',
         'views/cruise.xml',
         'views/room_availability.xml',
+        'views/reservation.xml',
         'views/menus.xml',
     ],
     'license': 'LGPL-3',
