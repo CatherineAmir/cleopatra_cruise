@@ -8,7 +8,7 @@
             <list string="Room Types">
                 <field name="name"/>
                 <field name="total_number"/>
-                <field name="facilities"/>
+                <field name="facilities" widget="many2many_tags"/>
             </list>
         </field>
     </record>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- list view -->
+    <record id="view_cruise_room_availability_list" model="ir.ui.view">
+        <field name="name">cruise.room_availability.list</field>
+        <field name="model">cruise.room_availability</field>
+        <field name="arch" type="xml">
+            <list string="Room Availability" editable="bottom">
+                <field name="room_id"/>
+                <field name="total_rooms"/>
+                <field name="reserved_rooms"/>
+                <field name="available_rooms"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- form view -->
+    <record id="view_cruise_room_availability_form" model="ir.ui.view">
+        <field name="name">cruise.room_availability.form</field>
+        <field name="model">cruise.room_availability</field>
+        <field name="arch" type="xml">
+            <form string="Room Availability">
+                <sheet>
+                    <group>
+                        <field name="cruise_id"/>
+                        <field name="room_id"/>
+                        <field name="total_rooms"/>
+                        <field name="reserved_rooms"/>
+                        <field name="available_rooms" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

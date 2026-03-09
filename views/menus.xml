@@ -29,4 +29,13 @@
               parent="menu_cleopatra_config"
               sequence="30"
               action="action_cruise_room_type"/>
+
+    
+
+    <!-- Cruises menu -->
+    <menuitem id="menu_cleopatra_cruises"
+              name="Cruises"
+              parent="menu_cleopatra_app"
+              sequence="10"
+              action="action_cruise_cruise"/>
 </odoo>

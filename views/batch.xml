@@ -24,7 +24,30 @@
                         <field name="name"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
+                        <field name="currency_id"/>
+                        <field name="single_supplements" widget="percentage"/>
                     </group>
+
+                    <notebook>
+                        <page string="Rates">
+<!--                            <group name="Rates">-->
+                                <field name="rate_ids">
+                                        <list editable="bottom">
+                                            <field name="batch_id" column_invisible="1"/>
+                                            <field name="room_id"/>
+                                            <field name="currency_id"/>
+                                            <field name="rate"/>
+                                        </list>
+                                </field>
+
+<!--                            </group>-->
+                        </page>
+                        <page string="Notes">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+
+
                 </sheet>
             </form>
         </field>

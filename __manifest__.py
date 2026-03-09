@@ -17,8 +17,9 @@
         'views/batch.xml',
         'views/facilities.xml',
         'views/room_type.xml',
+        'views/cruise.xml',
+        'views/room_availability.xml',
         'views/menus.xml',
-       
     ],
     'license': 'LGPL-3',
     'installable': True,

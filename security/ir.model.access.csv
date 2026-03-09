@@ -2,3 +2,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_cruise_batch,access_cruise_batch,model_cruise_batch,base.group_user,1,1,1,1
 access_cruise_facilities,access_cruise_facilities,model_cruise_facilities,base.group_user,1,1,1,1
 access_cruise_room_type,access_cruise_room_type,model_cruise_room_type,base.group_user,1,1,1,1
+access_cruise_batch_rate,access_curise_batch_rate,model_cruise_batch_rate,base.group_user,1,1,1,1
+access_cruise_cruise,access_cruise_cruise,model_cruise_cruise,base.group_user,1,1,1,1
+access_cruise_room_availability,access_cruise_room_availability,model_cruise_room_availability,base.group_user,1,1,1,1
