@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Cleopatra app main menu -->
+    <menuitem id="menu_cleopatra_app"
+              name="Cleopatra"
+              sequence="10"/>
+
+    <!-- Configuration submenu -->
+    <menuitem id="menu_cleopatra_config"
+              name="Configuration"
+              parent="menu_cleopatra_app"
+              sequence="20"/>
+
+<!--    Batches Menu-->
+    <menuitem id="menu_cleopatra_batches"
+              name="Batches"
+              parent="menu_cleopatra_config"
+              sequence="10"
+              action="action_cruise_batch"/>
+
+    <menuitem id="menu_cleopatra_facilities"
+              name="Facilities"
+              parent="menu_cleopatra_config"
+              sequence="20"
+              action="action_cruise_facilities"/>
+
+    <menuitem id="menu_cleopatra_room_types"
+              name="Room Types"
+              parent="menu_cleopatra_config"
+              sequence="30"
+              action="action_cruise_room_type"/>
+</odoo>
