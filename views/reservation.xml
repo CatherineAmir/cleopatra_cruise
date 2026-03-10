@@ -69,6 +69,7 @@
                                     <field name="room_id"/>
                                     <field name="number_of_rooms"/>
                                     <field name="number_of_persons"/>
+                                    <field name="number_of_nights"/>
                                     <field name="total_amount"/>
                                 </list>
                             </field>

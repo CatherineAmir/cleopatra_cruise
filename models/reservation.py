@@ -59,6 +59,7 @@ class ReservationLine(models.Model):
     ], string='Number of Persons', required=True,default="1")
     total_amount = fields.Float(string='Total Amount', compute='_compute_line_total_amount', store=True)
     number_of_rooms=fields.Integer(string='Number of Rooms',default=1)
+    number_of_nights=fields.Selection(string='Number of Nights',related='reservation_id.cruise_id.number_of_nights',store=True)
 
     @api.constrains('number_of_rooms')
     def _compute_number_of_rooms(self):
@@ -83,10 +84,10 @@ class ReservationLine(models.Model):
                     batch_id = record.reservation_id.batch_id
                     rate=batch_id.rate_ids.filtered(lambda r: r.room_id.id == record.room_id.id).rate
                     if int(record.number_of_persons)==1:
-                        record.total_amount = rate * int(record.number_of_persons) * record.number_of_rooms*(1+batch_id.single_supplements)
+                        record.total_amount = rate * int(record.number_of_persons) * record.number_of_rooms*(1+batch_id.single_supplements)*int(record.number_of_nights)
 
                     else:
-                        record.total_amount = rate*int(record.number_of_persons)*record.number_of_rooms
+                        record.total_amount = rate*int(record.number_of_persons)*record.number_of_rooms*int(record.number_of_nights)
 
 
             else:

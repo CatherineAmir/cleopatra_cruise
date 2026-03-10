@@ -25,21 +25,15 @@
         <field name="arch" type="xml">
             <form string="Cruise">
                 <sheet>
-<!--                    <div class="alert alert-info" role="alert" attrs="{'invisible': [('fully_booked', '=', False)]}">-->
-<!--                        <strong>This cruise is fully booked!</strong>-->
-<!--                    </div>-->
-                    <group>
-                        <label for="name" string="Name"/>
-                        <h1>
-                            <field name="name" readonly="1"/>
-                        </h1>
+                    <!--                    <div class="alert alert-info" role="alert" attrs="{'invisible': [('fully_booked', '=', False)]}">-->
+                    <!--                        <strong>This cruise is fully booked!</strong>-->
+                    <!--                    </div>-->
 
-                        <field name="batch_id" readonly="1"/>
-                        <field name="city"/>
-                        <field name="number_of_nights"/>
-                        <field name="reservation_count" readonly="1"/>
-                        <field name="fully_booked" readonly="1"/>
-                    </group>
+                    <label for="name" string="Name"/>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                    <!--                    </group>-->
                     <group>
                         <group string="From">
                             <field name="start_date"/>
@@ -50,6 +44,22 @@
 
                             <field name="end_date_computed" readonly="1"/>
                             <field name="end_day" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+
+
+                        <group string="Cruise Information">
+
+
+                            <field name="batch_id" readonly="1"/>
+                            <field name="city"/>
+                            <field name="number_of_nights"/>
+                        </group>
+                        <group string="Booking Information">
+                            <field name="reservation_count" readonly="1"/>
+                            <field name="fully_booked" readonly="1"/>
+                            <field name="available_for_booking" widget="boolean_toggle"/>
                         </group>
                     </group>
                     <notebook>

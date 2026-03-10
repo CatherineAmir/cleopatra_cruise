@@ -30,7 +30,7 @@
 
                     <notebook>
                         <page string="Rates">
-<!--                            <group name="Rates">-->
+
                                 <field name="rate_ids">
                                         <list editable="bottom">
                                             <field name="batch_id" column_invisible="1"/>
@@ -40,10 +40,13 @@
                                         </list>
                                 </field>
 
-<!--                            </group>-->
+
                         </page>
                         <page string="Notes">
                             <field name="description"/>
+                        </page>
+                        <page string="Terms and Conditions">
+                            <field name="terms_and_conditions"/>
                         </page>
                     </notebook>
 
