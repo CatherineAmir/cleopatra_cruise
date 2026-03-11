@@ -19,7 +19,7 @@ class Cruise(models.Model):
         ('luxor', 'Luxor'),
         ('aswan', 'Aswan'),
     ], string='City', required=True, tracking=True)
-    end_date_computed = fields.Date(string='End Date', compute='_compute_end_date', store=True)
+    end_date = fields.Date(string='End Date', compute='_compute_end_date', store=True)
     start_day = fields.Char(string='Start Day', compute='_compute_start_day', store=True)
     end_day = fields.Char(string='End Day', compute='_compute_end_day', store=True)
     batch_id = fields.Many2one('cruise.batch', string='Batch', compute='_compute_batch_id', store=True)
@@ -43,9 +43,9 @@ class Cruise(models.Model):
     def _compute_end_date(self):
         for record in self:
             if record.start_date and record.number_of_nights:
-                record.end_date_computed = record.start_date + timedelta(days=int(record.number_of_nights))
+                record.end_date = record.start_date + timedelta(days=int(record.number_of_nights))
             else:
-                record.end_date_computed = None
+                record.end_date = None
 
     @api.depends('start_date')
     def _compute_start_day(self):
@@ -56,12 +56,12 @@ class Cruise(models.Model):
             else:
                 record.start_day = None
 
-    @api.depends('end_date_computed')
+    @api.depends('end_date')
     def _compute_end_day(self):
         days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         for record in self:
-            if record.end_date_computed:
-                record.end_day = days[record.end_date_computed.weekday()]
+            if record.end_date:
+                record.end_day = days[record.end_date.weekday()]
             else:
                 record.end_day = None
 

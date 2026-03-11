@@ -5,6 +5,7 @@ class Reservation(models.Model):
     _name = 'cruise.reservation'
     _description = 'Cruise Reservation'
     _inherit = 'mail.thread'
+    _rec_name="ref"
     ref = fields.Char('Reservation', copy=False, readonly=True, default='New')
     # name=fields.Char(string='Name',compute='_compute_name', readonly=True, copy=False)
     cruise_id = fields.Many2one('cruise.cruise', string='Cruise', required=True, tracking=True)

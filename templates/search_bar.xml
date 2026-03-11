@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="search_bar" name="Search Bar">
+        <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/style.css"/>
+        <div class="search-bar">
+            <div class="sb-title">Search Voyages</div>
+            <div class="sb-row">
+
+                <!-- FROM month -->
+                <div class="sb-field" id="sbFromField">
+                    <span class="sf-icon">📅</span>
+                    <div class="sf-label">From</div>
+                    <div class="sf-value" id="sbFromVal">Select</div>
+                    <div class="sf-sub" id="sbFromSub">Month · Year</div>
+                    <!-- dropdown -->
+                    <div class="month-dropdown" id="mdFrom">
+                        <div class="md-year-row">
+                            <button class="md-yr-btn" onclick="shiftYear('from',-1)">‹</button>
+                            <span class="md-yr-label" id="mdFromYear">2026</span>
+                            <button class="md-yr-btn" onclick="shiftYear('from',1)">›</button>
+                        </div>
+                        <div class="md-months" id="mdFromMonths"></div>
+                    </div>
+                </div>
+
+                <!-- TO month -->
+                <div class="sb-field" id="sbToField">
+                    <span class="sf-icon">🗓</span>
+                    <div class="sf-label">To</div>
+                    <div class="sf-value" id="sbToVal">Select</div>
+                    <div class="sf-sub" id="sbToSub">Month · Year</div>
+                    <div class="month-dropdown" id="mdTo">
+                        <div class="md-year-row">
+                            <button class="md-yr-btn" onclick="shiftYear('to',-1)">‹</button>
+                            <span class="md-yr-label" id="mdToYear">2026</span>
+                            <button class="md-yr-btn" onclick="shiftYear('to',1)">›</button>
+                        </div>
+                        <div class="md-months" id="mdToMonths"></div>
+                    </div>
+                </div>
+
+                <!-- PERSONS -->
+                <div class="sb-field persons-field">
+                    <span class="sf-icon">👥</span>
+                    <div class="sf-label">Guests</div>
+                    <div class="persons-ctrl">
+                        <button class="pctrl-btn" id="btnMinus">−</button>
+                        <span class="pctrl-num" id="personsNum">2</span>
+                        <button class="pctrl-btn" id="btnPlus">+</button>
+                    </div>
+                    <div class="sf-sub" id="personsSub">Persons</div>
+                </div>
+
+                <!-- SEARCH BTN -->
+                <button class="sb-search-btn" id="sbSearchBtn">
+                    <span class="sb-icon">🔍</span>
+                    <span>GO</span>
+                </button>
+
+            </div>
+        </div>
+<!--        <script src="/cleopatra_cruise/static/src/js/script.js" type="text/javascript"></script>-->
+    </template>
+
+</odoo>
