@@ -27,6 +27,8 @@
                         <field name="end_date"/>
                         <field name="property_id"/>
                         <field name="currency_id"/>
+                        <field name="usd_egp_rate"/>
+
                         <field name="single_supplements" widget="percentage"/>
                     </group>
 
@@ -35,6 +37,7 @@
 
                                 <field name="rate_ids">
                                         <list editable="bottom">
+                                            <field name="sequence" widget="handle"/>
                                             <field name="batch_id" column_invisible="1"/>
                                             <field name="room_id"/>
                                             <field name="currency_id"/>
@@ -68,6 +71,7 @@
                 <field name="start_date"/>
                 <field name="end_date"/>
                 <field name="property_id"/>
+
             </search>
         </field>
     </record>

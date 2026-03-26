@@ -20,10 +20,19 @@ class Media(models.Model):
     property_id = fields.Many2one('cruise.property', string="Property")
     description = fields.Html(string="Description")
 
-    @api.model
-    def create(self, vals):
-        res = super(Media, self).create(vals)
-        if res.name == 'New':
-            res.name = self.env['ir.sequence'].next_by_code('media_seq')
+    # @api.model
+    # def create(self, vals):
+    #     res = super(Media, self).create(vals)
+    #     if res.name == 'New':
+    #         res.name = self.env['ir.sequence'].next_by_code('media_seq')
+    #
+    #     return res
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(Media, self).create(vals_list)
+        for record in res:
+            if record.ref == 'New':
+                record.ref = self.env['ir.sequence'].next_by_code('media_seq')
         return res
+

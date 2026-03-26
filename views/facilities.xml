@@ -9,6 +9,7 @@
               
                  
                 <field name="name"/>
+                <field name="icon"/>
             </list>
         </field>
     </record>
@@ -23,6 +24,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="icon"/>
                     </group>
                 </sheet>
             </form>

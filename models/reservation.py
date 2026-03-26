@@ -39,12 +39,20 @@ class Reservation(models.Model):
         for record in self:
             record.total_amount = sum(record.reservation_line_ids.mapped('total_amount'))
 
-    @api.model
-    def create(self, vals):
-        res = super(Reservation, self).create(vals)
-        if res.ref == 'New':
-            res.ref = self.env['ir.sequence'].next_by_code('reservation_seq')
+    # @api.model
+    # def create(self, vals):
+    #     res = super(Reservation, self).create(vals)
+    #     if res.ref == 'New':
+    #         res.ref = self.env['ir.sequence'].next_by_code('reservation_seq')
+    #
+    #     return res
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(Reservation, self).create(vals_list)
+        for record in res:
+            if record.ref == 'New':
+                record.ref = self.env['ir.sequence'].next_by_code('reservation_seq')
         return res
 
 

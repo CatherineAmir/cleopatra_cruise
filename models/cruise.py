@@ -106,3 +106,16 @@ class Cruise(models.Model):
             })
                 for room in rooms]
         return results
+
+
+    def get_rate_in_egp_minimum(self,persons):
+        room_rate_min=self.batch_id.rate_ids[0]
+        if room_rate_min:
+            room_rate_min=room_rate_min.rate
+            print("room_rate_min",room_rate_min)
+            room_rate_egp=round(room_rate_min   *int(self.number_of_nights)*int(persons)*self.batch_id.usd_egp_rate,2)
+
+            return room_rate_egp
+        else:
+            return 0
+

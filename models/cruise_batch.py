@@ -16,6 +16,8 @@ class CruiseBatch(models.Model):
     single_supplements = fields.Float(string='Single Supplement', default=0.7, copy=True, tracking=True)
     rate_ids = fields.One2many('cruise.batch_rate', 'batch_id', string='Rates', copy=True)
     terms_and_conditions=fields.Html(string='Terms and Conditions', copy=True)
+    usd_egp_rate=fields.Float(string='USD EGP Rate', default=50.0, copy=True, tracking=True)
+
     @api.constrains('start_date', 'end_date')
     def _check_start_date(self):
         for batch in self:
@@ -26,7 +28,7 @@ class CruiseBatch(models.Model):
 class CruiseBatchRate(models.Model):
     _name = 'cruise.batch_rate'
     _description = 'Cruise Batch Rate'
-
+    sequence = fields.Integer(string='Sequence', default=0, copy=True)
     batch_id = fields.Many2one('cruise.batch', string='Batch', required=True)
     room_id = fields.Many2one('cruise.room_type', string='Room', required=True)
     currency_id = fields.Many2one('res.currency', string='currency',related='batch_id.currency_id', readonly=True)

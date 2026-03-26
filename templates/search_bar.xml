@@ -6,19 +6,24 @@
         <div class="search-bar">
             <div class="sb-title">Search Voyages</div>
             <div class="sb-row">
-
+                <form action="/cruises" method="post" id="searchForm" >
+                      <input type="hidden" name="csrf_token"
+                               t-att-value="request.csrf_token()"/>
+                <div class="row">
                 <!-- FROM month -->
                 <div class="sb-field" id="sbFromField">
                     <span class="sf-icon">📅</span>
                     <div class="sf-label">From</div>
                     <div class="sf-value" id="sbFromVal">Select</div>
                     <div class="sf-sub" id="sbFromSub">Month · Year</div>
+                    <!-- Hidden input for date_from -->
+                    <input type="hidden" name="date_from" id="dateFromInput" value=""/>
                     <!-- dropdown -->
                     <div class="month-dropdown" id="mdFrom">
                         <div class="md-year-row">
-                            <button class="md-yr-btn" onclick="shiftYear('from',-1)">‹</button>
+                            <button class="md-yr-btn" type="button" onclick="event.preventDefault(); shiftYear('from',-1)">‹</button>
                             <span class="md-yr-label" id="mdFromYear">2026</span>
-                            <button class="md-yr-btn" onclick="shiftYear('from',1)">›</button>
+                            <button class="md-yr-btn" type="button" onclick="event.preventDefault(); shiftYear('from',1)">›</button>
                         </div>
                         <div class="md-months" id="mdFromMonths"></div>
                     </div>
@@ -26,41 +31,50 @@
 
                 <!-- TO month -->
                 <div class="sb-field" id="sbToField">
-                    <span class="sf-icon">🗓</span>
+                     <span class="sf-icon">📅</span>
                     <div class="sf-label">To</div>
                     <div class="sf-value" id="sbToVal">Select</div>
                     <div class="sf-sub" id="sbToSub">Month · Year</div>
+                    <!-- Hidden input for date_to -->
+                    <input type="hidden" name="date_to" id="dateToInput" value=""/>
                     <div class="month-dropdown" id="mdTo">
                         <div class="md-year-row">
-                            <button class="md-yr-btn" onclick="shiftYear('to',-1)">‹</button>
+                            <button class="md-yr-btn" type="button" onclick="event.preventDefault(); shiftYear('to',-1)">‹</button>
                             <span class="md-yr-label" id="mdToYear">2026</span>
-                            <button class="md-yr-btn" onclick="shiftYear('to',1)">›</button>
+                            <button class="md-yr-btn" type="button" onclick="event.preventDefault(); shiftYear('to',1)">›</button>
                         </div>
                         <div class="md-months" id="mdToMonths"></div>
                     </div>
                 </div>
 
                 <!-- PERSONS -->
-                <div class="sb-field persons-field">
+                    <div class="row align-items-center">
+                <div class="sb-field persons-field  align-items-center"
+                >
                     <span class="sf-icon">👥</span>
                     <div class="sf-label">Guests</div>
-                    <div class="persons-ctrl">
-                        <button class="pctrl-btn" id="btnMinus">−</button>
-                        <span class="pctrl-num" id="personsNum">2</span>
-                        <button class="pctrl-btn" id="btnPlus">+</button>
+                    <div class="persons-ctrl d-flex align-items-center justify-content-center">
+                        <button class="pctrl-btn" type="button" id="btnMinus" onclick="updatePersons(-1)">−</button>
+                        <span class="pctrl-num" id="personsNum"><t t-esc="person_count"/></span>
+                        <button class="pctrl-btn" type="button" id="btnPlus" onclick="updatePersons(1)">+</button>
                     </div>
+                    <!-- Hidden input for persons_count -->
+                    <input type="hidden" name="persons_count" id="personsCountInput" t-att-value="person_count"/>
                     <div class="sf-sub" id="personsSub">Persons</div>
                 </div>
+                    </div>
 
                 <!-- SEARCH BTN -->
-                <button class="sb-search-btn" id="sbSearchBtn">
+                <button class="sb-search-btn" id="sbSearchBtn" type="submit">
                     <span class="sb-icon">🔍</span>
                     <span>GO</span>
                 </button>
+                    </div>
+                </form>
 
             </div>
         </div>
-<!--        <script src="/cleopatra_cruise/static/src/js/script.js" type="text/javascript"></script>-->
+
     </template>
 
 </odoo>

@@ -150,31 +150,46 @@
 
                                 <!-- description -->
                                 <p class="card-desc">
-                                    Drift along the timeless waters of the Nile, tracing the ancient path between the temple-crowned city of Luxor and the sun-warmed shores of Aswan, where pharaohs once gazed upon the very same golden horizon..
+                                    <t t-esc="cruise.property_id.description"/>
                                 </p>
 
                                 <!-- amenities -->
                                 <div class="amenities">
-                                    <span class="amenity-tag">
-                                        <span class="icon">🍽</span>
-                                        Fine Dining
-                                    </span>
-                                    <span class="amenity-tag">
-                                        <span class="icon">🏊</span>
-                                        Infinity Pool
-                                    </span>
-                                    <span class="amenity-tag">
-                                        <span class="icon">🎭</span>
-                                        Live Shows
-                                    </span>
-                                    <span class="amenity-tag">
-                                        <span class="icon">🧖</span>
-                                        Spa &amp; Wellness
-                                    </span>
-                                    <span class="amenity-tag">
-                                        <span class="icon">🛥</span>
-                                        Shore Excursions
-                                    </span>
+                                    <t t-if="cruise.property_id and cruise.property_id.facilities">
+                                        <t t-foreach="cruise.property_id.facilities" t-as="facility">
+                                            <span class="amenity-tag">
+                                                <t t-if="facility.icon and facility.icon.startswith('fa-')">
+                                                    <i class="fa" t-att-class="'fa ' + facility.icon" style="margin-right: 6px;"></i>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="icon"><t t-esc="facility.icon or '✨'"/></span>
+                                                </t>
+                                                <t t-esc="facility.name"/>
+                                            </span>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <span class="amenity-tag">
+                                            <i class="fa fa-utensils" style="margin-right: 6px;"></i>
+                                            Fine Dining
+                                        </span>
+                                        <span class="amenity-tag">
+                                            <i class="fa fa-swimming-pool" style="margin-right: 6px;"></i>
+                                            Infinity Pool
+                                        </span>
+                                        <span class="amenity-tag">
+                                            <i class="fa fa-masks" style="margin-right: 6px;"></i>
+                                            Live Shows
+                                        </span>
+                                        <span class="amenity-tag">
+                                            <i class="fa fa-spa" style="margin-right: 6px;"></i>
+                                            Spa &amp; Wellness
+                                        </span>
+                                        <span class="amenity-tag">
+                                            <i class="fa fa-anchor" style="margin-right: 6px;"></i>
+                                            Shore Excursions
+                                        </span>
+                                    </t>
                                 </div>
 <!---->
                             </div>
@@ -184,10 +199,12 @@
                             <!-- FOOTER -->
                             <div class="card-footer-section">
                                 <div class="price-wrap">
-                                    <div class="price-label">From / per person</div>
-                                    <div class="price-amount"><sup>$</sup>3,490
+                                    <div class="price-label">From For <t t-esc="person_count"></t> person</div>
+                                    <div class="price-amount"><sup>EGP</sup>
+                                       <t t-esc="'{:,.0f}'.format(cruise.sudo().get_rate_in_egp_minimum(person_count))"
+                                                  />
                                     </div>
-                                    <div class="price-note">All-inclusive · Taxes included</div>
+                                    <div class="price-note">All-inclusive</div>
                                 </div>
                                 <button class="btn-book" id="bookBtn">Book Now</button>
                             </div>

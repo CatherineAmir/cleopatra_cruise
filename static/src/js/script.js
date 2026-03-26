@@ -115,10 +115,12 @@ function renderMonths(which) {
         const btn = document.createElement('button');
         btn.className = 'md-month-btn';
         btn.textContent = m;
+        btn.type = 'button';
         const isPast = yr < now.getFullYear() || (yr === now.getFullYear() && i < now.getMonth());
         if (isPast) btn.classList.add('past');
         if (sbState[which].month === i && sbState[which].year === yr) btn.classList.add('selected');
-        btn.addEventListener('click', e => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation();
             pickMonth(which, i);
         });
@@ -134,6 +136,18 @@ function pickMonth(which, idx) {
     const fieldSub = document.getElementById(which === 'from' ? 'sbFromSub' : 'sbToSub');
     fieldVal.textContent = MONTH_FULL[idx];
     fieldSub.textContent = yr;
+
+    // Create a date on the first day of the selected month
+    const date = new Date(yr, idx, 1);
+    const dateStr = date.toISOString().split('T')[0];
+
+    // Set the hidden input value
+    if (which === 'from') {
+        document.getElementById('dateFromInput').value = dateStr;
+    } else {
+        document.getElementById('dateToInput').value = dateStr;
+    }
+
     closeAllDropdowns();
 }
 
@@ -171,34 +185,61 @@ document.addEventListener('click', closeAllDropdowns);
 // persons counter
 let persons = 2;
 
-function updatePersons() {
-    document.getElementById('personsNum').textContent = persons;
-    document.getElementById('personsSub').textContent = persons === 1 ? 'Person' : 'Persons';
+function updatePersons(delta) {
+    console.log("Updating persons:", persons, "Delta:", delta);
+    const newPersons = persons + delta;
+    console.log("Updating persons:", newPersons);
+    if (newPersons >= 1 && newPersons <= 20) {
+        persons = newPersons;
+        document.getElementById('personsNum').textContent = persons;
+        document.getElementById('personsCountInput').value = persons;
+        document.getElementById('personsSub').textContent = persons === 1 ? 'Person' : 'Persons';
+    }
 }
 
-document.getElementById('btnMinus').addEventListener('click', () => {
-    if (persons > 1) {
-        persons--;
-        updatePersons();
-    }
+document.getElementById('btnMinus').addEventListener('click', (e) => {
+    // e.preventDefault();
+    updatePersons(-1);
 });
-document.getElementById('btnPlus').addEventListener('click', () => {
-    if (persons < 20) {
-        persons++;
-        updatePersons();
-    }
+document.getElementById('btnPlus').addEventListener('click', (e) => {
+    // e.preventDefault();
+    updatePersons(1);
 });
 
 // search button flash
-document.getElementById('sbSearchBtn').addEventListener('click', () => {
-    const btn = document.getElementById('sbSearchBtn');
-    btn.innerHTML = '<span>✓</span>';
-    btn.style.background = 'linear-gradient(135deg,#2d7d5a,#3aaa78)';
-    setTimeout(() => {
-        btn.innerHTML = '<span class="sb-icon">🔍</span><span>GO</span>';
-        btn.style.background = '';
-    }, 1500);
-});
+// document.getElementById('sbSearchBtn').addEventListener('click', (e) => {
+//     e.preventDefault();
+//
+//     const dateFrom = document.getElementById('dateFromInput').value;
+//     const dateTo = document.getElementById('dateToInput').value;
+//     const personsCount = document.getElementById('personsCountInput').value;
+//
+//     // Validate form
+//     if (!dateFrom || !dateTo || !personsCount) {
+//         alert('Please select both dates and number of guests');
+//         return;
+//     }
+//
+//     // Show success animation
+//     const btn = document.getElementById('sbSearchBtn');
+//     btn.innerHTML = '<span>✓</span>';
+//     btn.style.background = 'linear-gradient(135deg,#2d7d5a,#3aaa78)';
+//
+//     // Trigger custom event with search data
+//     const searchEvent = new CustomEvent('cruiseSearch', {
+//         detail: {
+//             dateFrom: dateFrom,
+//             dateTo: dateTo,
+//             personsCount: personsCount
+//         }
+//     });
+//     document.dispatchEvent(searchEvent);
+//
+//     // Refresh page after animation
+//     // setTimeout(() => {
+//     //     location.reload();
+//     // }, 1500);
+// });
 
 
 const card = document.getElementById('cruiseCard');
