@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Search view for Media -->
+    <record id="view_media_search" model="ir.ui.view">
+        <field name="name">media.search</field>
+        <field name="model">media</field>
+        <field name="arch" type="xml">
+            <search string="Media">
+                <field name="name"/>
+                <field name="pro_unit"/>
+                <field name="select"/>
+                <filter name="filter_property" string="Property" domain="[('pro_unit', '=', 'property')]"/>
+                <filter name="filter_unit" string="Unit" domain="[('pro_unit', '=', 'unit')]"/>
+                <filter name="filter_image" string="Image" domain="[('select', '=', 'image')]"/>
+                <filter name="filter_video" string="Video" domain="[('select', '=', 'video')]"/>
+                <filter name="filter_doc" string="Document" domain="[('select', '=', 'doc')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_pro_unit" string="Content Refer To" context="{'group_by': 'pro_unit'}"/>
+                    <filter name="group_by_select" string="Media Type" context="{'group_by': 'select'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- List view for Media -->
+    <record id="view_media_list" model="ir.ui.view">
+        <field name="name">media.list</field>
+        <field name="model">media</field>
+        <field name="arch" type="xml">
+            <list string="Media">
+                <field name="name"/>
+                <field name="pro_unit"/>
+                <field name="select"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Kanban view for Media -->
+    <record id="view_media_kanban" model="ir.ui.view">
+        <field name="name">media.kanban</field>
+        <field name="model">media</field>
+        <field name="arch" type="xml">
+            <kanban string="Media" class="o_kanban_small_column">
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <t t-if="record.unit_id.raw_value">
+                            <field class="fw-bold" name="unit_id" t-if="record.unit_id.raw_value"/>
+                            </t>
+                            <t t-else="">
+                                <span class="fw-bold"> Cleoptara Cruise </span>
+                            </t>
+                            <div class="o_kanban_image_fill position-relative w-100">
+                                        <field name="image" alt="Contact image" class="h-100" widget="image" options="{'img_class': 'object-fit-cover'}"/>
+                                        <field t-if="record.pro_unit == 'unit'" name="unit_id" class="position-absolute bottom-0 end-0 w-25 bg-light" widget="image" options="{'preview_image': 'image_128', 'img_class': 'object-fit-contain'}"/>
+                                    </div>
+
+
+<!--                                <img alt="Media" t-att-src="kanban_image('media', 'image', record.id.raw_value)"-->
+<!--                                     invisible="record.select.raw_value != 'image'"/>-->
+                                <!--                                <div invisible="record.select.raw_value == 'image'" class="o_image_placeholder bg-light d-flex align-items-center justify-content-center">-->
+                                <!--                                    <i t-if="record.select.raw_value == 'video'" class="fa fa-video-camera fa-3x"/>-->
+                                <!--                                    <i t-elif="record.select.raw_value == 'doc'" class="fa fa-file fa-3x"/>-->
+                                <!--                                    <i t-else="True" class="fa fa-link fa-3x"/>-->
+                                <!--                                </div>-->
+<!--                            </div>-->
+                            <!--                            <div class="oe_kanban_details">-->
+                            <!--                                <h4><field name="name"/></h4>-->
+                            <!--                                <p><strong><field name="select"/></strong></p>-->
+                            <!--                                <p><field name="pro_unit"/></p>-->
+                            <!--                            </div>-->
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form view for Media -->
+    <record id="view_media_form" model="ir.ui.view">
+        <field name="name">media.form</field>
+        <field name="model">media</field>
+        <field name="arch" type="xml">
+            <form string="Media">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="pro_unit"/>
+                        <field name="select"/>
+                    </group>
+                    <group invisible="pro_unit != 'unit'">
+                        <field name="unit_id"/>
+                    </group>
+                    <group invisible="select not in ['image', 'image_url']">
+                        <field name="image" widget="image" invisible="select != 'image'"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Media -->
+    <record id="action_media" model="ir.actions.act_window">
+        <field name="name">Media</field>
+        <field name="res_model">media</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_id" ref="view_media_kanban"/>
+        <field name="search_view_id" ref="view_media_search"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a new media item
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -30,7 +30,11 @@
               sequence="30"
               action="action_cruise_room_type"/>
 
-    
+    <menuitem id="menu_cleopatra_media"
+              name="Media"
+              parent="menu_cleopatra_config"
+              sequence="40"
+              action="action_media"/>
 
     <!-- Cruises menu -->
     <menuitem id="menu_cleopatra_cruises"

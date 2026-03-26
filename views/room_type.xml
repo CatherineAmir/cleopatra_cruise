@@ -20,11 +20,28 @@
         <field name="arch" type="xml">
             <form string="Cruise Room Type">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_media" type="object" class="oe_stat_button" icon="fa-image">
+                            <field string="Media" name="media_count" widget="statinfo"/>
+                        </button>
+                    </div>
                     <group>
                         <field name="name"/>
                         <field name="total_number"/>
                         <field name="facilities" widget="many2many_tags"/>
+                        <field name="area"/>
                     </group>
+                    <notebook>
+                        <page string="Media">
+                            <field name="media_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="select"/>
+                                    <field name="image" widget="image" invisible="select != 'image'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

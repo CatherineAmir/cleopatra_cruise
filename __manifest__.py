@@ -21,6 +21,7 @@
         'views/cruise.xml',
         'views/room_availability.xml',
         'views/reservation.xml',
+        'views/media_views.xml',
         'views/menus.xml',
         'templates/cruise_card.xml',
         'templates/main_cruise_page.xml',

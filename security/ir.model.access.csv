@@ -7,3 +7,4 @@ access_cruise_cruise,access_cruise_cruise,model_cruise_cruise,base.group_user,1,
 access_cruise_room_availability,access_cruise_room_availability,model_cruise_room_availability,base.group_user,1,1,1,1
 access_cruise_reservation,access_cruise_reservation,model_cruise_reservation,base.group_user,1,1,1,1
 access_cruise_reservation_line,access_cruise_reservation_line,model_cruise_reservation_line,base.group_user,1,1,1,1
+access_media,access_media,model_media,base.group_user,1,1,1,1
