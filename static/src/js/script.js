@@ -1,5 +1,5 @@
 // ── particles
-const container = document.getElementById('particles');
+let container = document.getElementById('particles');
 for (let i = 0; i < 40; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
@@ -75,26 +75,26 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 // updateDates();
 
 
-document.getElementById('bookBtn').addEventListener('click', function (e) {
-    const btn = this;
-    const circle = document.createElement('span');
-    circle.className = 'ripple';
-    const d = Math.max(btn.clientWidth, btn.clientHeight);
-    circle.style.width = circle.style.height = d + 'px';
-    const rect = btn.getBoundingClientRect();
-    circle.style.left = (e.clientX - rect.left - d / 2) + 'px';
-    circle.style.top = (e.clientY - rect.top - d / 2) + 'px';
-    btn.appendChild(circle);
-    setTimeout(() => circle.remove(), 600);
-
-    // feedback
-    btn.textContent = '✓ Reserved!';
-    btn.style.background = 'linear-gradient(135deg, #2d7d5a, #3aaa78)';
-    setTimeout(() => {
-        btn.textContent = 'Book Now';
-        btn.style.background = '';
-    }, 2200);
-});
+// document.getElementById('bookBtn').addEventListener('click', function (e) {
+//     const btn = this;
+//     const circle = document.createElement('span');
+//     circle.className = 'ripple';
+//     const d = Math.max(btn.clientWidth, btn.clientHeight);
+//     circle.style.width = circle.style.height = d + 'px';
+//     const rect = btn.getBoundingClientRect();
+//     circle.style.left = (e.clientX - rect.left - d / 2) + 'px';
+//     circle.style.top = (e.clientY - rect.top - d / 2) + 'px';
+//     btn.appendChild(circle);
+//     setTimeout(() => circle.remove(), 600);
+//
+//     // feedback
+//     btn.textContent = '✓ Reserved!';
+//     btn.style.background = 'linear-gradient(135deg, #2d7d5a, #3aaa78)';
+//     setTimeout(() => {
+//         btn.textContent = 'Book Now';
+//         btn.style.background = '';
+//     }, 2200);
+// });
 
 
 // ══ SEARCH BAR LOGIC ══
@@ -183,10 +183,11 @@ document.getElementById('sbToField').addEventListener('click', e => {
 document.addEventListener('click', closeAllDropdowns);
 
 // persons counter
-let persons = 2;
+// let persons = 2;
 
 function updatePersons(delta) {
-    console.log("Updating persons:", persons, "Delta:", delta);
+    let persons = parseInt(document.getElementById('personsCountInput')?.value) || 1;
+    console.log("Updating persons Called:", persons, "Delta:", delta);
     const newPersons = persons + delta;
     console.log("Updating persons:", newPersons);
     if (newPersons >= 1 && newPersons <= 20) {
@@ -197,49 +198,7 @@ function updatePersons(delta) {
     }
 }
 
-document.getElementById('btnMinus').addEventListener('click', (e) => {
-    // e.preventDefault();
-    updatePersons(-1);
-});
-document.getElementById('btnPlus').addEventListener('click', (e) => {
-    // e.preventDefault();
-    updatePersons(1);
-});
 
-// search button flash
-// document.getElementById('sbSearchBtn').addEventListener('click', (e) => {
-//     e.preventDefault();
-//
-//     const dateFrom = document.getElementById('dateFromInput').value;
-//     const dateTo = document.getElementById('dateToInput').value;
-//     const personsCount = document.getElementById('personsCountInput').value;
-//
-//     // Validate form
-//     if (!dateFrom || !dateTo || !personsCount) {
-//         alert('Please select both dates and number of guests');
-//         return;
-//     }
-//
-//     // Show success animation
-//     const btn = document.getElementById('sbSearchBtn');
-//     btn.innerHTML = '<span>✓</span>';
-//     btn.style.background = 'linear-gradient(135deg,#2d7d5a,#3aaa78)';
-//
-//     // Trigger custom event with search data
-//     const searchEvent = new CustomEvent('cruiseSearch', {
-//         detail: {
-//             dateFrom: dateFrom,
-//             dateTo: dateTo,
-//             personsCount: personsCount
-//         }
-//     });
-//     document.dispatchEvent(searchEvent);
-//
-//     // Refresh page after animation
-//     // setTimeout(() => {
-//     //     location.reload();
-//     // }, 1500);
-// });
 
 
 const card = document.getElementById('cruiseCard');

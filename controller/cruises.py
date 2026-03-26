@@ -24,7 +24,7 @@ class CruisesController(http.Controller):
         if date_to:
             date_to=datetime.strptime(date_to,"%Y-%m-%d")
             domain = expression.AND([domain, [("start_date", "<=", date_to)]])
-
+        print("domain",domain)
         cruises=request.env['cruise.cruise'].sudo().search(domain,order="start_date")
         print("cruises",cruises)
         data={
