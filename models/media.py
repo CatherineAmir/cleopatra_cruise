@@ -17,6 +17,8 @@ class Media(models.Model):
          ('url', 'url')], string='Media Type',default='image')
     image = fields.Image(string="Image", attachment=True, max_width=1920, max_height=1920)
     unit_id = fields.Many2one('cruise.room_type', string="Room Type")
+    property_id = fields.Many2one('cruise.property', string="Property")
+    description = fields.Html(string="Description")
 
     @api.model
     def create(self, vals):

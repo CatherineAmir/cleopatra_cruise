@@ -8,6 +8,7 @@
             <list string="Cruises">
                 <field name="name"/>
                 <field name="batch_id"/>
+                <field name="property_id"/>
                 <field name="start_date"/>
                 <field name="start_day"/>
                 <field name="number_of_nights"/>
@@ -56,6 +57,7 @@
 
 
                             <field name="batch_id" readonly="1"/>
+                            <field name="property_id" readonly="1"/>
                             <field name="city"/>
                             <field name="number_of_nights"/>
                         </group>

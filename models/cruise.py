@@ -23,6 +23,7 @@ class Cruise(models.Model):
     start_day = fields.Char(string='Start Day', compute='_compute_start_day', store=True)
     end_day = fields.Char(string='End Day', compute='_compute_end_day', store=True)
     batch_id = fields.Many2one('cruise.batch', string='Batch', compute='_compute_batch_id', store=True)
+    property_id = fields.Many2one('cruise.property', string='Property', related='batch_id.property_id', store=True, readonly=True)
     room_availability_ids = fields.One2many('cruise.room_availability', 'cruise_id', string='Room Availability')
     reservation_count = fields.Integer(string='Total Reservations', compute='_compute_reservation_count', store=True)
     fully_booked = fields.Boolean(string='Fully Booked', compute='_compute_fully_booked', store=True)

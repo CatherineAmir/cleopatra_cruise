@@ -9,10 +9,10 @@
                 <t t-foreach="cruises" t-as="cruise">
                     <t t-set="index" t-value="1"/>
 
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-4">
 
                         <div class="cruise-card " id="cruiseCard" style="border-radius:24px; overflow:hidden; position:relative;">
-                            <h1>Test</h1>
+
 
                             <!-- HERO -->
                             <!--                 src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=900&amp;auto=format&amp;fit=crop"-->
@@ -150,10 +150,7 @@
 
                                 <!-- description -->
                                 <p class="card-desc">
-                                    Sail the cerulean waters of the Mediterranean aboard the <strong>MSC
-                                    Virtuosa</strong>, gliding
-                                    between ancient harbours, volcanic islands, and Baroque citadels as the sun sets in
-                                    liquid gold.
+                                    Drift along the timeless waters of the Nile, tracing the ancient path between the temple-crowned city of Luxor and the sun-warmed shores of Aswan, where pharaohs once gazed upon the very same golden horizon..
                                 </p>
 
                                 <!-- amenities -->

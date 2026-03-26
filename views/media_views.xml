@@ -9,6 +9,8 @@
                 <field name="name"/>
                 <field name="pro_unit"/>
                 <field name="select"/>
+                <field name="unit_id"/>
+                <field name="property_id"/>
                 <filter name="filter_property" string="Property" domain="[('pro_unit', '=', 'property')]"/>
                 <filter name="filter_unit" string="Unit" domain="[('pro_unit', '=', 'unit')]"/>
                 <filter name="filter_image" string="Image" domain="[('select', '=', 'image')]"/>
@@ -91,9 +93,19 @@
                     <group invisible="pro_unit != 'unit'">
                         <field name="unit_id"/>
                     </group>
+                    <group invisible="pro_unit != 'property'">
+                        <field name="property_id"/>
+                    </group>
                     <group invisible="select not in ['image', 'image_url']">
                         <field name="image" widget="image" invisible="select != 'image'"/>
                     </group>
+                    <notebook>
+                        <page string="Additional Information">
+                            <group>
+                                <field name="description" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

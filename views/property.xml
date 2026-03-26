@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Search view for Property -->
+    <record id="view_property_search" model="ir.ui.view">
+        <field name="name">cruise.property.search</field>
+        <field name="model">cruise.property</field>
+        <field name="arch" type="xml">
+            <search string="Property">
+                <field name="name"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- List view for Property -->
+    <record id="view_property_list" model="ir.ui.view">
+        <field name="name">cruise.property.list</field>
+        <field name="model">cruise.property</field>
+        <field name="arch" type="xml">
+            <list string="Properties">
+                <field name="name"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view for Property -->
+    <record id="view_property_form" model="ir.ui.view">
+        <field name="name">cruise.property.form</field>
+        <field name="model">cruise.property</field>
+        <field name="arch" type="xml">
+            <form string="Property">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_media" type="object" class="oe_stat_button" icon="fa-image">
+                            <field string="Media" name="media_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="facilities" widget="many2many_tags"/>
+                    </group>
+                    <group string="More Data">
+                        <field name="data_html" widget="html" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Additional Information">
+                            <group>
+                                <field name="additional_html" widget="html" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Property -->
+    <record id="action_property" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">cruise.property</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_property_list"/>
+        <field name="search_view_id" ref="view_property_search"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a new property
+            </p>
+        </field>
+    </record>
+</odoo>
+
+
+
+

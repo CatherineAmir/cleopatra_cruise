@@ -9,6 +9,7 @@ class CruiseBatch(models.Model):
     name = fields.Char(string='Name', required=True, tracking=True)
     start_date = fields.Date(string='Start Date', tracking=True)
     end_date = fields.Date(string='End Date', tracking=True)
+    property_id = fields.Many2one('cruise.property', string='Property', tracking=True)
 
     description = fields.Html(string='Description', copy=True)
     currency_id = fields.Many2one('res.currency', string='Currency', tracking=True)

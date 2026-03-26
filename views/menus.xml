@@ -36,6 +36,12 @@
               sequence="40"
               action="action_media"/>
 
+    <menuitem id="menu_cleopatra_property"
+              name="Properties"
+              parent="menu_cleopatra_config"
+              sequence="50"
+              action="action_property"/>
+
     <!-- Cruises menu -->
     <menuitem id="menu_cleopatra_cruises"
               name="Cruises"

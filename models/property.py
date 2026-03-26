@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
-class RoomType(models.Model):
-    _name = 'cruise.room_type'
-    _description = 'Cruise Room Type'
+class Property(models.Model):
+    _name = 'cruise.property'
+    _description = 'Cruise Property'
 
     name = fields.Char(string='Name', required=True)
+    description = fields.Text(string='Description')
+    media_ids = fields.One2many('media', 'property_id', string='Media')
     facilities = fields.Many2many('cruise.facilities', string='Facilities')
-    total_number = fields.Integer(string='Total Number')
-    area= fields.Char(string='Area')
-    property_id = fields.Many2one('cruise.property', string='Property')
-    description = fields.Html(string='Description')
-    media_ids = fields.One2many('media', 'unit_id', string='Media')
+    data_html = fields.Html(string='More Data')
+    additional_html = fields.Html(string='Additional Information')
     media_count = fields.Integer(string='Media Count', compute='_compute_media_count')
 
     @api.depends('media_ids')
@@ -26,6 +25,10 @@ class RoomType(models.Model):
             'view_mode': 'kanban,list,form',
             'res_model': 'media',
             'type': 'ir.actions.act_window',
-            'domain': [('unit_id', '=', self.id)],
-            'context': {'default_unit_id': self.id},
+            'domain': [('property_id', '=', self.id)],
+            'context': {'default_property_id': self.id},
         }
+
+
+
+
