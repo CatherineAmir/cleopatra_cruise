@@ -206,9 +206,25 @@
                                     </div>
                                     <div class="price-note">All-inclusive</div>
                                 </div>
-                                <button class="btn-book" id="bookBtn" t-att-onclick="'window.location.href=&quot;/cruises/' + str(cruise.id) + '&quot;'">Book Now</button>
+
+                                <!-- Booking Details Display -->
+                                <div class="booking-details">
+                                    <div class="detail-row">
+                                        <span class="detail-label">📅 From:</span>
+                                        <span class="detail-value" id="bookDetailFrom">Select Date</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">📅 To:</span>
+                                        <span class="detail-value" id="bookDetailTo">Select Date</span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span class="detail-label">👥 Persons:</span>
+                                        <span class="detail-value" id="bookDetailPersons">2</span>
+                                    </div>
+                                </div>
+
+                                <button class="btn-book" id="bookBtn" t-att-data-cruise-id="cruise.id" onclick="bookNowWithCurrentParams(this)">Book Now</button>
                             </div>
-<!---->
                         </div>
                     </div>
                     <t t-set="index" t-value="index + 1"/>
@@ -217,7 +233,7 @@
                 </t>
             </div>
             </div>
-<!--        </div>-->
+
 
     </template>
 </odoo>

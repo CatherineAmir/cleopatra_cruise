@@ -247,7 +247,7 @@ function moveToSlide(element, slideIndex) {
 
     slideIndex = Math.max(0, Math.min(slideIndex, slides.length - 1));
     const offset = -slideIndex * 100;
-    track.style.transform = `translateY(${offset}%)`;
+    track.style.transform = `translateX(${offset}%)`;
 
     const indicators = card.querySelectorAll('.indicator');
     indicators.forEach((indicator, index) => {

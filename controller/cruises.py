@@ -41,6 +41,7 @@ class CruisesController(http.Controller):
     @http.route('/cruises/<int:cruise_id>', auth='public', website=True, methods=["GET", "POST"], csrf=False, )
     def cruises_cabins(self, cruise_id, **kw):
         print("cruise_id:", cruise_id)
+        print("kw", kw)
 
         # Get the cruise object
         cruise = request.env['cruise.cruise'].sudo().browse(cruise_id)
