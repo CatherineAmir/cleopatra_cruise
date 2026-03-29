@@ -3,6 +3,8 @@ from datetime import datetime, date, timedelta
 from odoo.osv import expression
 from odoo import http
 from odoo.http import request
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class CruisesController(http.Controller):
@@ -35,3 +37,24 @@ class CruisesController(http.Controller):
         }
         print("data",data)
         return request.render('cleopatra_cruise.main_cruise_page',data)
+
+    @http.route('/cruises/<int:cruise_id>', auth='public', website=True, methods=["GET", "POST"], csrf=False, )
+    def cruises_cabins(self, cruise_id, **kw):
+        print("cruise_id:", cruise_id)
+
+        # Get the cruise object
+        cruise = request.env['cruise.cruise'].sudo().browse(cruise_id)
+        if not cruise.exists():
+            _logger.warning(f"Cruise with ID {cruise_id} not found")
+            return request.redirect('/cruises')
+
+        # Get all room types for this cruise's property
+        room_types = request.env['cruise.room_type'].sudo().search([])
+
+        data = {
+            'cruise': cruise,
+            'cruise_id': cruise_id,
+            'room_types': room_types,
+        }
+        print("data:", data)
+        return request.render('cleopatra_cruise.cabin_cards_list', data)

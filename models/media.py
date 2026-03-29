@@ -32,7 +32,7 @@ class Media(models.Model):
     def create(self, vals_list):
         res = super(Media, self).create(vals_list)
         for record in res:
-            if record.ref == 'New':
-                record.ref = self.env['ir.sequence'].next_by_code('media_seq')
+            if record.name == 'New':
+                record.name = self.env['ir.sequence'].next_by_code('media_seq')
         return res
 

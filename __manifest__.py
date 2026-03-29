@@ -25,6 +25,7 @@
         'views/property.xml',
         'views/menus.xml',
         'templates/cruise_card.xml',
+        'templates/cabin_card.xml',
         'templates/main_cruise_page.xml',
         'templates/search_bar.xml',
     ],
