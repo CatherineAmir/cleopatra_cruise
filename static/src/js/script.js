@@ -1,6 +1,7 @@
 // ── particles
-let container = document.getElementById('particles');
-for (let i = 0; i < 40; i++) {
+try{
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 40; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
     p.style.cssText = `
@@ -13,6 +14,23 @@ for (let i = 0; i < 40; i++) {
     `;
     container.appendChild(p);
 }
+}
+catch(e){
+    container=document.getElementById('particles');
+}
+// for (let i = 0; i < 40; i++) {
+//     const p = document.createElement('div');
+//     p.className = 'particle';
+//     p.style.cssText = `
+//       left: ${Math.random() * 100}%;
+//       width: ${Math.random() * 2 + 1}px;
+//       height: ${Math.random() * 2 + 1}px;
+//       animation-duration: ${Math.random() * 12 + 8}s;
+//       animation-delay: ${Math.random() * 10}s;
+//       opacity: ${Math.random() * 0.5};
+//     `;
+//     container.appendChild(p);
+// }
 
 // ── date picker logic
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -456,4 +474,14 @@ function handleSwipe(carousel) {
     if (isDownSwipe) {
         prevSlide(track);
     }
+}
+function bookNowWithCurrentParams(btn){
+    console.log("Book Now clicked with current params");
+    const dateFrom = document.getElementById('dateFromInput').value;
+    const dateTo = document.getElementById('dateToInput').value;
+    const personCount = document.getElementById('personsCountInput').value;
+    const dataCruiseId = btn.dataset.cruiseId;
+    const url = `/cruises/${dataCruiseId}?date_from=${dateFrom}&date_to=${dateTo}&persons_count=${personCount}`;
+    console.log("Redirecting to:", url);
+    window.location.href = url;
 }

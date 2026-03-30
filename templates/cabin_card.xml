@@ -142,10 +142,15 @@
                     <!-- PRICE SECTION -->
                     <div class="cabin-price-section">
                         <div class="price-info">
-                            <div class="price-label">Price per Night</div>
+                            <div class="price-label">Double  Room Price</div>
+                            <t t-value="cruise.sudo().get_room_rate_in_egp(persons_count, room_type)" t-set="double_room_price"/>
                             <div class="price-amount">
                                 <sup>EGP</sup>
-                                <span id="priceDisplay" data-base-price="2500">2,500</span>
+                                <span id="priceDisplay" t-att-data-base-price="double_room_price">
+                                  <t t-esc="'{:,.0f}'.format(double_room_price)"
+                                                  />
+                                </span>
+
                             </div>
                         </div>
                     </div>
@@ -157,7 +162,9 @@
                             <button class="room-btn minus-btn" onclick="decrementRooms(this)" title="Decrease">
                                 <i class="fa fa-minus"></i>
                             </button>
-                            <input type="number" class="room-input" min="1" max="5" value="1" readonly="1"/>
+                            <t t-set="max_rooms" t-value="min(5, cruise.sudo().get_room_max_availability(room_type))"/>
+                            <input type="number" class="room-input" min="1" t-att-max="max_rooms" value="1" readonly="1"/>
+<!--                            <input type="number" class="room-input" min="1" t-att-max="5" value="1" readonly="1"/>-->
                             <button class="room-btn plus-btn" onclick="incrementRooms(this)" title="Increase">
                                 <i class="fa fa-plus"></i>
                             </button>

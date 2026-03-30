@@ -10,6 +10,7 @@
                 <field name="total_rooms"/>
                 <field name="reserved_rooms"/>
                 <field name="available_rooms"/>
+                <field name="available_for_booking" widget="boolean_toggle"/>
             </list>
         </field>
     </record>

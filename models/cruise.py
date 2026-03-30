@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, Command
 from datetime import timedelta
-
+import logging
+_logger = logging.getLogger(__name__)
 
 class Cruise(models.Model):
     _name = 'cruise.cruise'
@@ -98,7 +99,7 @@ class Cruise(models.Model):
         results = super().create(vals)
 
         rooms = self.env['cruise.room_type'].search_read([], ['name', 'total_number'])
-        print("rooms", rooms)
+
         for result in results:
             result.room_availability_ids = [Command.create({
                 "room_id": room["id"],
@@ -117,5 +118,35 @@ class Cruise(models.Model):
 
             return room_rate_egp
         else:
+            return 0
+
+
+    def get_room_rate_in_egp(self,persons,room_id):
+        room_rate=self.batch_id.rate_ids.filtered(lambda r: r.room_id == room_id)[0]
+        if room_rate:
+            room_rate=room_rate.rate
+            if int(persons)==1:
+                room_rate_egp = round(
+                    room_rate * int(self.number_of_nights) * int(persons) * self.batch_id.usd_egp_rate, 2)*(1+self.batch_id.single_supplements)
+                return room_rate_egp
+
+            elif int(persons)==2:
+
+                room_rate_egp = round(
+                    room_rate * int(self.number_of_nights) * int(persons) * self.batch_id.usd_egp_rate, 2)
+
+                return room_rate_egp
+        else:
+            return 0
+
+
+    def get_room_max_availability(self,room_id):
+        room_availability=self.room_availability_ids.filtered(lambda r: r.room_id == room_id)[0]
+        if room_availability:
+            av=room_availability.available_rooms
+            print("av",av)
+            return av
+        else:
+            _logger.error("No available rooms for room_id {} for cruise_id".format(room_id,self.id))
             return 0
 

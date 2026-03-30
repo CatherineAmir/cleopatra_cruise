@@ -15,8 +15,8 @@ class CruisesController(http.Controller):
         print("datetime",datetime.now())
         print("date",date.today())
         date_from=kw.get('date_from',False)
-        person_count=kw.get('persons_count',2)
-        print("persons_count",person_count)
+        persons_count=kw.get('persons_count',2)
+        print("persons_count",persons_count)
         domain=[("available_for_booking", "=", True),("start_date",'>',date.today())]
         if date_from:
             date_from=datetime.strptime(date_from,"%Y-%m-%d")
@@ -31,7 +31,7 @@ class CruisesController(http.Controller):
         print("cruises",cruises)
         data={
             'cruises':cruises,
-            "person_count":int(person_count),
+            "persons_count":int(persons_count),
             "date_from":date_from,
             "date_to":date_to,
         }
@@ -50,12 +50,17 @@ class CruisesController(http.Controller):
             return request.redirect('/cruises')
 
         # Get all room types for this cruise's property
-        room_types = request.env['cruise.room_type'].sudo().search([])
-
+        room_availability=cruise.room_availability_ids.sudo().filtered(lambda r:r.available_for_booking)
+        room_types=room_availability.mapped("room_id")
         data = {
             'cruise': cruise,
             'cruise_id': cruise_id,
             'room_types': room_types,
+            "room_availability":room_availability,
+
+            "persons_count":kw.get("persons_count",2),
+            "date_from":kw.get("date_from",''),
+            "date_to":kw.get("date_to",''),
         }
         print("data:", data)
         return request.render('cleopatra_cruise.cabin_cards_list', data)
