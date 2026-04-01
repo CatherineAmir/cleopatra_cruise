@@ -28,12 +28,16 @@ class CruisesController(http.Controller):
             domain = expression.AND([domain, [("start_date", "<=", date_to)]])
         print("domain",domain)
         cruises=request.env['cruise.cruise'].sudo().search(domain,order="start_date")
+        property_id=cruises.mapped('property_id')[0]
         print("cruises",cruises)
+        # if cruises:
+            # images=
         data={
             'cruises':cruises,
             "persons_count":int(persons_count),
             "date_from":date_from,
             "date_to":date_to,
+            "property_id":property_id,
         }
         print("data",data)
         return request.render('cleopatra_cruise.main_cruise_page',data)

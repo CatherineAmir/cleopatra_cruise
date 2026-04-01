@@ -24,6 +24,8 @@
         'views/media_views.xml',
         'views/property.xml',
         'views/menus.xml',
+        'templates/header.xml',
+        'templates/footer.xml',
         'templates/cruise_card.xml',
         'templates/cabin_card.xml',
         'templates/main_cruise_page.xml',
