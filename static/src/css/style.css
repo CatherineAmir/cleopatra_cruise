@@ -12,6 +12,7 @@
     --navy: #0b1a2e;
     --teal: #1a6b82;
     --fog: rgba(201, 168, 76, 0.12);
+    --white: #fff;
 }
 
 /*--navy: #043272;*/
@@ -19,7 +20,7 @@
 /*   --teal: #1a6b82;*/
 
 body {
-    background: var(--deep);
+    background: var(--white);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -37,22 +38,22 @@ body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 110%, #0d3a5c 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 80% 0%, #0d2d45 0%, transparent 60%),
-    var(--deep);
+    /*background: radial-gradient(ellipse 80% 60% at 50% 110%, #0d3a5c 0%, transparent 70%),*/
+    /*radial-gradient(ellipse 60% 40% at 80% 0%, #0d2d45 0%, transparent 60%),*/
+    /*var(--deep);*/
     z-index: 0;
 }
 
 
-body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 110%, #c8dae8 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 80% 0%, #1e75b6 0%, transparent 60%),
-    var(--deep);
-    z-index: 0;
-}
+/*body::before {*/
+/*    content: '';*/
+/*    position: fixed;*/
+/*    inset: 0;*/
+/*    background: radial-gradient(ellipse 80% 60% at 50% 110%, #c8dae8 0%, transparent 70%),*/
+/*    radial-gradient(ellipse 60% 40% at 80% 0%, #1e75b6 0%, transparent 60%),*/
+/*    var(--deep);*/
+/*    z-index: 0;*/
+/*}*/
 
 
 /* ── floating particles ── */
@@ -63,32 +64,32 @@ body::before {
     z-index: 1;
 }
 
-.particle {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: var(--gold-light);
-    border-radius: 50%;
-    opacity: 0;
-    animation: drift linear infinite;
-}
+/*.particle {*/
+/*    position: absolute;*/
+/*    width: 2px;*/
+/*    height: 2px;*/
+/*    background: var(--gold-light);*/
+/*    border-radius: 50%;*/
+/*    opacity: 0;*/
+/*    animation: drift linear infinite;*/
+/*}*/
 
-@keyframes drift {
-    0% {
-        transform: translateY(100vh) translateX(0);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.6;
-    }
-    90% {
-        opacity: 0.3;
-    }
-    100% {
-        transform: translateY(-10vh) translateX(30px);
-        opacity: 0;
-    }
-}
+/*@keyframes drift {*/
+/*    0% {*/
+/*        transform: translateY(100vh) translateX(0);*/
+/*        opacity: 0;*/
+/*    }*/
+/*    10% {*/
+/*        opacity: 0.6;*/
+/*    }*/
+/*    90% {*/
+/*        opacity: 0.3;*/
+/*    }*/
+/*    100% {*/
+/*        transform: translateY(-10vh) translateX(30px);*/
+/*        opacity: 0;*/
+/*    }*/
+/*}*/
 
 /* ── SEARCH BAR ── */
 .search-bar {
@@ -99,9 +100,9 @@ body::before {
     border: 1px solid rgba(201, 168, 76, 0.25);
     border-radius: 20px;
     padding: 16px 18px;
-    box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.1),
-    0 20px 50px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(201, 168, 76, 0.2);
+    /*box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.1),*/
+    /*0 20px 50px rgba(0, 0, 0, 0.6),*/
+    /*inset 0 1px 0 rgba(201, 168, 76, 0.2);*/
     animation: cardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     backdrop-filter: blur(20px);
 }
@@ -112,10 +113,11 @@ body::before {
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 14px;
-    opacity: 0.9;
+    opacity: 0.8;
     display: flex;
     align-items: center;
     gap: 8px;
+    font-weight: 400;
 }
 
 .sb-title::before, .sb-title::after {
@@ -171,14 +173,15 @@ body::before {
     font-size: 8px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.25);
     margin-bottom: 3px;
+    font-weight: 400;
 }
 
 .sb-field .sf-value {
     font-family: 'Cormorant Garamond', serif;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 500;
     color: #fff;
     white-space: nowrap;
     overflow: hidden;
@@ -236,7 +239,7 @@ body::before {
 .pctrl-num {
     font-family: 'Cormorant Garamond', serif;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     color: #fff;
     min-width: 18px;
     text-align: center;
@@ -253,10 +256,10 @@ body::before {
     color: var(--deep);
     font-family: 'Josefin Sans', sans-serif;
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 1.5px;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(201, 168, 76, 0.3);
+    /*box-shadow: 0 6px 20px rgba(201, 168, 76, 0.3);*/
     transition: transform 0.25s, box-shadow 0.25s;
     animation: gradShift 4s ease infinite;
     display: flex;
@@ -340,7 +343,7 @@ body::before {
 .md-yr-label {
     font-family: 'Cormorant Garamond', serif;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     color: #fff;
 }
 
@@ -375,7 +378,7 @@ body::before {
 .md-month-btn.selected {
     background: var(--gold);
     color: var(--deep);
-    font-weight: 600;
+    font-weight: 500;
     border-color: var(--gold);
 }
 
@@ -393,10 +396,10 @@ body::before {
     border-radius: 24px;
     overflow: hidden;
     background: linear-gradient(160deg, #0f2540 0%, #0a1c33 60%, #061624 100%);
-    box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.18),
-    0 40px 80px rgba(0, 0, 0, 0.7),
-    0 0 60px rgba(13, 58, 92, 0.4),
-    inset 0 1px 0 rgba(201, 168, 76, 0.25);
+    /*box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.18),*/
+    /*0 40px 80px rgba(0, 0, 0, 0.7),*/
+    /*0 0 60px rgba(13, 58, 92, 0.4),*/
+    /*inset 0 1px 0 rgba(201, 168, 76, 0.25);*/
     animation: cardIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -476,7 +479,7 @@ body::before {
     border-radius: 20px;
     color: var(--gold);
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 500;
     animation: fadeSlideIn 0.8s 0.6s both;
 }
 
@@ -499,14 +502,15 @@ body::before {
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--gold-light);
-    opacity: 0.9;
+    opacity: 0.8;
     margin-bottom: 4px;
+    font-weight: 400;
 }
 
 .hero-name {
     font-family: 'Cormorant Garamond', serif;
     font-size: 28px;
-    font-weight: 300;
+    font-weight: 400;
     color: #fff;
     line-height: 1.1;
     letter-spacing: 0.5px;
@@ -560,7 +564,7 @@ body::before {
 .hi-value {
     font-family: 'Cormorant Garamond', serif;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--gold-light);
     line-height: 1;
 }
@@ -569,15 +573,16 @@ body::before {
     font-size: 9px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.35);
     margin-top: 3px;
+    font-weight: 400;
 }
 
 /* description */
 .card-desc {
     font-size: 13px;
     line-height: 1.75;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.5);
     margin-bottom: 20px;
     font-weight: 300;
     animation: fadeSlideIn 0.8s 0.8s both;
@@ -603,13 +608,14 @@ body::before {
     gap: 5px;
     background: rgba(201, 168, 76, 0.07);
     border: 1px solid rgba(201, 168, 76, 0.18);
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.5);
     font-size: 10px;
     letter-spacing: 1px;
     text-transform: uppercase;
     padding: 5px 10px;
     border-radius: 20px;
     transition: all 0.25s;
+    font-weight: 400;
 }
 
 .amenity-tag:hover {
@@ -642,12 +648,13 @@ body::before {
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.35);
     margin-bottom: 2px;
+    font-weight: 400;
 }
 
 .price-amount {
     font-family: 'Cormorant Garamond', serif;
     font-size: 32px;
-    font-weight: 600;
+    font-weight: 500;
     color: #fff;
     line-height: 1;
 }
@@ -660,9 +667,10 @@ body::before {
 
 .price-note {
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.25);
     margin-top: 2px;
     letter-spacing: 1px;
+    font-weight: 400;
 }
 
 .btn-book {
@@ -676,7 +684,7 @@ body::before {
     border-radius: 50px;
     font-family: 'Josefin Sans', sans-serif;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
     cursor: pointer;
@@ -745,8 +753,9 @@ body::before {
     font-size: 9px;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.3);
     margin-bottom: 10px;
+    font-weight: 400;
 }
 
 .date-row {
@@ -786,14 +795,15 @@ body::before {
     font-size: 8px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.3);
     margin-bottom: 3px;
+    font-weight: 400;
 }
 
 .date-box .db-day {
     font-family: 'Cormorant Garamond', serif;
     font-size: 17px;
-    font-weight: 600;
+    font-weight: 500;
     color: #fff;
     line-height: 1;
 }
@@ -804,7 +814,8 @@ body::before {
     text-transform: uppercase;
     color: var(--gold-light);
     margin-top: 2px;
-    opacity: 0.85;
+    opacity: 0.7;
+    font-weight: 400;
 }
 
 .date-box input[type="date"] {
@@ -891,10 +902,11 @@ body::before {
     font-size: 9px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.4);
     white-space: nowrap;
     position: absolute;
     transform: translateX(-50%) translateY(14px);
+    font-weight: 400;
 }
 
 .port {
@@ -920,7 +932,7 @@ body::before {
 .section-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 42px;
-    font-weight: 600;
+    font-weight: 500;
     color: #fff;
     margin-bottom: 10px;
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
@@ -931,8 +943,9 @@ body::before {
 
 .section-subtitle {
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.5);
     letter-spacing: 0.5px;
+    font-weight: 400;
 }
 
 /* Main Cabin Card */
@@ -942,10 +955,10 @@ body::before {
     border-radius: 24px;
     overflow: hidden;
     background: linear-gradient(160deg, #0f2540 0%, #0a1c33 60%, #061624 100%);
-    box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.18),
-    0 40px 80px rgba(0, 0, 0, 0.7),
-    0 0 60px rgba(13, 58, 92, 0.4),
-    inset 0 1px 0 rgba(201, 168, 76, 0.25);
+    /*box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.18),*/
+    /*0 40px 80px rgba(0, 0, 0, 0.7),*/
+    /*0 0 60px rgba(13, 58, 92, 0.4),*/
+    /*inset 0 1px 0 rgba(201, 168, 76, 0.25);*/
     animation: cardIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
     transition: transform 0.3s, box-shadow 0.3s;
     height: 100%;
@@ -1131,7 +1144,7 @@ body::before {
 .cabin-name {
     font-family: 'Cormorant Garamond', serif;
     font-size: 28px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--gold-light);
     margin: 0;
     letter-spacing: 0.5px;
@@ -1141,19 +1154,21 @@ body::before {
     display: flex;
     align-items: center;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.5);
     letter-spacing: 0.5px;
+    font-weight: 400;
 }
 
 /* Cabin Description */
 .cabin-description {
     font-size: 13px;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.6);
     margin-bottom: 16px;
     max-height: 80px;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 400;
 }
 
 .cabin-description p {
@@ -1171,7 +1186,8 @@ body::before {
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 10px;
-    opacity: 0.9;
+    opacity: 0.75;
+    font-weight: 400;
 }
 
 .features-grid {
@@ -1210,8 +1226,9 @@ body::before {
 
 .feature-name {
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.75);
     letter-spacing: 0.3px;
+    font-weight: 400;
 }
 
 /* Cabin Divider */
@@ -1251,7 +1268,7 @@ body::before {
 .price-amount {
     font-family: 'Cormorant Garamond', serif;
     font-size: 28px;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--gold-light);
     letter-spacing: -1px;
 }
@@ -1273,7 +1290,8 @@ body::before {
     font-size: 9px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
 }
 
 .room-selector {
@@ -1319,7 +1337,7 @@ body::before {
     color: #fff;
     font-family: 'Cormorant Garamond', serif;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     text-align: center;
     padding: 0;
 }
@@ -1339,7 +1357,7 @@ body::before {
     color: var(--deep);
     font-family: 'Josefin Sans', sans-serif;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
     cursor: pointer;
