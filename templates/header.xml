@@ -4,6 +4,10 @@
         <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/header.css"/>
 
         <header id="top" class="cleopatra-header">
+            <div class="container text-center my-3">
+                <img src="/cleopatra_cruise/static/src/img/logo_gold.png" alt="Cleopatra Cruise" class="cleopatra-header-bg"/>
+            </div>
+
 
             <!-- ══════════════════════════════════════════════════════════
                  HERO CAROUSEL SECTION (Desktop) — Auto-scrolling Property Images
@@ -29,7 +33,7 @@
                     <div class="hero-overlay">
                         <div class="hero-content">
                             <h1 class="hero-title" id="heroTitle">Luxury Nile Cruises</h1>
-                            <p class="hero-description" id="heroDescription">Experience the magic of Egypt's most iconic river</p>
+                            <h3 class="text-center" id="heroDescription">Experience the magic of Egypt's most iconic river</h3>
                         </div>
                     </div>
                 </div>
@@ -235,7 +239,7 @@
                                             method: 'search_read',
                                             args: [
                                                 [['id', 'in', property.media_ids]],
-                                                ['id', 'name', 'image', 'description']
+                                                ['id', 'name', 'image', 'description','text_description']
                                             ],
                                             kwargs: {}
                                         }
@@ -251,7 +255,7 @@
                                         id: media.id,
                                         image: media.image ? `data:image/jpg;base64,${media.image}` : '/cleopatra_cruise/static/src/img/carousel-1.jpg',
                                         // title: media.name || `Media ${index + 1}`,
-                                        description: media.description || property.description || 'Luxury Cruise Experience'
+                                        description: media.text_description || property.description || 'Luxury Cruise Experience'
                                     }));
 
                                     console.log('Slides created:', slides);
@@ -337,7 +341,7 @@
 
                     // Update text content
                     if (slides[currentIndex]) {
-                        heroTitle.textContent = slides[currentIndex].title;
+                        // heroTitle.textContent = slides[currentIndex].title;
                         heroDescription.textContent = slides[currentIndex].description;
                     }
                 }
@@ -401,4 +405,3 @@
     </template>
 
 </odoo>
-

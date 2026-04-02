@@ -19,6 +19,7 @@ class Media(models.Model):
     unit_id = fields.Many2one('cruise.room_type', string="Room Type")
     property_id = fields.Many2one('cruise.property', string="Property")
     description = fields.Html(string="Description")
+    text_description = fields.Text(string="Text Description")
 
     # @api.model
     # def create(self, vals):

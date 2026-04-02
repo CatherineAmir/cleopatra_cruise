@@ -100,6 +100,11 @@
                         <field name="image" widget="image" invisible="select != 'image'"/>
                     </group>
                     <notebook>
+                        <page name="description" string="Description">
+                            <group>
+                                <field name="text_description"/>
+                            </group>
+                        </page>
                         <page string="Additional Information">
                             <group>
                                 <field name="description" nolabel="1"/>
