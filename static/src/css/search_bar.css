@@ -1,7 +1,15 @@
 /* ════════════════════════════════════════════════════════════════
    search_bar.css  –  Search Bar component styles (Centered Rectangle)
 ════════════════════════════════════════════════════════════════ */
-
+:root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --deep: #061120;
+    --navy: #0b1a2e;
+    --teal: #1a6b82;
+    --fog: rgba(201, 168, 76, 0.12);
+    --white: #fff;
+}
 /* ── SEARCH BAR WRAPPER ── */
 .search-bar-wrapper {
     display: flex;

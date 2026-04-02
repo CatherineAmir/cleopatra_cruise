@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="cruise_card_template">
+        <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/cruise_card.css"/>
 
 <!--            <div class="d-flex flex-column align-items-center justify-content-center"-->
 <!--     style="min-height: 100vh; padding: 30px 16px;">-->
@@ -37,8 +38,7 @@
                                         <t t-esc="cruise.number_of_nights"/>
                                         ·&amp;nbsp; Nights
                                     </div>
-                                    <!--                        <div class="hero-name">The <em>Aegean</em> Grand<br/>Odyssey-->
-                                    <!--                        </div>-->
+
                                 </div>
                             </div>
 
