@@ -476,31 +476,75 @@
     --bs-accordion-btn-active-border-color: transparent;
 }
 
+.accordion-item {
+    background: transparent;
+    border: 1px solid rgba(201, 168, 76, 0.3) !important;
+    border-radius: 6px !important;
+    margin: 0 !important;
+}
+
+.accordion-header {
+    margin: 0 !important;
+}
+
 .accordion-button {
-    --bs-accordion-btn-focus-border-color: rgba(201, 168, 76, 0.5);
-    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(201, 168, 76, 0.1);
+    background: transparent !important;
+    color: #c9a84c;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 6px 10px !important;
+    letter-spacing: 1px;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .accordion-button:not(.collapsed) {
     color: #c9a84c;
-    background-color: transparent;
-    box-shadow: none;
+    background-color: transparent !important;
 }
 
 .accordion-button:focus {
-    border-color: rgba(201, 168, 76, 0.5);
-    box-shadow: 0 0 0 0.25rem rgba(201, 168, 76, 0.1);
+    border-color: transparent !important;
+    box-shadow: none !important;
 }
 
-.accordion-button::after {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23c9a84c'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+.accordion-collapse {
+    background: transparent !important;
 }
 
-.accordion-item {
-    --bs-accordion-bg: transparent;
-    --bs-accordion-border-color: rgba(201, 168, 76, 0.3);
-    border: 1px solid rgba(201, 168, 76, 0.3) !important;
-    border-radius: 6px;
+.accordion-body {
+    background: rgba(201, 168, 76, 0.08);
+    padding: 8px 10px !important;
+    border-top: 1px solid rgba(201, 168, 76, 0.2);
+    color: #b8b8b8;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: 100%;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    color: #b8b8b8;
+    gap: 5px;
+    word-break: break-word;
+}
+
+.feature-item i {
+    color: #c9a84c;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.feature-name {
+    flex: 1;
+    word-wrap: break-word;
 }
 
 /* Responsive Design */
