@@ -229,7 +229,8 @@
                     </div>
                     <t t-set="index" t-value="index + 1"/>
 
-                            <script src="/cleopatra_cruise/static/src/js/script.js" type="text/javascript"></script>
+
+
                 </t>
             </div>
             </div>

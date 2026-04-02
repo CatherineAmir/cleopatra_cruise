@@ -55,6 +55,8 @@
                             <div class="sf-sub" id="sbRoomsSub"><t t-esc="persons_count"/></div>
                             <input type="hidden" name="rooms_count" id="roomsCountInput" t-att-value="rooms_count"/>
                             <input type="hidden" name="rooms_data" id="roomsDataInput" t-att-value="rooms_data"/>
+                            <input type="hidden" name="persons_count" id="personsCountInput" t-att-value="persons_count"/>
+
                         </div>
 
                         <!-- GO BUTTON -->

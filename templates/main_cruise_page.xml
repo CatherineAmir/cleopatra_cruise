@@ -13,8 +13,9 @@
 
         <t t-call="cleopatra_cruise.search_bar" />
         <t t-call="cleopatra_cruise.cruise_card_template" />
+        <script src="/cleopatra_cruise/static/src/js/cuise_card.js" type="text/javascript"></script>
 
-         <script src="/cleopatra_cruise/static/src/js/script.js" type="text/javascript"></script>
+
 
     </template>
 

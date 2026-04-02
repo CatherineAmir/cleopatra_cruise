@@ -129,9 +129,9 @@ class Cruise(models.Model):
                 room_rate_egp = round(
                     room_rate * int(self.number_of_nights) * int(persons) * self.batch_id.usd_egp_rate, 2)*(1+self.batch_id.single_supplements)
                 return room_rate_egp
-
-            elif int(persons)==2:
-
+            # todo check
+            # elif int(persons)==2:
+            else:
                 room_rate_egp = round(
                     room_rate * int(self.number_of_nights) * int(persons) * self.batch_id.usd_egp_rate, 2)
 

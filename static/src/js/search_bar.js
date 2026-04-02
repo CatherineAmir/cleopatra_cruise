@@ -116,6 +116,9 @@ document.addEventListener('click', function (e) {
 /* ─────────────────────────────────────────────
    MONTH PICKER  (From / To)
 ───────────────────────────────────────────── */
+ const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTH_FULL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var selectedFrom = null; // { year, month }
 var selectedTo   = null;
