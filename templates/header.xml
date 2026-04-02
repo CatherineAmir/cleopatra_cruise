@@ -4,21 +4,15 @@
         <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/header.css"/>
 
         <header id="top" class="cleopatra-header">
-<!--            <div class="container text-center my-3">-->
-<!--                <img src="/cleopatra_cruise/static/src/img/logo_gold.png" alt="Cleopatra Cruise" class="cleopatra-header-bg"/>-->
-<!--            </div>-->
 
-
-            <!-- ══════════════════════════════════════════════════════════
-                 HERO CAROUSEL SECTION (Desktop) — Auto-scrolling Property Images
-            ══════════════════════════════════════════════════════════════ -->
+            <!-- HERO CAROUSEL SECTION -->
             <div class="cleopatra-hero-carousel d-none d-lg-block" id="heroCarousel">
                 <div class="hero-carousel-container">
                     <div class="hero-carousel-track" id="carouselTrack">
-                        <!-- Carousel slides will be populated by JS with property images -->
+                        <!-- Slides populated by JavaScript -->
                     </div>
 
-                    <!-- Hero Carousel Navigation -->
+                    <!-- Navigation Buttons -->
                     <button class="hero-carousel-prev" id="carouselPrev" aria-label="Previous slide">
                         <i class="fa fa-chevron-left"></i>
                     </button>
@@ -26,90 +20,65 @@
                         <i class="fa fa-chevron-right"></i>
                     </button>
 
-                    <!-- Hero Carousel Indicators -->
+                    <!-- Indicators -->
                     <div class="hero-carousel-indicators" id="carouselIndicators"></div>
 
-                    <!-- Hero Overlay with Description -->
+                    <!-- Overlay -->
                     <div class="hero-overlay">
                         <div class="hero-content">
                             <h1 class="hero-title" id="heroTitle">Luxury Nile Cruises</h1>
-                            <h5 class="text-center" id="heroDescription">Experience the magic of Egypt's most iconic river</h5>
+                            <p class="hero-description" id="heroDescription">Experience the magic of Egypt's most iconic river</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ──────────────────────────────────────────────
-                 MAIN NAVBAR (Sticky, Shrinks on Scroll)
-            ────────────────────────────────────────────────── -->
+            <!-- MAIN NAVBAR -->
             <nav class="cleopatra-navbar navbar navbar-expand-lg" id="mainNavbar">
                 <div class="container-fluid">
 
                     <!-- Logo -->
-<!--                    <a class="navbar-brand cleopatra-logo" href="/cruises">-->
-<!--                        <t t-if="website.logo">-->
-<!--                            <img t-att-src="website.logo"-->
-<!--                                 alt="Cleopatra Cruise"-->
-<!--                                 class="logo-img"/>-->
-<!--                        </t>-->
-<!--                        <t t-else="">-->
-<!--                            <span class="logo-text">-->
-<!--                                <span class="logo-main">CLEOPATRA</span>-->
-<!--                                <span class="logo-sub">LUXURY CRUISE</span>-->
-<!--                            </span>-->
-<!--                        </t>-->
-<!--                    </a>-->
+                    <a class="navbar-brand cleopatra-logo" href="/">
+                        <t t-if="website.logo">
+                            <img t-att-src="website.logo" alt="Cleopatra Cruise" class="logo-img"/>
+                        </t>
+                        <t t-else="">
+                            <span class="logo-text">
+                                <span class="logo-main">CLEOPATRA</span>
+                                <span class="logo-sub">LUXURY CRUISE</span>
+                            </span>
+                        </t>
+                    </a>
 
                     <!-- Mobile Burger Menu -->
-                    <button class="navbar-toggler cleopatra-toggler"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#cleopatraNav"
-                            aria-controls="cleopatraNav"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation">
+                    <button class="navbar-toggler cleopatra-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#cleopatraNav" aria-controls="cleopatraNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="toggler-bar"></span>
                         <span class="toggler-bar"></span>
                         <span class="toggler-bar"></span>
                     </button>
 
-                    <!-- Nav Links Collapse -->
+                    <!-- Nav Links -->
                     <div class="collapse navbar-collapse" id="cleopatraNav">
                         <ul class="navbar-nav mx-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-1">
 
-                            <!-- Home -->
                             <li class="nav-item">
-                                <a class="nav-link cleopatra-nav-link" href="https://cleopatracruise.com">Home</a>
+                                <a class="nav-link cleopatra-nav-link" href="/">Home</a>
                             </li>
 
-                            <!-- About Us Dropdown -->
                             <li class="nav-item dropdown">
-                                <a class="nav-link cleopatra-nav-link dropdown-toggle"
-                                   href="/about"
-                                   role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    The Cruise
-                                </a>
-<!--                                <ul class="dropdown-menu cleopatra-dropdown">-->
-<!--                                    <li><a class="dropdown-item" href="/about">Our Story</a></li>-->
-<!--                                    <li><a class="dropdown-item" href="/team">Our Team</a></li>-->
-<!--                                    <li><a class="dropdown-item" href="/why-us">Why Choose Us</a></li>-->
-<!--                                    <li><a class="dropdown-item" href="/awards">Awards &amp; Recognition</a></li>-->
-<!--                                </ul>-->
-                            </li>
-
-                            <!-- Our Cruises Dropdown -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link cleopatra-nav-link dropdown-toggle"
-                                   href="https://cleopatracruise.com/the-cruise"
-                                   role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    The  Cruise
-                                </a>
+                                <a class="nav-link cleopatra-nav-link dropdown-toggle" href="/about" role="button" data-bs-toggle="dropdown" aria-expanded="false">About Us</a>
                                 <ul class="dropdown-menu cleopatra-dropdown">
-                                    <li><a class="dropdown-item" href="https://cleopatracruise.com">Nile Cruise</a></li>
+                                    <li><a class="dropdown-item" href="/about">Our Story</a></li>
+                                    <li><a class="dropdown-item" href="/team">Our Team</a></li>
+                                    <li><a class="dropdown-item" href="/why-us">Why Choose Us</a></li>
+                                    <li><a class="dropdown-item" href="/awards">Awards &amp; Recognition</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link cleopatra-nav-link dropdown-toggle" href="/cruises" role="button" data-bs-toggle="dropdown" aria-expanded="false">Our Cruises</a>
+                                <ul class="dropdown-menu cleopatra-dropdown">
+                                    <li><a class="dropdown-item" href="/cruises/nile-cruise">Nile Cruise</a></li>
                                     <li><a class="dropdown-item" href="/cruises/lake-nasser">Lake Nasser Cruise</a></li>
                                     <li><a class="dropdown-item" href="/cruises/felucca">Felucca Sailing</a></li>
                                     <li><a class="dropdown-item" href="/cruises/dahabiya">Dahabiya Cruise</a></li>
@@ -118,33 +87,19 @@
                                 </ul>
                             </li>
 
-                            <!-- Tours &amp; Excursions Dropdown -->
-<!--                            <li class="nav-item dropdown">-->
-<!--                                <a class="nav-link cleopatra-nav-link dropdown-toggle"-->
-<!--                                   href="/tours"-->
-<!--                                   role="button"-->
-<!--                                   data-bs-toggle="dropdown"-->
-<!--                                   aria-expanded="false">-->
-<!--                                    Tours &amp; Excursions-->
-<!--                                </a>-->
-<!--                                <ul class="dropdown-menu cleopatra-dropdown">-->
-<!--                                    <li><a class="dropdown-item" href="/tours/luxor">Luxor Tours</a></li>-->
-<!--                                    <li><a class="dropdown-item" href="/tours/aswan">Aswan Tours</a></li>-->
-<!--                                    <li><a class="dropdown-item" href="/tours/abu-simbel">Abu Simbel</a></li>-->
-<!--                                    <li><a class="dropdown-item" href="/tours/valley-of-kings">Valley of the Kings</a></li>-->
-<!--                                    <li><a class="dropdown-item" href="/tours/karnak">Karnak Temple</a></li>-->
-<!--                                </ul>-->
-<!--                            </li>-->
-
-                            <!-- Destinations Dropdown -->
                             <li class="nav-item dropdown">
-                                <a class="nav-link cleopatra-nav-link dropdown-toggle"
-                                   href="/destinations"
-                                   role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Destinations
-                                </a>
+                                <a class="nav-link cleopatra-nav-link dropdown-toggle" href="/tours" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tours &amp; Excursions</a>
+                                <ul class="dropdown-menu cleopatra-dropdown">
+                                    <li><a class="dropdown-item" href="/tours/luxor">Luxor Tours</a></li>
+                                    <li><a class="dropdown-item" href="/tours/aswan">Aswan Tours</a></li>
+                                    <li><a class="dropdown-item" href="/tours/abu-simbel">Abu Simbel</a></li>
+                                    <li><a class="dropdown-item" href="/tours/valley-of-kings">Valley of the Kings</a></li>
+                                    <li><a class="dropdown-item" href="/tours/karnak">Karnak Temple</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link cleopatra-nav-link dropdown-toggle" href="/destinations" role="button" data-bs-toggle="dropdown" aria-expanded="false">Destinations</a>
                                 <ul class="dropdown-menu cleopatra-dropdown">
                                     <li><a class="dropdown-item" href="/destinations/luxor">Luxor</a></li>
                                     <li><a class="dropdown-item" href="/destinations/aswan">Aswan</a></li>
@@ -153,12 +108,10 @@
                                 </ul>
                             </li>
 
-                            <!-- Gallery -->
                             <li class="nav-item">
                                 <a class="nav-link cleopatra-nav-link" href="/gallery">Gallery</a>
                             </li>
 
-                            <!-- Contact -->
                             <li class="nav-item">
                                 <a class="nav-link cleopatra-nav-link" href="/contactus">Contact</a>
                             </li>
@@ -172,15 +125,13 @@
                             </a>
                         </div>
 
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
+                    </div>
+                </div>
             </nav>
 
         </header>
 
-        <!-- ══════════════════════════════════════════════════════════
-             HERO CAROUSEL SCRIPT
-        ══════════════════════════════════════════════════════════════ -->
+        <!-- CAROUSEL SCRIPT -->
         <script type="text/javascript">
         <![CDATA[
             document.addEventListener('DOMContentLoaded', function() {
@@ -192,205 +143,113 @@
                 const heroTitle = document.getElementById('heroTitle');
                 const heroDescription = document.getElementById('heroDescription');
 
-                // ...existing code...
                 let slides = [];
                 let currentIndex = 0;
-                let autoScrollInterval;
+                let autoScrollInterval = null;
 
-                // Fetch property media data from backend
-                async function fetchPropertyMedia() {
-                    try {
-                        // Fetch the first property with media
-                        const response = await fetch('/web/dataset/call_kw/cruise.property/search_read', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                jsonrpc: '2.0',
-                                method: 'call',
-                                params: {
-                                    model: 'cruise.property',
-                                    method: 'search_read',
-                                    args: [[], ['id', 'name', 'description', 'media_ids']],
-                                    kwargs: {limit: 1}
-                                }
-                            })
-                        });
-
-                        const data = await response.json();
-
-                        if (data.result && data.result.length > 0) {
-                            const property = data.result[0];
-                            console.log('Property fetched:', property);
-
-                            // If property has media, fetch media details
-                            if (property.media_ids && property.media_ids.length > 0) {
-                                const mediaResponse = await fetch('/web/dataset/call_kw/media/search_read', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        jsonrpc: '2.0',
-                                        method: 'call',
-                                        params: {
-                                            model: 'media',
-                                            method: 'search_read',
-                                            args: [
-                                                [['id', 'in', property.media_ids]],
-                                                ['id', 'name', 'image', 'description','text_description']
-                                            ],
-                                            kwargs: {}
-                                        }
-                                    })
-                                });
-
-                                const mediaData = await mediaResponse.json();
-                                console.log('Media fetched:', mediaData);
-
-                                if (mediaData.result && mediaData.result.length > 0) {
-                                    // Build slides from media data with IDs
-                                    slides = mediaData.result.map((media, index) => ({
-                                        id: media.id,
-                                        image: media.image ? `data:image/jpg;base64,${media.image}` : '/cleopatra_cruise/static/src/img/carousel-1.jpg',
-                                        // title: media.name || `Media ${index + 1}`,
-                                        description: media.text_description || property.description || 'Luxury Cruise Experience'
-                                    }));
-
-                                    console.log('Slides created:', slides);
-                                    initCarousel();
-                                    return;
-                                }
-                            }
-                        }
-
-                        // Fallback: Use default placeholder slides if no media found
-                        console.log('No property media found, using defaults');
-                        initCarouselWithDefaults();
-                    } catch (error) {
-                        console.error('Error fetching property media:', error);
-                        // Fallback to defaults on error
-                        initCarouselWithDefaults();
+                // Default slides
+                const defaultSlides = [
+                    {
+                        id: 0,
+                        image: '/cleopatra_cruise/static/src/img/carousel-1.jpg',
+                        title: 'Luxury Nile Cruises',
+                        description: 'Experience the magic of Egypt\'s most iconic river'
+                    },
+                    {
+                        id: 1,
+                        image: '/cleopatra_cruise/static/src/img/carousel-2.jpg',
+                        title: 'Premium Cabins',
+                        description: 'Elegantly designed suites with breathtaking river views'
+                    },
+                    {
+                        id: 2,
+                        image: '/cleopatra_cruise/static/src/img/carousel-3.jpg',
+                        title: 'Ancient Wonders',
+                        description: 'Discover temples, tombs, and archaeological marvels'
                     }
-                }
+                ];
 
-                // Initialize with default placeholder slides (fallback)
-                function initCarouselWithDefaults() {
-                    slides = [
-                        {
-                            id: 0,
-                            image: '/cleopatra_cruise/static/src/img/carousel-1.jpg',
-                            title: 'Luxury Nile Cruises',
-                            description: 'Experience the magic of Egypt\'s most iconic river'
-                        },
-                        {
-                            id: 1,
-                            image: '/cleopatra_cruise/static/src/img/carousel-2.jpg',
-                            title: 'Premium Cabins',
-                            description: 'Elegantly designed suites with breathtaking river views'
-                        },
-                        {
-                            id: 2,
-                            image: '/cleopatra_cruise/static/src/img/carousel-3.jpg',
-                            title: 'Ancient Wonders',
-                            description: 'Discover temples, tombs, and archaeological marvels'
-                        }
-                    ];
-                    initCarousel();
-                }
-
-                // Initialize carousel
-                function initCarousel() {
-                    // Clear existing slides first
+                function initCarousel(slidesData) {
+                    slides = slidesData;
                     carouselTrack.innerHTML = '';
                     carouselIndicators.innerHTML = '';
 
-                    // Create slides with media IDs
                     slides.forEach((slide, index) => {
                         const slideEl = document.createElement('div');
                         slideEl.className = 'hero-carousel-slide';
                         slideEl.setAttribute('data-media-id', slide.id);
-                        slideEl.innerHTML = `
-                            <img src="${slide.image}" alt="${slide.title}" class="hero-carousel-image"/>
-                        `;
+                        slideEl.innerHTML = '<img src="' + slide.image + '" alt="' + slide.title + '" class="hero-carousel-image"/>';
                         carouselTrack.appendChild(slideEl);
 
-                        // Create indicator with media ID
                         const indicator = document.createElement('button');
                         indicator.className = 'hero-indicator' + (index === 0 ? ' active' : '');
                         indicator.setAttribute('data-slide', index);
-                        indicator.setAttribute('data-media-id', slide.id);
-                        indicator.setAttribute('aria-label', `Go to slide ${index + 1}`);
-                        indicator.onclick = () => goToSlide(index);
+                        indicator.onclick = function() { goToSlide(index); };
                         carouselIndicators.appendChild(indicator);
                     });
 
+                    updateCarousselDisplay();
                     startAutoScroll();
                 }
 
-                // Update carousel position
-                function updateCarousel() {
+                function updateCarousselDisplay() {
                     const offset = -currentIndex * 100;
-                    carouselTrack.style.transform = `translateX(${offset}%)`;
+                    carouselTrack.style.transform = 'translateX(' + offset + '%)';
 
-                    // Update indicators
-                    document.querySelectorAll('.hero-indicator').forEach((ind, i) => {
-                        ind.classList.toggle('active', i === currentIndex);
+                    document.querySelectorAll('.hero-indicator').forEach(function(ind, i) {
+                        if (i === currentIndex) {
+                            ind.classList.add('active');
+                        } else {
+                            ind.classList.remove('active');
+                        }
                     });
 
-                    // Update text content
                     if (slides[currentIndex]) {
-                        // heroTitle.textContent = slides[currentIndex].title;
-                        heroDescription.textContent = slides[currentIndex].description;
+                        heroTitle.textContent = slides[currentIndex].title;
+                        heroDescription.innerHTML = slides[currentIndex].description;
                     }
                 }
 
-                // Go to specific slide
-                function goToSlide(index) {
-                    currentIndex = index % slides.length;
-                    updateCarousel();
-                    resetAutoScroll();
-                }
-
-                // Next slide
                 function nextSlide() {
                     currentIndex = (currentIndex + 1) % slides.length;
-                    updateCarousel();
-                    resetAutoScroll();
+                    updateCarousselDisplay();
                 }
 
-                // Previous slide
                 function prevSlide() {
                     currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-                    updateCarousel();
+                    updateCarousselDisplay();
+                }
+
+                function goToSlide(index) {
+                    currentIndex = index % slides.length;
+                    updateCarousselDisplay();
                     resetAutoScroll();
                 }
 
-                // Auto-scroll every 5 seconds
                 function startAutoScroll() {
                     autoScrollInterval = setInterval(nextSlide, 5000);
                 }
 
-                // Reset auto-scroll timer
-                function resetAutoScroll() {
+                function pauseAutoScroll() {
                     clearInterval(autoScrollInterval);
+                }
+
+                function resetAutoScroll() {
+                    pauseAutoScroll();
                     startAutoScroll();
                 }
 
-                // Event listeners
-                prevBtn.addEventListener('click', prevSlide);
-                nextBtn.addEventListener('click', nextSlide);
-                // ...existing code...
-                // Pause auto-scroll on hover
-                carousel.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
-                carousel.addEventListener('mouseleave', startAutoScroll);
+                if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+                if (nextBtn) nextBtn.addEventListener('click', nextSlide);
 
-                // Initialize carousel with dynamic property media
-                fetchPropertyMedia();
+                if (carousel) {
+                    carousel.addEventListener('mouseenter', pauseAutoScroll);
+                    carousel.addEventListener('mouseleave', startAutoScroll);
+                }
+
+                initCarousel(defaultSlides);
             });
 
-            // Navbar shrink on scroll
             window.addEventListener('scroll', function() {
                 const navbar = document.getElementById('mainNavbar');
                 if (window.scrollY > 100) {
@@ -405,3 +264,4 @@
     </template>
 
 </odoo>
+

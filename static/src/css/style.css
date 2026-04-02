@@ -955,15 +955,11 @@ body::before {
     border-radius: 24px;
     overflow: hidden;
     background: linear-gradient(160deg, #0f2540 0%, #0a1c33 60%, #061624 100%);
-    /*box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.18),*/
-    /*0 40px 80px rgba(0, 0, 0, 0.7),*/
-    /*0 0 60px rgba(13, 58, 92, 0.4),*/
-    /*inset 0 1px 0 rgba(201, 168, 76, 0.25);*/
     animation: cardIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
     transition: transform 0.3s, box-shadow 0.3s;
     height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .cabin-card:hover {
@@ -977,7 +973,9 @@ body::before {
 /* Carousel Container */
 .cabin-carousel-container {
     position: relative;
-    width: 100%;
+    flex: 0 0 50%;
+    width: 50%;
+    min-height: 400px;
     background: #0a1c33;
     overflow: hidden;
 }
@@ -1123,7 +1121,8 @@ body::before {
 
 /* Cabin Card Body */
 .cabin-card-body {
-    flex: 1;
+    flex: 0 0 50%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     padding: 24px;
@@ -1376,6 +1375,41 @@ body::before {
 
 .btn-add-room:active {
     transform: translateY(0) scale(0.98);
+}
+
+/* ── Bootstrap Accordion Styling ── */
+.accordion {
+    --bs-accordion-bg: transparent;
+    --bs-accordion-border-color: transparent;
+    --bs-accordion-btn-active-bg: transparent;
+    --bs-accordion-btn-active-border-color: transparent;
+}
+
+.accordion-button {
+    --bs-accordion-btn-focus-border-color: rgba(201, 168, 76, 0.5);
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(201, 168, 76, 0.1);
+}
+
+.accordion-button:not(.collapsed) {
+    color: #c9a84c;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    border-color: rgba(201, 168, 76, 0.5);
+    box-shadow: 0 0 0 0.25rem rgba(201, 168, 76, 0.1);
+}
+
+.accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23c9a84c'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.accordion-item {
+    --bs-accordion-bg: transparent;
+    --bs-accordion-border-color: rgba(201, 168, 76, 0.3);
+    border: 1px solid rgba(201, 168, 76, 0.3) !important;
+    border-radius: 6px;
 }
 
 /* Responsive Design */

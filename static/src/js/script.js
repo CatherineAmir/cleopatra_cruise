@@ -281,7 +281,7 @@ function moveToSlide(element, slideIndex) {
  * Next slide
  */
 function nextSlide(element) {
-    const card = element.closest('.cabin-card');
+    const card = element.closest('.cabin-card-horizontal');
     if (!card) return;
 
     const slides = card.querySelectorAll('.carousel-slide');
@@ -299,7 +299,7 @@ function nextSlide(element) {
  * Previous slide
  */
 function prevSlide(element) {
-    const card = element.closest('.cabin-card');
+    const card = element.closest('.cabin-card-horizontal');
     if (!card) return;
 
     const slides = card.querySelectorAll('.carousel-slide');
@@ -317,7 +317,7 @@ function prevSlide(element) {
  * Go to specific slide by indicator
  */
 function goToSlide(element, slideIndex) {
-    const card = element.closest('.cabin-card');
+    const card = element.closest('.cabin-card-horizontal');
     if (card) {
         moveToSlide(card, slideIndex);
     }
@@ -357,15 +357,15 @@ function decrementRooms(element) {
  * Update price display based on room count
  */
 function updatePriceDisplay(element) {
-    const card = element.closest('.cabin-card');
+    const card = element.closest('.cabin-card-horizontal');
     if (!card) return;
 
     const roomInput = card.querySelector('.room-input');
-    const priceDisplay = card.querySelector('#priceDisplay');
+    const priceDisplay = card.querySelector('[id="priceDisplay"]') || card.querySelector('.price-amount span');
 
     if (roomInput && priceDisplay) {
         const roomCount = parseInt(roomInput.value) || 1;
-        const basePrice = parseInt(priceDisplay.dataset.basePrice) || 2500;
+        const basePrice = parseInt(priceDisplay.getAttribute('data-base-price')) || 0;
         const totalPrice = basePrice * roomCount;
 
         priceDisplay.textContent = totalPrice.toLocaleString('en-US', {
@@ -380,22 +380,37 @@ function updatePriceDisplay(element) {
  * Add room to booking
  */
 function addRoomToBooking(element) {
-    const card = element.closest('.cabin-card');
-    if (!card) return;
+    const card = element.closest('.cabin-card-horizontal');
+    if (!card) {
+        console.error('Cabin card not found');
+        return;
+    }
 
+    const roomTypeId = element.getAttribute('data-room-type-id');
+    const maxRooms = element.getAttribute('data-max-rooms');
     const cabinName = card.querySelector('.cabin-name').textContent;
     const roomCount = card.querySelector('.room-input').value;
-    const price = card.querySelector('#priceDisplay').textContent;
+    const priceElement = card.querySelector('[id="priceDisplay"]') || card.querySelector('.price-amount span');
+    const price = priceElement ? priceElement.textContent : '0';
 
     const bookingData = {
+        roomTypeId: roomTypeId,
         cabin: cabinName,
         rooms: parseInt(roomCount),
-        pricePerNight: parseInt(card.querySelector('#priceDisplay').dataset.basePrice) || 2500,
+        maxAvailable: parseInt(maxRooms) || 5,
+        pricePerNight: parseInt(priceElement.getAttribute('data-base-price')) || 0,
         totalPrice: parseInt(price.replace(/,/g, ''))
     };
 
     console.log('Adding to booking:', bookingData);
+
+    // Show confirmation
     showNotification(element, `${roomCount} room(s) in ${cabinName} added to booking!`);
+
+    // Reset room count
+    setTimeout(() => {
+        card.querySelector('.room-input').value = '1';
+    }, 2000);
 }
 
 /**
