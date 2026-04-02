@@ -71,6 +71,11 @@ class CruisesController(http.Controller):
     def cruises_cabins(self, cruise_id, **kw):
         print("cruise_id:", cruise_id)
         print("kw", kw)
+        rooms_count = int(kw.get('rooms_count', 1))
+        rooms_data = ast.literal_eval(kw.get('rooms_data', "[2]"))
+        print("rooms_data", rooms_data)
+        print("rooms_count", rooms_count)
+        persons_count = sum(rooms_data)
 
         # Get the cruise object
         cruise = request.env['cruise.cruise'].sudo().browse(cruise_id)
@@ -90,6 +95,8 @@ class CruisesController(http.Controller):
             "persons_count": kw.get("persons_count", 2),
             "date_from": kw.get("date_from", ''),
             "date_to": kw.get("date_to", ''),
+            "rooms_count":rooms_count,
+            "rooms_data": rooms_data,
         }
         print("data:", data)
         return request.render('cleopatra_cruise.cabin_cards_list', data)
