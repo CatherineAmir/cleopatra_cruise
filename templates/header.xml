@@ -33,7 +33,7 @@
                     <div class="hero-overlay">
                         <div class="hero-content">
                             <h1 class="hero-title" id="heroTitle">Luxury Nile Cruises</h1>
-                            <h3 class="text-center" id="heroDescription">Experience the magic of Egypt's most iconic river</h3>
+                            <h5 class="text-center" id="heroDescription">Experience the magic of Egypt's most iconic river</h5>
                         </div>
                     </div>
                 </div>
