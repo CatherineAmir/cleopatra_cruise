@@ -4,9 +4,9 @@
         <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/header.css"/>
 
         <header id="top" class="cleopatra-header">
-            <div class="container text-center my-3">
-                <img src="/cleopatra_cruise/static/src/img/logo_gold.png" alt="Cleopatra Cruise" class="cleopatra-header-bg"/>
-            </div>
+<!--            <div class="container text-center my-3">-->
+<!--                <img src="/cleopatra_cruise/static/src/img/logo_gold.png" alt="Cleopatra Cruise" class="cleopatra-header-bg"/>-->
+<!--            </div>-->
 
 
             <!-- ══════════════════════════════════════════════════════════
@@ -46,19 +46,19 @@
                 <div class="container-fluid">
 
                     <!-- Logo -->
-                    <a class="navbar-brand cleopatra-logo" href="/">
-                        <t t-if="website.logo">
-                            <img t-att-src="website.logo"
-                                 alt="Cleopatra Cruise"
-                                 class="logo-img"/>
-                        </t>
-                        <t t-else="">
-                            <span class="logo-text">
-                                <span class="logo-main">CLEOPATRA</span>
-                                <span class="logo-sub">LUXURY CRUISE</span>
-                            </span>
-                        </t>
-                    </a>
+<!--                    <a class="navbar-brand cleopatra-logo" href="/cruises">-->
+<!--                        <t t-if="website.logo">-->
+<!--                            <img t-att-src="website.logo"-->
+<!--                                 alt="Cleopatra Cruise"-->
+<!--                                 class="logo-img"/>-->
+<!--                        </t>-->
+<!--                        <t t-else="">-->
+<!--                            <span class="logo-text">-->
+<!--                                <span class="logo-main">CLEOPATRA</span>-->
+<!--                                <span class="logo-sub">LUXURY CRUISE</span>-->
+<!--                            </span>-->
+<!--                        </t>-->
+<!--                    </a>-->
 
                     <!-- Mobile Burger Menu -->
                     <button class="navbar-toggler cleopatra-toggler"
@@ -79,7 +79,7 @@
 
                             <!-- Home -->
                             <li class="nav-item">
-                                <a class="nav-link cleopatra-nav-link" href="/">Home</a>
+                                <a class="nav-link cleopatra-nav-link" href="https://cleopatracruise.com">Home</a>
                             </li>
 
                             <!-- About Us Dropdown -->
@@ -89,27 +89,27 @@
                                    role="button"
                                    data-bs-toggle="dropdown"
                                    aria-expanded="false">
-                                    About Us
+                                    The Cruise
                                 </a>
-                                <ul class="dropdown-menu cleopatra-dropdown">
-                                    <li><a class="dropdown-item" href="/about">Our Story</a></li>
-                                    <li><a class="dropdown-item" href="/team">Our Team</a></li>
-                                    <li><a class="dropdown-item" href="/why-us">Why Choose Us</a></li>
-                                    <li><a class="dropdown-item" href="/awards">Awards &amp; Recognition</a></li>
-                                </ul>
+<!--                                <ul class="dropdown-menu cleopatra-dropdown">-->
+<!--                                    <li><a class="dropdown-item" href="/about">Our Story</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="/team">Our Team</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="/why-us">Why Choose Us</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="/awards">Awards &amp; Recognition</a></li>-->
+<!--                                </ul>-->
                             </li>
 
                             <!-- Our Cruises Dropdown -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link cleopatra-nav-link dropdown-toggle"
-                                   href="/cruises"
+                                   href="https://cleopatracruise.com/the-cruise"
                                    role="button"
                                    data-bs-toggle="dropdown"
                                    aria-expanded="false">
-                                    Our Cruises
+                                    The  Cruise
                                 </a>
                                 <ul class="dropdown-menu cleopatra-dropdown">
-                                    <li><a class="dropdown-item" href="/cruises/nile-cruise">Nile Cruise</a></li>
+                                    <li><a class="dropdown-item" href="https://cleopatracruise.com">Nile Cruise</a></li>
                                     <li><a class="dropdown-item" href="/cruises/lake-nasser">Lake Nasser Cruise</a></li>
                                     <li><a class="dropdown-item" href="/cruises/felucca">Felucca Sailing</a></li>
                                     <li><a class="dropdown-item" href="/cruises/dahabiya">Dahabiya Cruise</a></li>
@@ -119,22 +119,22 @@
                             </li>
 
                             <!-- Tours &amp; Excursions Dropdown -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link cleopatra-nav-link dropdown-toggle"
-                                   href="/tours"
-                                   role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Tours &amp; Excursions
-                                </a>
-                                <ul class="dropdown-menu cleopatra-dropdown">
-                                    <li><a class="dropdown-item" href="/tours/luxor">Luxor Tours</a></li>
-                                    <li><a class="dropdown-item" href="/tours/aswan">Aswan Tours</a></li>
-                                    <li><a class="dropdown-item" href="/tours/abu-simbel">Abu Simbel</a></li>
-                                    <li><a class="dropdown-item" href="/tours/valley-of-kings">Valley of the Kings</a></li>
-                                    <li><a class="dropdown-item" href="/tours/karnak">Karnak Temple</a></li>
-                                </ul>
-                            </li>
+<!--                            <li class="nav-item dropdown">-->
+<!--                                <a class="nav-link cleopatra-nav-link dropdown-toggle"-->
+<!--                                   href="/tours"-->
+<!--                                   role="button"-->
+<!--                                   data-bs-toggle="dropdown"-->
+<!--                                   aria-expanded="false">-->
+<!--                                    Tours &amp; Excursions-->
+<!--                                </a>-->
+<!--                                <ul class="dropdown-menu cleopatra-dropdown">-->
+<!--                                    <li><a class="dropdown-item" href="/tours/luxor">Luxor Tours</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="/tours/aswan">Aswan Tours</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="/tours/abu-simbel">Abu Simbel</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="/tours/valley-of-kings">Valley of the Kings</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="/tours/karnak">Karnak Temple</a></li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
 
                             <!-- Destinations Dropdown -->
                             <li class="nav-item dropdown">
