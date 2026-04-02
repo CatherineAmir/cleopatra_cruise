@@ -9,7 +9,7 @@
 ───────────────────────────────────────────── */
 // var rooms = [2]; // start: 1 room, 2 adults
 var rooms= JSON.parse(document.getElementById('roomsDataInput').value || '[2]'); // load from hidden input (if any)
-console.log('Initial rooms state:', rooms);
+
 
 /* ── render the room rows ── */
 function renderRooms() {
@@ -201,6 +201,26 @@ function closeAllMonthDropdowns() {
     });
 }
 
+/* Close month overlay when clicking outside modal */
+document.addEventListener('click', function (e) {
+    var mdFrom = document.getElementById('mdFrom');
+    var mdTo = document.getElementById('mdTo');
+    var sbFromField = document.getElementById('sbFromField');
+    var sbToField = document.getElementById('sbToField');
+
+    if (mdFrom && mdFrom.classList.contains('open')) {
+        if (!sbFromField.contains(e.target) && !mdFrom.contains(e.target)) {
+            closeAllMonthDropdowns();
+        }
+    }
+
+    if (mdTo && mdTo.classList.contains('open')) {
+        if (!sbToField.contains(e.target) && !mdTo.contains(e.target)) {
+            closeAllMonthDropdowns();
+        }
+    }
+});
+
 /* toggle From / To dropdowns */
 (function attachMonthToggles() {
     ['From', 'To'].forEach(function (which) {
@@ -222,7 +242,6 @@ function closeAllMonthDropdowns() {
     });
 })();
 
-document.addEventListener('click', function () { closeAllMonthDropdowns(); });
 
 /* ── init on DOM ready ── */
 document.addEventListener('DOMContentLoaded', function () {

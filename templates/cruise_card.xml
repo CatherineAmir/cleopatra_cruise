@@ -4,7 +4,7 @@
 
 <!--            <div class="d-flex flex-column align-items-center justify-content-center"-->
 <!--     style="min-height: 100vh; padding: 30px 16px;">-->
-                <div class="container-fluid  py-5">
+                <div class="container-fluid py-5 my-5">
             <div class="row g-4" style="margin-top: 40px;">
                 <t t-foreach="cruises" t-as="cruise">
                     <t t-set="index" t-value="1"/>
