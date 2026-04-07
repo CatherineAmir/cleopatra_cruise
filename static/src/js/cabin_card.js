@@ -12,7 +12,16 @@ function addRoomToBooking(element) {
     const roomTypeId = element.getAttribute('data-room-type-id');
     const maxRooms = element.getAttribute('data-max-rooms');
     const cabinName = card.querySelector('.cabin-name').textContent;
-    const roomCount = card.querySelector('.room-input').value;
+
+    // Get room count from the room selector button's data attribute
+    const roomButton = card.querySelector('.btn-room-selector');
+    const roomCount = roomButton ? parseInt(roomButton.getAttribute('data-selected-count')) || 0 : 0;
+
+    if (roomCount === 0) {
+        showNotification(element, 'Please select at least 1 room');
+        return;
+    }
+
     const priceElement = card.querySelector('[id="priceDisplay"]') || card.querySelector('.price-amount span');
     const price = priceElement ? priceElement.textContent : '0';
 
@@ -30,9 +39,12 @@ function addRoomToBooking(element) {
     // Show confirmation
     showNotification(element, `${roomCount} room(s) in ${cabinName} added to booking!`);
 
-    // Reset room count
+    // Reset room count to 0 (unselected state)
     setTimeout(() => {
-        card.querySelector('.room-input').value = '1';
+        if (roomButton) {
+            roomButton.setAttribute('data-selected-count', '0');
+            roomButton.querySelector('.room-selector-text').textContent = 'Select Rooms';
+        }
     }, 2000);
 }
 
@@ -305,3 +317,230 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+/**
+ * Room Distribution Modal Functions
+ */
+
+// Store modal context
+var roomDistributionContext = {
+    allRoomTypes: [],
+    totalRoomsNeeded: 0,
+    roomsData: {},
+    currentRoom: null
+};
+
+/**
+ * Open room distribution modal
+ */
+function openRoomDistributionModal(button, roomTypeId) {
+    console.log('Opening room distribution modal for room type:', roomTypeId);
+
+    const overlay = document.getElementById('roomDistributionOverlay');
+    if (!overlay) {
+        console.error('Room distribution overlay not found');
+        return;
+    }
+
+    // Get all room types from the page
+    const allRoomCards = document.querySelectorAll('.cabin-card-horizontal');
+    roomDistributionContext.allRoomTypes = [];
+    roomDistributionContext.roomsData = {};
+
+    allRoomCards.forEach(card => {
+        const typeId = card.querySelector('.btn-room-selector').getAttribute('data-room-type-id');
+        const typeName = card.querySelector('.cabin-name').textContent.trim();
+        const available = parseInt(card.querySelector('.btn-room-selector').getAttribute('data-available')) || 0;
+
+        roomDistributionContext.allRoomTypes.push({
+            id: typeId,
+            name: typeName,
+            available: available
+        });
+
+        // Initialize rooms data for this type
+        roomDistributionContext.roomsData[typeId] = 0;
+    });
+
+    // Get required rooms from search
+    const requiredRooms = parseInt(button.getAttribute('data-required')) || 1;
+    roomDistributionContext.totalRoomsNeeded = requiredRooms;
+    roomDistributionContext.currentRoom = roomTypeId;
+
+    // Render modal content
+    renderRoomDistributionModal();
+
+    // Show overlay
+    overlay.classList.add('open');
+}
+
+/**
+ * Render room distribution modal content
+ */
+function renderRoomDistributionModal() {
+    const body = document.getElementById('roomDistributionBody');
+    if (!body) return;
+
+    let html = `
+        <div class="distribution-info">
+            <p class="info-text">You need to select <strong>${roomDistributionContext.totalRoomsNeeded} room(s)</strong> total</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%; background: linear-gradient(135deg, #c9a84c, #e8c97a);"></div>
+                </div>
+                <span class="progress-text"><span id="selectedCount">0</span>/${roomDistributionContext.totalRoomsNeeded}</span>
+            </div>
+        </div>
+
+        <div class="room-types-list">
+    `;
+
+    roomDistributionContext.allRoomTypes.forEach(roomType => {
+        const selected = roomDistributionContext.roomsData[roomType.id] || 0;
+        const isAvailable = roomType.available > 0;
+        const disabled = !isAvailable || (selected === 0 && getTotalSelected() >= roomDistributionContext.totalRoomsNeeded);
+
+        html += `
+            <div class="room-type-selector" data-room-id="${roomType.id}">
+                <div class="room-type-header">
+                    <h3 class="room-type-name">${roomType.name}</h3>
+                    <span class="room-type-availability">${roomType.available} available</span>
+                </div>
+
+                <div class="room-type-controls">
+                    <button type="button" class="room-control-btn minus" onclick="decrementRoomSelection('${roomType.id}')" ${disabled || selected === 0 ? 'disabled' : ''}>
+                        <i class="fa fa-minus"></i>
+                    </button>
+
+                    <div class="room-count-display">
+                        <span class="selected-count">${selected}</span>
+                        <span class="total-count">/ ${roomType.available}</span>
+                    </div>
+
+                    <button type="button" class="room-control-btn plus" onclick="incrementRoomSelection('${roomType.id}')" ${disabled ? 'disabled' : ''}>
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="room-adults-info" ${selected === 0 ? 'style="display:none;"' : ''}>
+                    <p>Guests in selected rooms:</p>
+                    <div class="adults-list" id="adults-${roomType.id}">
+                        ${generateAdultsDisplay(selected)}
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    html += '</div>';
+    body.innerHTML = html;
+
+    // Update progress
+    updateRoomDistributionProgress();
+}
+
+/**
+ * Generate adults display for rooms
+ */
+function generateAdultsDisplay(count) {
+    let html = '';
+    if (count === 0) return html;
+
+    // Get room data from search bar if available
+    const roomsData = window.rooms || [2]; // Default: [2] adults per room
+
+    for (let i = 0; i < count; i++) {
+        const adults = roomsData[i] || 2;
+        html += `<span class="adult-badge">${adults} Adult${adults > 1 ? 's' : ''}</span>`;
+    }
+    return html;
+}
+
+/**
+ * Increment room selection
+ */
+function incrementRoomSelection(roomTypeId) {
+    const roomType = roomDistributionContext.allRoomTypes.find(r => r.id === roomTypeId);
+    if (!roomType) return;
+
+    const total = getTotalSelected();
+    if (total < roomDistributionContext.totalRoomsNeeded) {
+        roomDistributionContext.roomsData[roomTypeId] = (roomDistributionContext.roomsData[roomTypeId] || 0) + 1;
+
+        // Check if exceeds available
+        if (roomDistributionContext.roomsData[roomTypeId] > roomType.available) {
+            roomDistributionContext.roomsData[roomTypeId] = roomType.available;
+        }
+
+        renderRoomDistributionModal();
+    }
+}
+
+/**
+ * Decrement room selection
+ */
+function decrementRoomSelection(roomTypeId) {
+    const current = roomDistributionContext.roomsData[roomTypeId] || 0;
+    if (current > 0) {
+        roomDistributionContext.roomsData[roomTypeId] = current - 1;
+        renderRoomDistributionModal();
+    }
+}
+
+/**
+ * Get total selected rooms
+ */
+function getTotalSelected() {
+    return Object.values(roomDistributionContext.roomsData).reduce((sum, val) => sum + (val || 0), 0);
+}
+
+/**
+ * Update progress bar
+ */
+function updateRoomDistributionProgress() {
+    const total = getTotalSelected();
+    const percentage = (total / roomDistributionContext.totalRoomsNeeded) * 100;
+
+    const progressFill = document.getElementById('progressFill');
+    const selectedCount = document.getElementById('selectedCount');
+
+    if (progressFill) progressFill.style.width = Math.min(percentage, 100) + '%';
+    if (selectedCount) selectedCount.textContent = total;
+}
+
+/**
+ * Confirm room distribution
+ */
+function confirmRoomDistribution() {
+    const total = getTotalSelected();
+
+    if (total !== roomDistributionContext.totalRoomsNeeded) {
+        alert(`Please select exactly ${roomDistributionContext.totalRoomsNeeded} room(s)`);
+        return;
+    }
+
+    // Update the button with selection info
+    const currentButton = document.querySelector(`.btn-room-selector[data-room-type-id="${roomDistributionContext.currentRoom}"]`);
+    if (currentButton) {
+        const selectedCount = roomDistributionContext.roomsData[roomDistributionContext.currentRoom] || 0;
+        currentButton.setAttribute('data-selected-count', selectedCount);
+
+        const textSpan = currentButton.querySelector('.room-selector-text');
+        if (textSpan) {
+            textSpan.textContent = selectedCount > 0 ? `${selectedCount} Room${selectedCount > 1 ? 's' : ''} Selected` : 'Select Rooms';
+        }
+    }
+
+    console.log('Room distribution confirmed:', roomDistributionContext.roomsData);
+    closeRoomDistributionModal();
+}
+
+/**
+ * Close room distribution modal
+ */
+function closeRoomDistributionModal() {
+    const overlay = document.getElementById('roomDistributionOverlay');
+    if (overlay) {
+        overlay.classList.remove('open');
+    }
+}

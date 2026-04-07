@@ -166,24 +166,40 @@
                             </div>
                         </div>
 
-                        <!-- ROOM SELECTION SECTION -->
-                        <div class="room-selection" style="display: flex; align-items: center; gap: 8px;">
-                            <label class="selection-label" style="font-size: 11px; color: #999; text-transform: uppercase; white-space: nowrap;">Qty:</label>
-                            <div class="room-selector" style="display: flex; align-items: center; gap: 6px;">
-                                <button class="room-btn minus-btn" onclick="decrementRooms(this)" title="Decrease" style="width: 30px; height: 30px; border: 1px solid #c9a84c; background: transparent; color: #c9a84c; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
-                                    <i class="fa fa-minus"></i>
+                        <!-- ROOM SELECTION FOR SINGLE CABIN TYPE -->
+                        <t t-set="available_rooms" t-value="cruise.sudo().get_room_max_availability(room_type)"/>
+                        <t t-set="search_rooms" t-value="int(rooms_count) if persons_count else 1"/>
+                        <t t-set="max_rooms_allowed" t-value="min(available_rooms, search_rooms)"/>
+
+                        <div class="room-selection" style="display: flex; flex-direction: column; gap: 12px;">
+                            <label class="selection-label" style="font-size: 11px; color: #999; text-transform: uppercase; white-space: nowrap;">Book This Room Type:</label>
+
+                            <!-- Room Quantity Selector -->
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <label style="font-size: 11px; color: #999; white-space: nowrap;">Qty:</label>
+                                <div class="room-qty-controls" style="display: flex; align-items: center; gap: 6px; flex: 1;">
+                                    <button type="button" class="qty-btn minus" t-att-onclick="'decrementRoomQty(this, %d)' % room_type.id" style="width: 30px; height: 30px; background: rgba(201,168,76,0.15); border: 1px solid #c9a84c; border-radius: 4px; color: #c9a84c; cursor: pointer; font-weight: 600;">−</button>
+                                    <input type="number" class="room-qty-input" t-att-data-room-id="room_type.id" min="0" t-att-max="max_rooms_allowed" value="0" readonly="readonly" style="flex: 1; text-align: center; padding: 6px; background: rgba(201,168,76,0.1); border: 1px solid #c9a84c; border-radius: 4px; color: #c9a84c; font-weight: 600;"/>
+                                    <button type="button" class="qty-btn plus" t-att-onclick="'incrementRoomQty(this, %d, %d)' % (room_type.id, max_rooms_allowed)" style="width: 30px; height: 30px; background: rgba(201,168,76,0.15); border: 1px solid #c9a84c; border-radius: 4px; color: #c9a84c; cursor: pointer; font-weight: 600;">+</button>
+                                    <span class="max-rooms" style="font-size: 11px; color: #c9a84c; white-space: nowrap;">/ <t t-esc="max_rooms_allowed"/></span>
+                                </div>
+                            </div>
+
+                            <!-- Adults Per Room Selector (when quantity > 0) -->
+                            <div class="adults-selector" t-att-data-room-id="room_type.id" style="display: none; padding: 12px; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px;">
+                                <p style="margin: 0 0 8px 0; font-size: 11px; color: #999; text-transform: uppercase; font-weight: 600;">👥 Set Guests per Room:</p>
+                                <button type="button" class="btn-set-adults" t-att-onclick="'setAdultsPerRoom(this, %d)' % room_type.id" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #c9a84c 0%, #e8c97a 100%); border: none; border-radius: 6px; color: #0f2540; cursor: pointer; font-weight: 700; transition: all 0.3s; font-size: 12px;">
+                                    <i class="fa fa-users" style="margin-right: 6px;"></i>Configure Guests Distribution
                                 </button>
-                                <t t-set="max_rooms" t-value="min(5, cruise.sudo().get_room_max_availability(room_type))"/>
-                                <input type="number" class="room-input" min="1" t-att-max="max_rooms" value="1" readonly="1" style="width: 45px; text-align: center; border: 1px solid #c9a84c; background: rgba(201,168,76,0.1); border-radius: 4px; padding: 6px; color: #c9a84c; font-weight: 600;"/>
-                                <button class="room-btn plus-btn" onclick="incrementRooms(this)" title="Increase" style="width: 30px; height: 30px; border: 1px solid #c9a84c; background: transparent; color: #c9a84c; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
-                                    <i class="fa fa-plus"></i>
-                                </button>
+                                <div class="selected-adults-info" t-att-data-room-id="room_type.id" style="margin-top: 8px; padding: 8px; background: rgba(232,201,122,0.1); border-left: 3px solid #e8c97a; border-radius: 4px; font-size: 11px; color: #e8c97a; display: none;">
+                                    <!-- Will show: "X room(s) = Y total guests - Distribution: R1: 2, R2: 1, ..." -->
+                                </div>
                             </div>
                         </div>
 
                         <!-- ADD TO BOOKING BUTTON -->
-                        <button class="btn-add-room" onclick="addRoomToBooking(this)" t-att-data-room-type-id="room_type.id" t-att-data-max-rooms="max_rooms" style="padding: 10px 18px; background: linear-gradient(135deg, #c9a84c 0%, #e8c97a 100%); color: #0f2540; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; white-space: nowrap; font-size: 13px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(201, 168, 76, 0.3);">
-                            <i class="fa fa-plus" style="margin-right: 5px;"></i>Add
+                        <button class="btn-add-room" t-att-onclick="'addRoomToBooking(this, %d)' % room_type.id" style="padding: 10px 18px; background: linear-gradient(135deg, #c9a84c 0%, #e8c97a 100%); color: #0f2540; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; white-space: nowrap; font-size: 13px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(201, 168, 76, 0.3);">
+                            <i class="fa fa-plus" style="margin-right: 5px;"></i>Add to Booking
                         </button>
                     </div>
                 </div>
@@ -202,6 +218,33 @@
         <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/cabin_card.css"/>
          <div class="particles" id="particles"/>
         <t t-call="cleopatra_cruise.search_bar" />
+
+        <!-- BOOKING SUMMARY CARD -->
+        <div class="booking-summary-wrapper">
+            <div class="container">
+                <div class="booking-summary-card">
+                    <div class="summary-header">
+                        <h3 class="summary-title">📋 Your Selection</h3>
+                        <button type="button" class="summary-clear-btn" onclick="clearAllBookings()" style="background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); color: #c9a84c; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.3s;">Clear All</button>
+                    </div>
+
+                    <div class="summary-content">
+                        <div class="summary-items" id="summaryItems" style="display: flex; flex-direction: column; gap: 10px; min-height: 60px;">
+                            <p class="empty-message" style="color: #999; font-size: 13px; text-align: center; margin: auto;">No rooms selected yet</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-footer">
+                        <div class="summary-total" style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: rgba(201,168,76,0.1); border-radius: 6px;">
+                            <span style="font-size: 12px; color: #999; text-transform: uppercase;">Total Price:</span>
+                            <span class="total-price" id="totalPrice" style="font-size: 20px; font-weight: 700; background: linear-gradient(135deg, #c9a84c, #e8c97a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">EGP 0</span>
+                        </div>
+                        <button class="btn-checkout" onclick="proceedToCheckout()" style="width: 100%; margin-top: 12px; padding: 12px; background: linear-gradient(135deg, #c9a84c 0%, #e8c97a 100%); color: #0f2540; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(201, 168, 76, 0.3);">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="cabin-cards-container py-5">
             <div class="container">
                 <!-- Back Button -->
@@ -226,10 +269,29 @@
                 </div>
             </div>
         </div>
-          <script src="/cleopatra_cruise/static/src/js/cabin_card.js" type="text/javascript"></script>
+          <script src="/cleopatra_cruise/static/src/js/cabin_card_new.js" type="text/javascript"></script>
       <script>
 
 </script>
+
+        <!-- ROOM DISTRIBUTION MODAL -->
+        <div class="room-distribution-overlay" id="roomDistributionOverlay" onclick="closeRoomDistributionModal()">
+            <div class="room-distribution-modal" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <h2>🛏️ Distribute Your Rooms</h2>
+                    <button class="modal-close" type="button" onclick="closeRoomDistributionModal()">✕</button>
+                </div>
+
+                <div class="modal-body" id="roomDistributionBody">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+
+                <div class="modal-footer">
+                    <button class="modal-cancel-btn" type="button" onclick="closeRoomDistributionModal()">Cancel</button>
+                    <button class="modal-confirm-btn" type="button" onclick="confirmRoomDistribution()">Confirm Selection</button>
+                </div>
+            </div>
+        </div>
     </template>
 
 </odoo>

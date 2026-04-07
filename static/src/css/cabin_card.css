@@ -420,6 +420,77 @@
     padding: 6px;
 }
 
+/* Room Quantity Select Dropdown */
+.room-quantity-select {
+    flex: 1;
+    padding: 8px 12px;
+    background: rgba(201, 168, 76, 0.1);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 4px;
+    color: #c9a84c;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    appearance: none;
+    padding-right: 32px;
+    transition: all 0.3s;
+}
+
+.room-quantity-select:hover {
+    background: rgba(201, 168, 76, 0.15);
+    border-color: rgba(201, 168, 76, 0.5);
+}
+
+.room-quantity-select:focus {
+    outline: none;
+    background: rgba(201, 168, 76, 0.2);
+    border-color: rgba(201, 168, 76, 0.6);
+    box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.1);
+}
+
+.room-quantity-select option {
+    background: #0f2540;
+    color: #c9a84c;
+}
+
+.room-info-text {
+    font-size: 11px;
+    color: #c9a84c;
+    white-space: nowrap;
+    padding: 0 8px;
+}
+
+/* Room Selector Button */
+.btn-room-selector {
+    flex: 1;
+    padding: 8px 12px;
+    background: rgba(201, 168, 76, 0.1);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 4px;
+    color: #c9a84c;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s;
+}
+
+.btn-room-selector:hover {
+    background: rgba(201, 168, 76, 0.15);
+    border-color: rgba(201, 168, 76, 0.5);
+}
+
+.btn-room-selector:active {
+    transform: scale(0.98);
+}
+
+.room-selector-text {
+    flex: 1;
+}
+
 .room-btn {
     width: 32px;
     height: 32px;
@@ -608,6 +679,473 @@
 .feature-name {
     flex: 1;
     word-wrap: break-word;
+}
+
+/* ─────────────────────────────────── */
+/* ROOM DISTRIBUTION MODAL STYLES      */
+/* ─────────────────────────────────── */
+
+.room-distribution-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.room-distribution-overlay.open {
+    display: flex;
+}
+
+.room-distribution-modal {
+    background: linear-gradient(135deg, #0f2540 0%, #0a1c33 100%);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.room-distribution-modal .modal-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.room-distribution-modal .modal-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #fff;
+    background: linear-gradient(135deg, #c9a84c, #e8c97a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.room-distribution-modal .modal-close {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #c9a84c;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.room-distribution-modal .modal-close:hover {
+    color: #e8c97a;
+    transform: scale(1.1);
+}
+
+.room-distribution-modal .modal-body {
+    padding: 24px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.room-distribution-modal .modal-footer {
+    padding: 20px 24px;
+    border-top: 1px solid rgba(201, 168, 76, 0.2);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+/* Distribution Info */
+.distribution-info {
+    margin-bottom: 24px;
+}
+
+.info-text {
+    color: #d4d4d4;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(201, 168, 76, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+.progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 12px;
+    color: #c9a84c;
+    font-weight: 600;
+    min-width: 50px;
+    text-align: right;
+}
+
+/* Room Types List */
+.room-types-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.room-type-selector {
+    background: rgba(201, 168, 76, 0.05);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.3s;
+}
+
+.room-type-selector:hover {
+    background: rgba(201, 168, 76, 0.08);
+    border-color: rgba(201, 168, 76, 0.3);
+}
+
+.room-type-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.room-type-name {
+    margin: 0;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.room-type-availability {
+    font-size: 12px;
+    color: #c9a84c;
+    background: rgba(201, 168, 76, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Room Type Controls */
+.room-type-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.room-control-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background: rgba(201, 168, 76, 0.15);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    color: #c9a84c;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.room-control-btn:hover:not(:disabled) {
+    background: rgba(201, 168, 76, 0.25);
+    border-color: rgba(201, 168, 76, 0.5);
+    transform: scale(1.05);
+}
+
+.room-control-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.room-count-display {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 12px;
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 6px;
+}
+
+.selected-count {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e8c97a;
+}
+
+.total-count {
+    font-size: 12px;
+    color: #999;
+}
+
+/* Adults Info */
+.room-adults-info {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+.room-adults-info p {
+    margin: 0 0 8px 0;
+    font-size: 12px;
+    color: #999;
+}
+
+.adults-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.adult-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.3), rgba(232, 201, 122, 0.2));
+    border: 1px solid rgba(201, 168, 76, 0.4);
+    border-radius: 16px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: #e8c97a;
+    font-weight: 600;
+}
+
+/* Modal Buttons */
+.modal-cancel-btn,
+.modal-confirm-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s;
+}
+
+.modal-cancel-btn {
+    background: rgba(201, 168, 76, 0.15);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    color: #c9a84c;
+}
+
+.modal-cancel-btn:hover {
+    background: rgba(201, 168, 76, 0.25);
+    border-color: rgba(201, 168, 76, 0.5);
+}
+
+.modal-confirm-btn {
+    background: linear-gradient(135deg, #c9a84c 0%, #e8c97a 100%);
+    color: #0f2540;
+}
+
+.modal-confirm-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(201, 168, 76, 0.3);
+}
+
+/* ─────────────────────────────────── */
+/* BOOKING SUMMARY CARD STYLES         */
+/* ─────────────────────────────────── */
+
+.booking-summary-wrapper {
+    position: relative;
+    z-index: 2;
+    padding: 20px 0;
+    background: linear-gradient(135deg, rgba(15, 37, 64, 0.3), rgba(10, 28, 51, 0.3));
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+.booking-summary-card {
+    background: linear-gradient(135deg, rgba(15, 37, 64, 0.7), rgba(10, 28, 51, 0.7));
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    border-radius: 12px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+.summary-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #c9a84c, #e8c97a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.summary-clear-btn {
+    background: rgba(201, 168, 76, 0.1) !important;
+    border: 1px solid rgba(201, 168, 76, 0.3) !important;
+    color: #c9a84c !important;
+    padding: 6px 12px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s !important;
+}
+
+.summary-clear-btn:hover {
+    background: rgba(201, 168, 76, 0.2) !important;
+    border-color: rgba(201, 168, 76, 0.5) !important;
+}
+
+.summary-content {
+    padding: 16px 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.summary-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 60px;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.summary-item:hover {
+    background: rgba(201, 168, 76, 0.12);
+    border-color: rgba(201, 168, 76, 0.3);
+}
+
+.summary-item p {
+    margin: 0;
+}
+
+.summary-item p:first-child {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.summary-item p:last-child {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #c9a84c;
+}
+
+.empty-message {
+    color: #999;
+    font-size: 13px;
+    text-align: center;
+    margin: auto;
+}
+
+.summary-footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+.summary-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: rgba(201, 168, 76, 0.1);
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.summary-total span:first-child {
+    font-size: 12px;
+    color: #999;
+    text-transform: uppercase;
+}
+
+.total-price {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #c9a84c, #e8c97a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.btn-checkout {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #c9a84c 0%, #e8c97a 100%);
+    color: #0f2540;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(201, 168, 76, 0.3);
+}
+
+.btn-checkout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(201, 168, 76, 0.4);
+}
+
+.btn-checkout:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Scrollbar styling for summary content */
+.summary-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.summary-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.summary-content::-webkit-scrollbar-thumb {
+    background: rgba(201, 168, 76, 0.3);
+    border-radius: 3px;
+}
+
+.summary-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(201, 168, 76, 0.5);
 }
 
 /* Responsive Design */
