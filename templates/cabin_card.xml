@@ -204,6 +204,14 @@
         <t t-call="cleopatra_cruise.search_bar" />
         <div class="cabin-cards-container py-5">
             <div class="container">
+                <!-- Back Button -->
+                <div style="margin-bottom: 20px;">
+                    <a href="/cruises" class="btn-back" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(201, 168, 76, 0.15); border: 1px solid rgba(201, 168, 76, 0.3); border-radius: 8px; color: #c9a84c; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.3s; cursor: pointer;">
+                        <i class="fa fa-arrow-left" style="font-size: 16px;"></i>
+                        <span>Back to Cruises</span>
+                    </a>
+                </div>
+
                 <div class="cabin-cards-header">
                     <h2 class="section-title">Choose Your Cabin</h2>
                     <p class="section-subtitle">Select from our luxurious cabin types and customize your experience</p>
