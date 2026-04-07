@@ -126,13 +126,13 @@
                                             <div class="features-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
                                                 <t t-foreach="room_type.facilities" t-as="facility">
                                                     <div class="feature-item" style="display: flex; align-items: center; font-size: 11px; color: #b8b8b8; gap: 5px;">
-                                                        <t t-if="facility.icon">
-                                                            <t t-if="facility.icon.startswith('fa-')">
-                                                                <i class="fa" t-att-class="'fa ' + facility.icon" style="color: #c9a84c; font-size: 12px; flex-shrink: 0;"></i>
-                                                            </t>
-                                                            <t t-else="">
-                                                                <span class="feature-icon" style="font-size: 12px; flex-shrink: 0;"><t t-esc="facility.icon"/></span>
-                                                            </t>
+                                                        <t t-if="facility.icon and 'fa-' in facility.icon">
+                                                            <!-- Font Awesome Icon -->
+                                                            <i class="fa" t-att-class="'fa ' + facility.icon" style="color: #c9a84c; font-size: 12px; flex-shrink: 0;"></i>
+                                                        </t>
+                                                        <t t-elif="facility.icon">
+                                                            <!-- Emoji or text icon -->
+                                                            <span class="feature-icon" style="font-size: 12px; flex-shrink: 0;"><t t-esc="facility.icon"/></span>
                                                         </t>
                                                         <span class="feature-name" style="flex: 1;"><t t-esc="facility.name"/></span>
                                                     </div>
@@ -219,6 +219,9 @@
             </div>
         </div>
           <script src="/cleopatra_cruise/static/src/js/cabin_card.js" type="text/javascript"></script>
+      <script>
+
+</script>
     </template>
 
 </odoo>

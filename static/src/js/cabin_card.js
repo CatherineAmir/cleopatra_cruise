@@ -1,16 +1,3 @@
-function getCurrentSlideIndex(element) {
-    const track = element.closest('.carousel-wrapper') ?
-                  element.closest('.carousel-wrapper').querySelector('.carousel-track') :
-                  element.querySelector('.carousel-track');
-
-    if (!track) return 0;
-
-    const transform = window.getComputedStyle(track).transform;
-    const matrix = transform.match(/^matrix\((.+)\)$/);
-    const translateY = matrix ? parseFloat(matrix[1].split(', ')[5]) : 0;
-    const slideHeight = track.offsetHeight;
-    return Math.abs(Math.round(translateY / slideHeight));
-}
 /**
  * Initialize all cabin cards
  */
@@ -61,17 +48,18 @@ function getCurrentSlideIndex(element) {
     if (!track) return 0;
 
     const transform = window.getComputedStyle(track).transform;
+    // Parse matrix to get translateX value
     const matrix = transform.match(/^matrix\((.+)\)$/);
-    const translateY = matrix ? parseFloat(matrix[1].split(', ')[5]) : 0;
-    const slideHeight = track.offsetHeight;
-    return Math.abs(Math.round(translateY / slideHeight));
+    const translateX = matrix ? parseFloat(matrix[1].split(', ')[4]) : 0; // Index 4 is translateX in matrix()
+    const slideWidth = track.offsetWidth / track.children.length;
+    return Math.max(0, Math.round(-translateX / slideWidth));
 }
 
 /**
  * Move carousel to specific slide
  */
 function moveToSlide(element, slideIndex) {
-    const card = element.closest('.cabin-card');
+    const card = element.closest('.cabin-card-horizontal') || element.closest('.cabin-card');
     if (!card) return;
 
     const track = card.querySelector('.carousel-track');
@@ -214,3 +202,64 @@ function showNotification(element, message) {
         btn.disabled = false;
     }, 2000);
 }
+
+/**
+ * Initialize carousel for all cabin cards on page load
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing cabin card carousels...');
+
+    // Initialize all carousels
+    const carousels = document.querySelectorAll('.cabin-card-horizontal');
+    console.log('Found ' + carousels.length + ' cabin cards');
+
+    carousels.forEach((card, index) => {
+        const track = card.querySelector('.carousel-track');
+        const slides = card.querySelectorAll('.carousel-slide');
+
+        if (track && slides.length > 0) {
+            console.log('Carousel ' + index + ' has ' + slides.length + ' slides');
+            // Ensure carousel starts at first slide
+            track.style.transform = 'translateX(0%)';
+
+            // Update indicators
+            const indicators = card.querySelectorAll('.indicator');
+            if (indicators.length > 0) {
+                indicators[0].classList.add('active');
+            }
+        }
+    });
+
+    console.log('Carousel initialization complete');
+});
+
+/**
+ * Auto-play carousel option (commented out by default)
+ */
+function startAutoPlay(carouselElement, interval = 5000) {
+    setInterval(() => {
+        nextSlide(carouselElement);
+    }, interval);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var targetId = btn.getAttribute('data-bs-target');
+                var target = document.querySelector(targetId);
+                if (!target) return;
+
+                var isOpen = target.classList.contains('show');
+
+                if (isOpen) {
+                    target.classList.remove('show');
+                    btn.classList.add('collapsed');
+                    btn.setAttribute('aria-expanded', 'false');
+                } else {
+                    target.classList.add('show');
+                    btn.classList.remove('collapsed');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    });
