@@ -50,9 +50,16 @@ function getCurrentSlideIndex(element) {
     const transform = window.getComputedStyle(track).transform;
     // Parse matrix to get translateX value
     const matrix = transform.match(/^matrix\((.+)\)$/);
-    const translateX = matrix ? parseFloat(matrix[1].split(', ')[4]) : 0; // Index 4 is translateX in matrix()
-    const slideWidth = track.offsetWidth / track.children.length;
-    return Math.max(0, Math.round(-translateX / slideWidth));
+    if (!matrix) return 0;
+
+    const translateX = parseFloat(matrix[1].split(', ')[4]); // Index 4 is translateX in matrix()
+
+    // Get the parent container width (100% of carousel)
+    const containerWidth = track.parentElement.offsetWidth;
+
+    // Calculate current index based on translateX
+    const slideIndex = Math.round(-translateX / containerWidth);
+    return Math.max(0, slideIndex);
 }
 
 /**
@@ -60,15 +67,28 @@ function getCurrentSlideIndex(element) {
  */
 function moveToSlide(element, slideIndex) {
     const card = element.closest('.cabin-card-horizontal') || element.closest('.cabin-card');
-    if (!card) return;
+    if (!card) {
+        console.error('Card not found');
+        return;
+    }
 
     const track = card.querySelector('.carousel-track');
     const slides = card.querySelectorAll('.carousel-slide');
+    const wrapper = card.querySelector('.carousel-wrapper');
 
-    if (!track || slides.length === 0) return;
+    if (!track || slides.length === 0) {
+        console.error('Track or slides not found');
+        return;
+    }
 
     slideIndex = Math.max(0, Math.min(slideIndex, slides.length - 1));
+
+    // Use wrapper width for more accurate calculation
+    const containerWidth = wrapper ? wrapper.offsetWidth : 100;
     const offset = -slideIndex * 100;
+
+    console.log('Moving to slide ' + slideIndex + ' of ' + slides.length + ', offset: ' + offset + '%');
+
     track.style.transform = `translateX(${offset}%)`;
 
     const indicators = card.querySelectorAll('.indicator');
@@ -206,32 +226,54 @@ function showNotification(element, message) {
 /**
  * Initialize carousel for all cabin cards on page load
  */
-document.addEventListener('DOMContentLoaded', function() {
+function initializeCarousels() {
     console.log('Initializing cabin card carousels...');
 
     // Initialize all carousels
     const carousels = document.querySelectorAll('.cabin-card-horizontal');
     console.log('Found ' + carousels.length + ' cabin cards');
 
-    carousels.forEach((card, index) => {
+    carousels.forEach((card, cardIndex) => {
         const track = card.querySelector('.carousel-track');
         const slides = card.querySelectorAll('.carousel-slide');
+        const wrapper = card.querySelector('.carousel-wrapper');
 
         if (track && slides.length > 0) {
-            console.log('Carousel ' + index + ' has ' + slides.length + ' slides');
+            console.log('Carousel ' + cardIndex + ' has ' + slides.length + ' slides');
+
+            // Log slide images
+            slides.forEach((slide, slideIndex) => {
+                const img = slide.querySelector('img');
+                console.log('  Slide ' + slideIndex + ': ' + (img ? 'Has image' : 'No image'));
+            });
+
+            if (wrapper) {
+                console.log('Carousel wrapper dimensions: ' + wrapper.offsetWidth + 'x' + wrapper.offsetHeight);
+            }
+            console.log('Track dimensions: ' + track.offsetWidth + 'x' + track.offsetHeight);
+
             // Ensure carousel starts at first slide
             track.style.transform = 'translateX(0%)';
 
             // Update indicators
             const indicators = card.querySelectorAll('.indicator');
             if (indicators.length > 0) {
+                console.log('Found ' + indicators.length + ' indicators');
                 indicators[0].classList.add('active');
             }
+        } else {
+            console.warn('Carousel ' + cardIndex + ' missing track or slides. Track: ' + !!track + ', Slides: ' + (slides ? slides.length : 0));
         }
     });
 
     console.log('Carousel initialization complete');
-});
+}
+
+// Initialize on DOM content loaded
+document.addEventListener('DOMContentLoaded', initializeCarousels);
+
+// Also initialize after a short delay to catch dynamically loaded content
+setTimeout(initializeCarousels, 1000);
 
 /**
  * Auto-play carousel option (commented out by default)
