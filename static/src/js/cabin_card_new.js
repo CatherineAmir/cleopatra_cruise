@@ -22,6 +22,56 @@ function initializeBookingSystem() {
 }
 
 /**
+ * Get total persons booked across all room types
+ */
+function getTotalBookedPersons() {
+    let totalPersons = 0;
+    for (const booking of Object.values(bookingState.bookings)) {
+        if (booking.roomsAdultsDistribution && booking.roomsAdultsDistribution.length > 0) {
+            totalPersons += booking.roomsAdultsDistribution.reduce((a, b) => a + b, 0);
+        } else if (booking.adultsPerRoom) {
+            totalPersons += booking.quantity * booking.adultsPerRoom;
+        }
+    }
+    return totalPersons;
+}
+
+/**
+ * Get total rooms booked across all room types
+ */
+function getTotalBookedRooms() {
+    let totalRooms = 0;
+    for (const booking of Object.values(bookingState.bookings)) {
+        if (booking.quantity > 0) {
+            totalRooms += booking.quantity;
+        }
+    }
+    return totalRooms;
+}
+
+/**
+ * Get search parameters from page
+ */
+function getSearchParams() {
+    // Try to get from global window object or sessionStorage
+    if (window.searchParams) {
+        return window.searchParams;
+    }
+
+    // Try to parse from sessionStorage
+    const stored = sessionStorage.getItem('searchParams');
+    if (stored) {
+        return JSON.parse(stored);
+    }
+
+    // Return default if not found
+    return {
+        personsCount: 0,
+        roomsCount: 0
+    };
+}
+
+/**
  * Increment room quantity for a specific cabin type
  */
 function incrementRoomQty(button, roomTypeId, maxAllowed) {
@@ -30,6 +80,37 @@ function incrementRoomQty(button, roomTypeId, maxAllowed) {
 
     const input = card.querySelector('.room-qty-input');
     if (!input) return;
+
+    // Get search parameters
+    const searchParams = getSearchParams();
+    const requiredPersons = parseInt(searchParams.personsCount) || 0;
+    const requiredRooms = parseInt(searchParams.roomsCount) || 0;
+
+    // Check if persons limit reached
+    if (requiredPersons > 0) {
+        const totalBooked = getTotalBookedPersons();
+        if (totalBooked >= requiredPersons) {
+            alert(`✗ Maximum persons (${requiredPersons}) already booked. You cannot add more rooms.`);
+            // Disable the button
+            button.disabled = true;
+            button.style.opacity = '0.5';
+            button.style.cursor = 'not-allowed';
+            return;
+        }
+    }
+
+    // Check if rooms limit reached
+    if (requiredRooms > 0) {
+        const totalRoomsBooked = getTotalBookedRooms();
+        if (totalRoomsBooked >= requiredRooms) {
+            alert(`✗ Maximum rooms (${requiredRooms}) already booked. You cannot add more rooms.`);
+            // Disable the button
+            button.disabled = true;
+            button.style.opacity = '0.5';
+            button.style.cursor = 'not-allowed';
+            return;
+        }
+    }
 
     let currentQty = parseInt(input.value) || 0;
 
@@ -64,7 +145,111 @@ function incrementRoomQty(button, roomTypeId, maxAllowed) {
                 }
             }
         }
+
+        // Update all button states
+        updateAllButtonStates();
     }
+}
+
+/**
+ * Update all button states based on persons limit
+ */
+function updateAllButtonStates() {
+    const searchParams = getSearchParams();
+    const requiredPersons = parseInt(searchParams.personsCount) || 0;
+    const requiredRooms = parseInt(searchParams.roomsCount) || 0;
+
+    const totalBooked = getTotalBookedPersons();
+    const totalRoomsBooked = getTotalBookedRooms();
+
+    const personsLimitReached = requiredPersons > 0 && totalBooked >= requiredPersons;
+    const roomsLimitReached = requiredRooms > 0 && totalRoomsBooked >= requiredRooms;
+    const limitReached = personsLimitReached || roomsLimitReached;
+
+    // Update all cabin cards
+    document.querySelectorAll('.cabin-card-horizontal').forEach(card => {
+        const plusBtn = card.querySelector('.qty-btn.plus');
+        const addBtn = card.querySelector('.btn-add-room');
+        const configBtn = card.querySelector('.btn-set-adults');
+        const minusBtn = card.querySelector('.qty-btn.minus');
+        const qtyInput = card.querySelector('.room-qty-input');
+
+        let limitMessage = '';
+        if (personsLimitReached && roomsLimitReached) {
+            limitMessage = `Max persons (${requiredPersons}) and rooms (${requiredRooms}) reached`;
+        } else if (personsLimitReached) {
+            limitMessage = `Max persons (${requiredPersons}) reached`;
+        } else if (roomsLimitReached) {
+            limitMessage = `Max rooms (${requiredRooms}) reached`;
+        }
+
+        if (limitReached) {
+            // Disable all buttons and interactions when limit is reached
+            if (plusBtn) {
+                plusBtn.disabled = true;
+                plusBtn.style.opacity = '0.5';
+                plusBtn.style.cursor = 'not-allowed';
+                plusBtn.title = limitMessage;
+                plusBtn.style.pointerEvents = 'none';
+            }
+            if (addBtn) {
+                addBtn.disabled = true;
+                addBtn.style.opacity = '0.5';
+                addBtn.style.cursor = 'not-allowed';
+                addBtn.title = limitMessage;
+                addBtn.style.pointerEvents = 'none';
+            }
+            if (configBtn) {
+                configBtn.disabled = true;
+                configBtn.style.opacity = '0.5';
+                configBtn.style.cursor = 'not-allowed';
+                configBtn.title = limitMessage;
+                configBtn.style.pointerEvents = 'none';
+            }
+            // Keep minus button enabled to allow removal
+            if (minusBtn) {
+                minusBtn.disabled = false;
+                minusBtn.style.opacity = '1';
+                minusBtn.style.cursor = 'pointer';
+                minusBtn.style.pointerEvents = 'auto';
+            }
+            if (qtyInput) {
+                qtyInput.style.opacity = '0.7';
+            }
+        } else {
+            // Enable buttons when limit not reached
+            if (plusBtn) {
+                plusBtn.disabled = false;
+                plusBtn.style.opacity = '1';
+                plusBtn.style.cursor = 'pointer';
+                plusBtn.style.pointerEvents = 'auto';
+                plusBtn.title = '';
+            }
+            if (addBtn) {
+                addBtn.disabled = false;
+                addBtn.style.opacity = '1';
+                addBtn.style.cursor = 'pointer';
+                addBtn.style.pointerEvents = 'auto';
+                addBtn.title = '';
+            }
+            if (configBtn) {
+                configBtn.disabled = false;
+                configBtn.style.opacity = '1';
+                configBtn.style.cursor = 'pointer';
+                configBtn.style.pointerEvents = 'auto';
+                configBtn.title = '';
+            }
+            if (minusBtn) {
+                minusBtn.disabled = false;
+                minusBtn.style.opacity = '1';
+                minusBtn.style.cursor = 'pointer';
+                minusBtn.style.pointerEvents = 'auto';
+            }
+            if (qtyInput) {
+                qtyInput.style.opacity = '1';
+            }
+        }
+    });
 }
 
 /**
@@ -113,6 +298,21 @@ function setAdultsPerRoom(button, roomTypeId, adultsCount) {
 
     const qty = parseInt(card.querySelector('.room-qty-input').value) || 0;
     if (qty === 0) return;
+
+    // Get search parameters
+    const searchParams = getSearchParams();
+    const requiredPersons = parseInt(searchParams.personsCount) || 0;
+
+    // Check if persons limit would be exceeded
+    if (requiredPersons > 0) {
+        const totalBooked = getTotalBookedPersons();
+        const estimatedTotal = totalBooked + (qty * 2); // Estimate with 2 adults per room
+
+        if (estimatedTotal > requiredPersons) {
+            const warning = `⚠️ Adding ${qty} room(s) may exceed the required ${requiredPersons} persons. Please adjust accordingly.`;
+            console.warn(warning);
+        }
+    }
 
     // Open the room distribution modal for individual adult selection
     openRoomAdultsDistributionModal(card, roomTypeId, qty);
@@ -346,12 +546,42 @@ function addRoomToBooking(button, roomTypeId) {
         return;
     }
 
+    // Get search parameters
+    const searchParams = getSearchParams();
+    const requiredPersons = parseInt(searchParams.personsCount) || 0;
+    const requiredRooms = parseInt(searchParams.roomsCount) || 0;
+
+    // Check persons limit
+    if (requiredPersons > 0) {
+        const totalBooked = getTotalBookedPersons();
+        const newGuests = bookingState.bookings[roomTypeId].roomsAdultsDistribution ?
+                         bookingState.bookings[roomTypeId].roomsAdultsDistribution.reduce((a, b) => a + b, 0) :
+                         (quantity * (bookingState.bookings[roomTypeId].adultsPerRoom || 2));
+        const totalAfterBooking = totalBooked + newGuests;
+
+        if (totalAfterBooking > requiredPersons) {
+            alert(`✗ Cannot add booking!\n\nRequired persons: ${requiredPersons}\nAlready booked: ${totalBooked}\nAttempting to add: ${newGuests}\nTotal would be: ${totalAfterBooking}\n\nPlease reduce the number of rooms or adults per room.`);
+            return;
+        }
+    }
+
+    // Check rooms limit
+    if (requiredRooms > 0) {
+        const totalRoomsBooked = getTotalBookedRooms();
+        const totalRoomsAfterBooking = totalRoomsBooked + quantity;
+
+        if (totalRoomsAfterBooking > requiredRooms) {
+            alert(`✗ Cannot add booking!\n\nRequired rooms: ${requiredRooms}\nAlready booked: ${totalRoomsBooked}\nAttempting to add: ${quantity}\nTotal would be: ${totalRoomsAfterBooking}\n\nPlease reduce the number of rooms.`);
+            return;
+        }
+    }
+
     // Get price
     const priceSpan = card.querySelector('.price-amount span');
     const pricePerRoom = priceSpan ? parseInt(priceSpan.textContent.replace(/,/g, '')) : 0;
 
-    // Update booking
-    bookingState.bookings[roomTypeId] = {
+    // Store booking data before clearing
+    const bookingData = {
         name: card.querySelector('.cabin-name').textContent.trim(),
         quantity: quantity,
         adultsPerRoom: bookingState.bookings[roomTypeId].adultsPerRoom || null,
@@ -360,19 +590,14 @@ function addRoomToBooking(button, roomTypeId) {
         totalPrice: pricePerRoom * quantity
     };
 
+    // Update booking with stored data
+    bookingState.bookings[roomTypeId] = bookingData;
+
     // Show success
-    showNotification(button, `${quantity} room(s) added to booking!`);
+    // showNotification(button, `${quantity} room(s) added to booking!`);
 
     // Update summary
     updateBookingSummary();
-
-    // Reset form
-    setTimeout(() => {
-        qtyInput.value = 0;
-        card.querySelector('.adults-selector').style.display = 'none';
-        delete bookingState.bookings[roomTypeId];
-        updateBookingSummary();
-    }, 2000);
 }
 
 /**
@@ -473,6 +698,9 @@ function updateBookingSummary() {
     if (totalPrice) {
         totalPrice.textContent = 'EGP ' + grandTotal.toLocaleString();
     }
+
+    // Update button states based on current bookings
+    updateAllButtonStates();
 }
 
 /**
@@ -483,13 +711,19 @@ function removeBooking(roomTypeId) {
         delete bookingState.bookings[roomTypeId];
         updateBookingSummary();
 
+        // Update button states to re-enable if limit is no longer reached
+        updateAllButtonStates();
+
         // Reset the cabin card
         const allCards = document.querySelectorAll('.cabin-card-horizontal');
         allCards.forEach(card => {
             const input = card.querySelector('.room-qty-input');
             if (input && input.getAttribute('data-room-id') == roomTypeId) {
                 input.value = 0;
-                card.querySelector('.adults-selector').style.display = 'none';
+                const adultsSelector = card.querySelector('.adults-selector');
+                if (adultsSelector) {
+                    adultsSelector.style.display = 'none';
+                }
             }
         });
     }
