@@ -125,7 +125,9 @@ class Cruise(models.Model):
         room_rate=self.batch_id.rate_ids.filtered(lambda r: r.room_id == room_id)[0]
         if room_rate:
             room_rate=room_rate.rate
+            print("persons",persons)
             if int(persons)==1:
+                print("")
                 room_rate_egp = round(
                     room_rate * int(self.number_of_nights) * int(persons) * self.batch_id.usd_egp_rate, 2)*(1+self.batch_id.single_supplements)
                 return room_rate_egp
