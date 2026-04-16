@@ -160,8 +160,8 @@
                             <t t-value="cruise.sudo().get_room_rate_in_egp(2, room_type)" t-set="double_room_price"/>
                             <div class="price-amount" style="display: flex; align-items: baseline; gap: 2px;">
                                 <sup style="font-size: 12px; color: #c9a84c;">EGP</sup>
-                                <span style="font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #c9a84c, #e8c97a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                                    <t t-esc="'{:,.0f}'.format(double_room_price)"/>
+                                <span style="font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #c9a84c, #e8c97a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" t-att-data-cruise-id="cruise.id">
+                                    <t t-esc="'{:,.0f}'.format(double_room_price)" />
                                 </span>
                             </div>
                         </div>
@@ -220,7 +220,7 @@
         <t t-call="cleopatra_cruise.search_bar" />
 
         <!-- BOOKING SUMMARY CARD -->
-        <div class="booking-summary-wrapper">
+        <div class="booking-summary-wrapper mt-5">
             <div class="container">
                 <div class="booking-summary-card">
                     <div class="summary-header">

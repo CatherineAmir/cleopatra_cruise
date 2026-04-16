@@ -578,16 +578,20 @@ function addRoomToBooking(button, roomTypeId) {
 
     // Get price
     const priceSpan = card.querySelector('.price-amount span');
+
     const pricePerRoom = priceSpan ? parseInt(priceSpan.textContent.replace(/,/g, '')) : 0;
+    const cruiseId=priceSpan ? priceSpan.getAttribute('data-cruise-id') : null;
 
     // Store booking data before clearing
     const bookingData = {
+        id:roomTypeId,
         name: card.querySelector('.cabin-name').textContent.trim(),
         quantity: quantity,
         adultsPerRoom: bookingState.bookings[roomTypeId].adultsPerRoom || null,
         roomsAdultsDistribution: bookingState.bookings[roomTypeId].roomsAdultsDistribution || [],
         pricePerRoom: pricePerRoom,
-        totalPrice: pricePerRoom * quantity
+        totalPrice: pricePerRoom * quantity,
+        cruiseId: cruiseId
     };
 
     // Update booking with stored data
@@ -748,7 +752,7 @@ function clearAllBookings() {
 /**
  * Proceed to checkout
  */
-function proceedToCheckout() {
+async function proceedToCheckout() {
     const hasBookings = Object.keys(bookingState.bookings).length > 0;
 
     if (!hasBookings) {
@@ -756,8 +760,25 @@ function proceedToCheckout() {
         return;
     }
 
+    console.log("bookingState.bookings ",bookingState.bookings)
+
     console.log('Proceeding to checkout with:', bookingState.bookings);
-    alert('Proceeding to checkout with ' + Object.keys(bookingState.bookings).length + ' room type(s)');
+    // alert('Proceeding to checkout with ' + Object.keys(bookingState.bookings).length + ' room type(s)');
+    console.log('Search parameters:', getSearchParams());
+    const response = await fetch('/cruises/14/checkout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bookings: bookingState.bookings,
+            searchParams: getSearchParams()
+        })
+
+    });
+
+    const data=await response.json();
+
     // TODO: Redirect to checkout page with booking data
 }
 

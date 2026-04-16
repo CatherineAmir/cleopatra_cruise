@@ -10,6 +10,7 @@
     --fog: rgba(201, 168, 76, 0.12);
     --white: #fff;
 }
+
 /* ── SEARCH BAR WRAPPER ── */
 .search-bar-wrapper {
     display: flex;
@@ -17,6 +18,8 @@
     align-items: center;
     padding: 40px 20px;
     width: 100%;
+    position: relative;
+    z-index: 1000;
 }
 
 .search-bar-container {
@@ -26,14 +29,23 @@
     border: 1px solid rgba(201, 168, 76, 0.25);
     border-radius: 16px;
     padding: 24px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     animation: sb-cardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 1001;
 }
 
 @keyframes sb-cardIn {
-    from { opacity: 0; transform: translateY(40px) scale(0.96); }
-    to   { opacity: 1; transform: translateY(0)    scale(1);    }
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* ── TITLE ── */
@@ -170,11 +182,14 @@
     background: linear-gradient(160deg, #0f2540 0%, #0a1c33 100%);
     border: 1px solid rgba(201, 168, 76, 0.25);
     border-radius: 12px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-    z-index: 9999 !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    z-index: 1000 !important;
     overflow: hidden;
     display: none;
-    animation: sb-dropIn 0.2s cubic-bezier(0.16,1,0.3,1) both;
+    animation: sb-dropIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
 }
 
 .month-dropdown.open {
@@ -182,8 +197,14 @@
 }
 
 @keyframes sb-dropIn {
-    from { opacity: 0; transform: translateY(-8px) scale(0.97); }
-    to   { opacity: 1; transform: translateY(0)    scale(1);    }
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* Month year row */
@@ -192,15 +213,15 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px 14px 8px;
-    border-bottom: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
 }
 
 .md-yr-btn {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: rgba(201,168,76,0.1);
-    border: 1px solid rgba(201,168,76,0.2);
+    background: rgba(201, 168, 76, 0.1);
+    border: 1px solid rgba(201, 168, 76, 0.2);
     color: #c9a84c;
     font-size: 13px;
     cursor: pointer;
@@ -211,7 +232,7 @@
 }
 
 .md-yr-btn:hover {
-    background: rgba(201,168,76,0.25);
+    background: rgba(201, 168, 76, 0.25);
 }
 
 .md-yr-label {
@@ -233,7 +254,7 @@
     border: 1px solid transparent;
     border-radius: 8px;
     padding: 7px 4px;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255, 255, 255, 0.55);
     font-family: 'Josefin Sans', sans-serif;
     font-size: 10px;
     letter-spacing: 1px;
@@ -244,9 +265,9 @@
 }
 
 .md-month-btn:hover {
-    background: rgba(201,168,76,0.12);
+    background: rgba(201, 168, 76, 0.12);
     color: #e8c97a;
-    border-color: rgba(201,168,76,0.2);
+    border-color: rgba(201, 168, 76, 0.2);
 }
 
 .md-month-btn.selected {
@@ -275,7 +296,7 @@
     display: none;
     align-items: center;
     justify-content: center;
-    z-index: 9998 !important;
+    z-index: 1000 !important;
     backdrop-filter: blur(5px);
     animation: fade-in 0.3s ease;
 }
@@ -285,8 +306,12 @@
 }
 
 @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .rooms-modal {
@@ -295,7 +320,7 @@
     border-radius: 16px;
     width: 90%;
     max-width: 500px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
     animation: modal-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
 }

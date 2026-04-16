@@ -100,3 +100,10 @@ class CruisesController(http.Controller):
         }
         print("data:", data)
         return request.render('cleopatra_cruise.cabin_cards_list', data)
+
+
+    @http.route("/cruises/<int:cruise_id>/checkout", auth='public', website=True, methods=["POST"], csrf=False,)
+    def cruises_checkout(self, cruise_id, **kw):
+        print("cruise_id:", cruise_id)
+        print("kw", kw)
+        self.body
