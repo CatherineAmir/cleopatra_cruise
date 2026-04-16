@@ -158,10 +158,17 @@
                         <div class="cabin-price-section">
                             <div class="price-label" style="font-size: 11px; color: #999; margin-bottom: 4px; text-transform: uppercase;">Price</div>
                             <t t-value="cruise.sudo().get_room_rate_in_egp(2, room_type)" t-set="double_room_price"/>
+                            <t t-value="cruise.sudo().get_room_rate_in_egp(1, room_type)" t-set="single_room_price"/>
                             <div class="price-amount" style="display: flex; align-items: baseline; gap: 2px;">
                                 <sup style="font-size: 12px; color: #c9a84c;">EGP</sup>
                                 <span style="font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #c9a84c, #e8c97a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" t-att-data-cruise-id="cruise.id">
                                     <t t-esc="'{:,.0f}'.format(double_room_price)" />
+                                </span>
+                            </div>
+
+                            <div class="single-price-room d-none">
+                             <span style="font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #c9a84c, #e8c97a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" t-att-data-cruise-id="cruise.id">
+                                    <t t-esc="'{:,.0f}'.format(single_room_price)" />
                                 </span>
                             </div>
                         </div>

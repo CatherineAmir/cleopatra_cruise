@@ -97,6 +97,7 @@ class CruisesController(http.Controller):
             "date_to": kw.get("date_to", ''),
             "rooms_count":rooms_count,
             "rooms_data": rooms_data,
+            "search_action": f"/cruises/{cruise_id}",
         }
         print("data:", data)
         return request.render('cleopatra_cruise.cabin_cards_list', data)

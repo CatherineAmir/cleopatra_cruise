@@ -605,10 +605,32 @@ function addRoomToBooking(button, roomTypeId) {
 
     // Get price
     const priceSpan = card.querySelector('.price-amount span');
+    const priceSingleSpan = card.querySelector('.single-price-room span');
 
-    const pricePerRoom = priceSpan ? parseInt(priceSpan.textContent.replace(/,/g, '')) : 0;
+
+    if (!priceSpan) {
+
+    }
+    console.log("adults distribution: ", bookingState.bookings[roomTypeId].roomsAdultsDistribution);
+
+    const singlePrice = priceSingleSpan ? parseInt(priceSingleSpan.textContent.replace(/,/g, '')) : null;
+    console.log("singlePrice: ", singlePrice);
+    let pricePerRoom = priceSpan ? parseInt(priceSpan.textContent.replace(/,/g, '')) : 0;
     const cruiseId = priceSpan ? priceSpan.getAttribute('data-cruise-id') : null;
-
+    // if (quantity ===1) {
+    //     pricePerRoom=singlePrice || pricePerRoom;
+    // }
+    let totalPrice = 0
+    for (let adults of bookingState.bookings[roomTypeId].roomsAdultsDistribution){
+        console.log("adults: ", adults);
+        if (adults === 1){
+            console.log("single price will be used for room with 1 adult: ", singlePrice);
+            totalPrice+=singlePrice;
+        }
+        else {
+            totalPrice+=pricePerRoom;
+        }
+    }
     // Store booking data before clearing
     const bookingData = {
         id: roomTypeId,
@@ -616,8 +638,8 @@ function addRoomToBooking(button, roomTypeId) {
         quantity: quantity,
         adultsPerRoom: bookingState.bookings[roomTypeId].adultsPerRoom || null,
         roomsAdultsDistribution: bookingState.bookings[roomTypeId].roomsAdultsDistribution || [],
-        pricePerRoom: pricePerRoom,
-        totalPrice: pricePerRoom * quantity,
+        pricePerRoom: totalPrice ,
+        totalPrice: totalPrice,
         cruiseId: cruiseId
     };
 
@@ -945,9 +967,81 @@ function goToSlide(element, slideIndex) {
 /**
  * Bootstrap accordion toggle handler
  */
+/**
+ * Save booking state to sessionStorage before page unload (e.g. search form submit)
+ */
+function saveBookingStateToSession() {
+    try {
+        sessionStorage.setItem('cabinBookingState', JSON.stringify(bookingState.bookings));
+        // Store the current cruise path to only restore on same cruise
+        sessionStorage.setItem('cabinBookingPath', window.location.pathname);
+    } catch (e) {
+        console.warn('Could not save booking state', e);
+    }
+}
+
+/**
+ * Restore booking state from sessionStorage
+ */
+function restoreBookingStateFromSession() {
+    try {
+        const savedPath = sessionStorage.getItem('cabinBookingPath');
+        // Only restore if we're on the same cruise cabin page
+        if (savedPath && savedPath === window.location.pathname) {
+            const saved = sessionStorage.getItem('cabinBookingState');
+            if (saved) {
+                bookingState.bookings = JSON.parse(saved);
+                // Restore UI for each booking
+                for (const [roomTypeId, booking] of Object.entries(bookingState.bookings)) {
+                    if (booking.quantity > 0) {
+                        // Find the card and restore qty input
+                        const allCards = document.querySelectorAll('.cabin-card-horizontal');
+                        allCards.forEach(card => {
+                            const input = card.querySelector('.room-qty-input');
+                            const addBtn = card.querySelector('.btn-add-room');
+                            if (input && input.getAttribute('data-room-id') == roomTypeId) {
+                                input.value = booking.quantity;
+                                // Show adults selector
+                                const adultsSelector = card.querySelector('.adults-selector');
+                                if (adultsSelector) adultsSelector.style.display = 'block';
+                                // Restore adults info display
+                                const adultsInfo = card.querySelector('.selected-adults-info');
+                                if (adultsInfo && booking.roomsAdultsDistribution && booking.roomsAdultsDistribution.length > 0) {
+                                    const totalAdults = booking.roomsAdultsDistribution.reduce((a, b) => a + b, 0);
+                                    const distribution = booking.roomsAdultsDistribution.map((a, i) => `Room ${i + 1}: ${a}🧑`).join(', ');
+                                    adultsInfo.innerHTML = `
+                                        <div style="font-size: 11px; color: #e8c97a;">
+                                            <div><strong>${booking.quantity} room(s)</strong> = <strong>${totalAdults} total guests</strong></div>
+                                            <div style="margin-top: 4px; font-size: 10px; color: #c9a84c; max-height: 40px; overflow-y: auto;">${distribution}</div>
+                                        </div>
+                                    `;
+                                    adultsInfo.style.display = 'block';
+                                }
+                            }
+                        });
+                    }
+                }
+                updateBookingSummary();
+                console.log('Restored booking state from session');
+            }
+        }
+    } catch (e) {
+        console.warn('Could not restore booking state', e);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     initializeBookingSystem();
     initializeCarousels();
+    restoreBookingStateFromSession();
+
+    // Save state before search form submits
+    var searchForm = document.getElementById('searchForm');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function () {
+            saveBookingStateToSession();
+        });
+    }
 
     document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function (btn) {
         btn.addEventListener('click', function () {

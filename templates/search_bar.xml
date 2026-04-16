@@ -9,7 +9,7 @@
             <div class="search-bar-container">
                 <div class="sb-title">Search Voyages</div>
 
-                <form action="/cruises" method="post" id="searchForm" class="search-bar-form">
+                <form t-att-action="search_action or '/cruises'" method="post" id="searchForm" class="search-bar-form">
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
                     <div class="search-bar-fields">
