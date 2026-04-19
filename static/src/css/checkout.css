@@ -1,5 +1,6 @@
 .checkout-page-wrapper {
-    background: linear-gradient(135deg, #0a1628 0%, #0f2540 50%, #0a1c33 100%);
+    /*background: linear-gradient(135deg, #0a1628 0%, #0f2540 50%, #0a1c33 100%);*/
+    background:#fff;
     min-height: 100vh;
     color: #fff;
 }
