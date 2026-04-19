@@ -30,6 +30,7 @@
         'templates/cabin_card.xml',
         'templates/main_cruise_page.xml',
         'templates/search_bar.xml',
+        'templates/checkout_page.xml',
     ],
 
     'web.assets_frontend': [

@@ -855,26 +855,25 @@ async function proceedToCheckout() {
         return;
     }
 
-    console.log("bookingState.bookings ", bookingState.bookings)
-
+    console.log("bookingState.bookings ", bookingState.bookings);
     console.log('Proceeding to checkout with:', bookingState.bookings);
-    // alert('Proceeding to checkout with ' + Object.keys(bookingState.bookings).length + ' room type(s)');
     console.log('Search parameters:', getSearchParams());
-    const response = await fetch('/cruises/14/checkout', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            bookings: bookingState.bookings,
-            searchParams: getSearchParams()
-        })
 
-    });
+    // Save booking state and search params for checkout page
+    saveBookingStateToSession();
+    sessionStorage.setItem('checkoutSearchParams', JSON.stringify(getSearchParams()));
 
-    const data = await response.json();
+    // Get cruise ID from first booking
+    let cruiseId = null;
+    for (const booking of Object.values(bookingState.bookings)) {
+        if (booking.cruiseId) {
+            cruiseId = booking.cruiseId;
+            break;
+        }
+    }
 
-    // TODO: Redirect to checkout page with booking data
+    // Redirect to checkout page
+    window.location.href = '/cruises/' + (cruiseId || '0') + '/checkout';
 }
 
 /**

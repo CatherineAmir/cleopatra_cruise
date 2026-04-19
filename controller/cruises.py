@@ -103,8 +103,22 @@ class CruisesController(http.Controller):
         return request.render('cleopatra_cruise.cabin_cards_list', data)
 
 
-    @http.route("/cruises/<int:cruise_id>/checkout", auth='public', website=True, methods=["POST"], csrf=False,)
-    def cruises_checkout(self, cruise_id, **kw):
+    @http.route("/cruises/<int:cruise_id>/checkout", auth='public', website=True, methods=["GET"], csrf=False)
+    def cruises_checkout_page(self, cruise_id, **kw):
+        """Render the checkout page with guest form and reservation summary."""
+        cruise = request.env['cruise.cruise'].sudo().browse(cruise_id)
+        countries = request.env['res.country'].sudo().search([], order='name')
+        data = {
+            'cruise': cruise if cruise.exists() else False,
+            'cruise_id': cruise_id,
+            'countries': countries,
+        }
+        return request.render('cleopatra_cruise.checkout_page', data)
+
+    @http.route("/cruises/<int:cruise_id>/checkout/confirm", auth='public', website=True, methods=["POST"], csrf=False, type='json')
+    def cruises_checkout_confirm(self, cruise_id, **kw):
+        """Process checkout submission."""
         print("cruise_id:", cruise_id)
         print("kw", kw)
-        self.body
+        # TODO: Process booking and payment
+        return {'success': True, 'redirect': '/cruises'}
