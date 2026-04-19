@@ -53,7 +53,17 @@ function getTotalBookedRooms() {
  * Get search parameters from page
  */
 function getSearchParams() {
-    // Try to get from global window object or sessionStorage
+    // First try server-injected params from data attributes (works for both GET and POST)
+    var dataEl = document.getElementById('cabinSearchParamsData');
+    if (dataEl) {
+        return {
+            personsCount: parseInt(dataEl.getAttribute('data-persons-count')) || 0,
+            roomsCount: parseInt(dataEl.getAttribute('data-rooms-count')) || 0,
+            currency: dataEl.getAttribute('data-currency') || 'EGP'
+        };
+    }
+
+    // Fallback: try URL query params
     console.log("window.location: ", window.location);
     const params = new URLSearchParams(window.location.search);
 
@@ -1032,17 +1042,14 @@ function restoreBookingStateFromSession() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Always start with a clean booking state on cabin page load
+    sessionStorage.removeItem('cabinBookingState');
+    sessionStorage.removeItem('cabinBookingPath');
+    sessionStorage.removeItem('checkoutSearchParams');
+    bookingState.bookings = {};
+
     initializeBookingSystem();
     initializeCarousels();
-    restoreBookingStateFromSession();
-
-    // Save state before search form submits
-    var searchForm = document.getElementById('searchForm');
-    if (searchForm) {
-        searchForm.addEventListener('submit', function () {
-            saveBookingStateToSession();
-        });
-    }
 
     document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function (btn) {
         btn.addEventListener('click', function () {

@@ -92,7 +92,7 @@ class CruisesController(http.Controller):
             'cruise_id': cruise_id,
             'room_types': room_types,
             "room_availability": room_availability,
-            "persons_count": kw.get("persons_count", 2),
+            "persons_count": int(persons_count),
             "date_from": kw.get("date_from", ''),
             "date_to": kw.get("date_to", ''),
             "rooms_count":rooms_count,
