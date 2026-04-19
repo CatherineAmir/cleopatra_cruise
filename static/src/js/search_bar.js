@@ -8,7 +8,8 @@
    rooms = [ adultsCount, adultsCount, … ]   (1 or 2 adults per room)
 ───────────────────────────────────────────── */
 // var rooms = [2]; // start: 1 room, 2 adults
-var rooms= JSON.parse(document.getElementById('roomsDataInput').value || '[2]'); // load from hidden input (if any)
+var roomsDataEl = document.getElementById('roomsDataInput');
+var rooms = roomsDataEl ? JSON.parse(roomsDataEl.value || '[2]') : [2];
 
 
 /* ── render the room rows ── */
@@ -80,8 +81,10 @@ function syncRoomsInputs() {
 
     var countInput = document.getElementById('roomsCountInput');
     var dataInput  = document.getElementById('roomsDataInput');
+    var personsInput = document.getElementById('personsCountInput');
     if (countInput) countInput.value = rooms.length;
     if (dataInput)  dataInput.value  = JSON.stringify(rooms);
+    if (personsInput) personsInput.value = totalAdults;
 }
 
 /* ── open overlay modal ── */

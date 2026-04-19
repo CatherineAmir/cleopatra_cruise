@@ -1,13 +1,15 @@
 const card = document.getElementById('cruiseCard');
-card.addEventListener('mousemove', e => {
-    const {left, top, width, height} = card.getBoundingClientRect();
-    const x = ((e.clientX - left) / width - 0.5) * 10;
-    const y = ((e.clientY - top) / height - 0.5) * -10;
-    card.style.transform = `perspective(800px) rotateY(${x}deg) rotateX(${y}deg) scale(1.01)`;
-});
-card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-});
+if (card) {
+    card.addEventListener('mousemove', e => {
+        const {left, top, width, height} = card.getBoundingClientRect();
+        const x = ((e.clientX - left) / width - 0.5) * 10;
+        const y = ((e.clientY - top) / height - 0.5) * -10;
+        card.style.transform = `perspective(800px) rotateY(${x}deg) rotateX(${y}deg) scale(1.01)`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+    });
+}
 
 function bookNowWithCurrentParams(btn){
     console.log("Book Now clicked with current params");

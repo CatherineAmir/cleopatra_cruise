@@ -26,15 +26,17 @@ class CruisesController(http.Controller):
         # persons_count=kw.get('persons_count',2)
         print("persons_count", persons_count)
         currency = kw.get('currency', 'EGP')
+        date_from_str = kw.get('date_from', '')
+        date_to_str = kw.get('date_to', '')
         domain = [("available_for_booking", "=", True), ("start_date", '>', date.today())]
         if date_from:
-            date_from = datetime.strptime(date_from, "%Y-%m-%d")
-            domain = expression.AND([domain, [("start_date", ">=", date_from)]])
+            date_from_dt = datetime.strptime(date_from, "%Y-%m-%d")
+            domain = expression.AND([domain, [("start_date", ">=", date_from_dt)]])
 
         date_to = kw.get('date_to', False)
         if date_to:
-            date_to = datetime.strptime(date_to, "%Y-%m-%d")
-            domain = expression.AND([domain, [("start_date", "<=", date_to)]])
+            date_to_dt = datetime.strptime(date_to, "%Y-%m-%d")
+            domain = expression.AND([domain, [("start_date", "<=", date_to_dt)]])
         print("domain", domain)
         cruises = request.env['cruise.cruise'].sudo().search(domain, order="start_date")
         if cruises:
@@ -43,8 +45,8 @@ class CruisesController(http.Controller):
             data = {
                 'cruises': cruises,
                 "persons_count": int(persons_count),
-                "date_from": date_from,
-                "date_to": date_to,
+                "date_from": date_from_str,
+                "date_to": date_to_str,
                 "property_id": property_id,
                 "rooms_count": rooms_count,
                 "rooms_data": rooms_data,
@@ -56,8 +58,8 @@ class CruisesController(http.Controller):
             data = {
 
                 "persons_count": int(persons_count),
-                "date_from": date_from,
-                "date_to": date_to,
+                "date_from": date_from_str,
+                "date_to": date_to_str,
                 "cruises":False,
                 "rooms_count": rooms_count,
                 "rooms_data": rooms_data,
