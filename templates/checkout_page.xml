@@ -83,7 +83,7 @@
                                 <div class="summary-divider"></div>
                                 <div class="summary-total-row">
                                     <span>Total</span>
-                                    <span id="checkoutTotalPrice" class="summary-total-price">EGP 0</span>
+                                    <span id="checkoutTotalPrice" class="summary-total-price">0</span>
                                 </div>
                             </div>
                         </div>

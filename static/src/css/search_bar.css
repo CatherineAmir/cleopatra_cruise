@@ -136,6 +136,28 @@
     white-space: nowrap;
 }
 
+/* ── CURRENCY SELECT ── */
+.sf-currency-select {
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    color: var(--gold-light);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    margin-top: 4px;
+}
+.sf-currency-select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.2);
+}
+.sf-currency-select option {
+    background: var(--navy);
+    color: var(--white);
+}
+
 /* ── SEARCH BUTTON ── */
 .sb-search-btn {
     flex: 0 0 auto;

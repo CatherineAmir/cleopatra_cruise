@@ -41,6 +41,7 @@
         <field name="model">cruise.reservation</field>
         <field name="arch" type="xml">
             <form string="Reservation">
+                <button name="create_transaction_link" string="Create Payment Link" type="object" class="oe_highlight"/>
            
                 <sheet>
                  <field name="reservation_state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"/>
@@ -51,6 +52,7 @@
                     <group>
                         <field name="cruise_id" readonly="1"/>
                         <field name="batch_id" readonly="1"/>
+                        <field name="create_date"/>
                     </group>
                     <group string="Guest Information">
                         <field name="guest_id" readonly="1"/>
@@ -61,10 +63,13 @@
                     </group>
                     <group>
                         <field name="reservation_state" invisible="1"/>
-                        <field name="payment_state"/>
+                        <field name="payment_state" invisible="1"/>
+                        <field name="payment_transaction_state"/>
                         <field name="total_amount" readonly="1"/>
+                        <field name="secondary_total_amount" readonly="1"/>
                         <field name="currency_id"/>
                         <field name="secondary_currency_id"/>
+                        <field name="payment_transaction_id"/>
 
                     </group>
                     <notebook>
@@ -81,6 +86,11 @@
                                     <field name="secondary_currency_id" readonly="1" column_invisible="1"/>
                                 </list>
                             </field>
+                        </page>
+
+
+                        <page string="Notes">
+                            <field name="notes"/>
                         </page>
                     </notebook>
                 </sheet>

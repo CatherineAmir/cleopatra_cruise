@@ -200,8 +200,8 @@
                             <div class="card-footer-section">
                                 <div class="price-wrap">
                                     <div class="price-label">From For <t t-esc="persons_count"></t> person</div>
-                                    <div class="price-amount"><sup>EGP</sup>
-                                       <t t-esc="'{:,.0f}'.format(cruise.sudo().get_rate_in_egp_minimum(persons_count))"
+                                    <div class="price-amount"><sup><t t-esc="currency or 'EGP'"/></sup>
+                                       <t t-esc="'{:,.0f}'.format(cruise.sudo().get_rate_in_egp_minimum(persons_count, currency or 'EGP'))"
                                                   />
                                     </div>
                                     <div class="price-note">All-inclusive</div>

@@ -109,33 +109,33 @@ class Cruise(models.Model):
         return results
 
 
-    def get_rate_in_egp_minimum(self,persons):
+    def get_rate_in_egp_minimum(self, persons, currency='EGP'):
         room_rate_min=self.batch_id.rate_ids[0]
         if room_rate_min:
             room_rate_min=room_rate_min.rate
             print("room_rate_min",room_rate_min)
-            room_rate_egp=round(room_rate_min   *int(self.number_of_nights)*int(persons)*self.batch_id.usd_egp_rate,2)
+            exchange = self.batch_id.usd_egp_rate if currency == 'EGP' else 1
+            room_rate_egp=round(room_rate_min * int(self.number_of_nights) * int(persons) * exchange, 2)
 
             return room_rate_egp
         else:
             return 0
 
 
-    def get_room_rate_in_egp(self,persons,room_id):
+    def get_room_rate_in_egp(self, persons, room_id, currency='EGP'):
         room_rate=self.batch_id.rate_ids.filtered(lambda r: r.room_id == room_id)[0]
         if room_rate:
             room_rate=room_rate.rate
             print("persons",persons)
+            exchange = self.batch_id.usd_egp_rate if currency == 'EGP' else 1
             if int(persons)==1:
                 print("")
                 room_rate_egp = round(
-                    room_rate * int(self.number_of_nights) * int(persons) * self.batch_id.usd_egp_rate, 2)*(1+self.batch_id.single_supplements)
+                    room_rate * int(self.number_of_nights) * int(persons) * exchange, 2)*(1+self.batch_id.single_supplements)
                 return room_rate_egp
-            # todo check
-            # elif int(persons)==2:
             else:
                 room_rate_egp = round(
-                    room_rate * int(self.number_of_nights) * int(persons) * self.batch_id.usd_egp_rate, 2)
+                    room_rate * int(self.number_of_nights) * int(persons) * exchange, 2)
 
                 return room_rate_egp
         else:

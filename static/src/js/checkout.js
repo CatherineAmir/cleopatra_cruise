@@ -28,7 +28,8 @@ function loadBookingData() {
             var urlParams = new URLSearchParams(window.location.search);
             checkoutSearchParams = {
                 personsCount: urlParams.get('persons_count') || 0,
-                roomsCount: urlParams.get('rooms_count') || 0
+                roomsCount: urlParams.get('rooms_count') || 0,
+                currency: urlParams.get('currency') || 'EGP'
             };
         }
     } catch (e) {
@@ -43,6 +44,8 @@ function renderSummary() {
     var container = document.getElementById('checkoutSummaryItems');
     var totalEl = document.getElementById('checkoutTotalPrice');
     if (!container) return;
+
+    var currency = (checkoutSearchParams && checkoutSearchParams.currency) || 'EGP';
 
     container.innerHTML = '';
     var grandTotal = 0;
@@ -72,7 +75,7 @@ function renderSummary() {
         item.innerHTML =
             '<p class="summary-room-name">' + escapeHtml(booking.name || 'Room') + '</p>' +
             '<p class="summary-room-detail">' + distributionStr + '</p>' +
-            '<p class="summary-room-price">EGP ' + (booking.totalPrice || 0).toLocaleString() + '</p>';
+            '<p class="summary-room-price">' + currency + ' ' + (booking.totalPrice || 0).toLocaleString() + '</p>';
 
         container.appendChild(item);
     }
@@ -82,7 +85,7 @@ function renderSummary() {
     }
 
     if (totalEl) {
-        totalEl.textContent = 'EGP ' + grandTotal.toLocaleString();
+        totalEl.textContent = currency + ' ' + grandTotal.toLocaleString();
     }
 }
 
@@ -166,6 +169,7 @@ async function submitCheckout() {
         });
 
         var data = await response.json();
+        console.log("dataa", data);
 
         if (data.success) {
             sessionStorage.removeItem('cabinBookingState');

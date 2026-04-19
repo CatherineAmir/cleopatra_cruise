@@ -62,7 +62,8 @@ function getSearchParams() {
         // console.log("will return search params ");
         return {
             personsCount: params.get('persons_count'),
-            roomsCount: params.get('rooms_count')
+            roomsCount: params.get('rooms_count'),
+            currency: params.get('currency') || 'EGP'
         };
         // return params;
     }
@@ -76,7 +77,8 @@ function getSearchParams() {
     // Return default if not found
     return {
         personsCount: 0,
-        roomsCount: 0
+        roomsCount: 0,
+        currency: 'EGP'
     };
 }
 
@@ -777,7 +779,7 @@ function updateBookingSummary() {
             price.style.cssText = 'text-align: right;';
             price.innerHTML = `
                 <p style="margin: 0; font-size: 13px; font-weight: 700; color: #e8c97a;">
-                    EGP ${booking.totalPrice.toLocaleString()}
+                    ${getSearchParams().currency} ${booking.totalPrice.toLocaleString()}
                 </p>
                 <button type="button" onclick="removeBooking('${roomTypeId}')" style="margin-top: 4px; background: rgba(255,59,48,0.2); border: 1px solid rgba(255,59,48,0.4); color: #ff3b30; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 10px; font-weight: 600; transition: all 0.3s;">Remove</button>
             `;
@@ -795,7 +797,7 @@ function updateBookingSummary() {
 
     // Update total price
     if (totalPrice) {
-        totalPrice.textContent = 'EGP ' + grandTotal.toLocaleString();
+        totalPrice.textContent = getSearchParams().currency + ' ' + grandTotal.toLocaleString();
     }
 
     // Update button states based on current bookings

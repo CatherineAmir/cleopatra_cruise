@@ -16,8 +16,9 @@ function bookNowWithCurrentParams(btn){
     const personCount = document.getElementById('personsCountInput').value;
     const roomsCount = document.getElementById('roomsCountInput').value;
     const roomsDataInput = document.getElementById('roomsDataInput').value;
+    const currency = document.getElementById('currencySelect') ? document.getElementById('currencySelect').value : 'EGP';
     const dataCruiseId = btn.dataset.cruiseId;
-    const url = `/cruises/${dataCruiseId}?date_from=${dateFrom}&date_to=${dateTo}&persons_count=${personCount}&rooms_count=${roomsCount}&rooms_data=${encodeURIComponent(roomsDataInput)}`;
+    const url = `/cruises/${dataCruiseId}?date_from=${dateFrom}&date_to=${dateTo}&persons_count=${personCount}&rooms_count=${roomsCount}&rooms_data=${encodeURIComponent(roomsDataInput)}&currency=${currency}`;
     console.log("Redirecting to:", url);
     window.location.href = url;
 }

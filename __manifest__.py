@@ -11,7 +11,7 @@
     'company': 'SITA-EGYPT',
     'maintainer': 'SITA-EGYPT',
     'website': 'https://www.sita-eg.com',
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail','sita_payment_integration','sita_pay_api'],
     'data': [
         'security/ir.model.access.csv',
         'data/sequence.xml',

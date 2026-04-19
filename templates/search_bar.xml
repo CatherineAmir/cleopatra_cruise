@@ -59,6 +59,16 @@
 
                         </div>
 
+                        <!-- CURRENCY -->
+                        <div class="sb-field currency-field">
+                            <span class="sf-icon">💱</span>
+                            <div class="sf-label">Currency</div>
+                            <select name="currency" id="currencySelect" class="sf-currency-select">
+                                <option value="EGP" t-att-selected="'selected' if (currency or 'EGP') == 'EGP' else None">EGP</option>
+                                <option value="USD" t-att-selected="'selected' if (currency or 'EGP') == 'USD' else None">USD</option>
+                            </select>
+                        </div>
+
                         <!-- GO BUTTON -->
                         <button class="sb-search-btn" id="sbSearchBtn" type="submit">
                             <span class="sb-icon">🔍</span>
