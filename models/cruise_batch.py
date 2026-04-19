@@ -4,7 +4,7 @@ from odoo.exceptions import UserError, ValidationError, AccessError, MissingErro
 class CruiseBatch(models.Model):
     _name = 'cruise.batch'
     _description = 'Cruise Batch'
-    _inherit = 'mail.thread'
+    _inherit = ['mail.thread','mail.activity.mixin']
 
     name = fields.Char(string='Name', required=True, tracking=True)
     start_date = fields.Date(string='Start Date', tracking=True)
@@ -17,7 +17,7 @@ class CruiseBatch(models.Model):
     rate_ids = fields.One2many('cruise.batch_rate', 'batch_id', string='Rates', copy=True)
     terms_and_conditions=fields.Html(string='Terms and Conditions', copy=True)
     usd_egp_rate=fields.Float(string='USD EGP Rate', default=50.0, copy=True, tracking=True)
-
+    secondary_currency_id = fields.Many2one('res.currency', string='Secondary Currency', tracking=True)
     @api.constrains('start_date', 'end_date')
     def _check_start_date(self):
         for batch in self:

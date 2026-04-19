@@ -28,6 +28,7 @@
                         <field name="property_id"/>
                         <field name="currency_id"/>
                         <field name="usd_egp_rate"/>
+                        <field name="secondary_currency_id"/>
 
                         <field name="single_supplements" widget="percentage"/>
                     </group>
@@ -54,6 +55,9 @@
                             <field name="terms_and_conditions"/>
                         </page>
                     </notebook>
+
+
+                    <chatter/>
 
 
                 </sheet>

@@ -30,6 +30,7 @@
                 <field name="reservation_state"/>
                 <field name="payment_state"/>
                 <field name="total_amount"/>
+
             </list>
         </field>
     </record>
@@ -48,29 +49,36 @@
                         <field name="ref" readonly="1"/>
                     </h1>
                     <group>
-                        <field name="cruise_id"/>
+                        <field name="cruise_id" readonly="1"/>
                         <field name="batch_id" readonly="1"/>
                     </group>
                     <group string="Guest Information">
-                        <field name="guest_id"/>
+                        <field name="guest_id" readonly="1"/>
                         <field name="guest_email" readonly="1"/>
                         <field name="guest_phone" readonly="1"/>
                         <field name="guest_country" readonly="1"/>
+
                     </group>
                     <group>
                         <field name="reservation_state" invisible="1"/>
                         <field name="payment_state"/>
                         <field name="total_amount" readonly="1"/>
+                        <field name="currency_id"/>
+                        <field name="secondary_currency_id"/>
+
                     </group>
                     <notebook>
-                        <page string="Reservation Lines">
-                            <field name="reservation_line_ids">
+                        <page string="Reservation Lines" >
+                            <field name="reservation_line_ids" readonly="1">
                                 <list editable="bottom">
                                     <field name="room_id"/>
                                     <field name="number_of_rooms"/>
                                     <field name="number_of_persons"/>
                                     <field name="number_of_nights"/>
-                                    <field name="total_amount"/>
+                                    <field name="total_amount" sum="Total"/>
+                                    <field name="total_amount_secondary" sum="Total"/>
+                                    <field name="currency_id" readonly="1" column_invisible="1"/>
+                                    <field name="secondary_currency_id" readonly="1" column_invisible="1"/>
                                 </list>
                             </field>
                         </page>
@@ -87,7 +95,7 @@
         <field name="model">cruise.reservation</field>
         <field name="arch" type="xml">
             <search string="Reservations">
-                <field name="cruise_id"/>
+                <field name="cruise_id" />
                 <field name="guest_id"/>
                 <field name="guest_email"/>
                 <field name="guest_phone"/>

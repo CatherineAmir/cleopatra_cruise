@@ -115,10 +115,106 @@ class CruisesController(http.Controller):
         }
         return request.render('cleopatra_cruise.checkout_page', data)
 
-    @http.route("/cruises/<int:cruise_id>/checkout/confirm", auth='public', website=True, methods=["POST"], csrf=False, type='json')
+    @http.route("/cruises/<int:cruise_id>/checkout/confirm", auth='public', website=True, methods=["POST"], csrf=False, type='http')
     def cruises_checkout_confirm(self, cruise_id, **kw):
-        """Process checkout submission."""
-        print("cruise_id:", cruise_id)
-        print("kw", kw)
-        # TODO: Process booking and payment
-        return {'success': True, 'redirect': '/cruises'}
+        """Process checkout submission: create partner, reservation and lines."""
+        import json as _json
+        def _json_response(data, status=200):
+            return request.make_response(
+                _json.dumps(data),
+                headers=[('Content-Type', 'application/json')],
+                status=status,
+            )
+        try:
+            data = _json.loads(request.httprequest.get_data(as_text=True))
+            print("data", data)
+            guest_data = data.get('guest', {})
+            bookings = data.get('bookings', {})
+
+            _logger.info("Checkout confirm cruise_id=%s guest=%s bookings=%s", cruise_id, guest_data, bookings)
+
+            # Validate required guest fields
+            required_fields = ['first_name', 'last_name', 'email', 'mobile', 'country_id']
+            for field in required_fields:
+                if not guest_data.get(field):
+                    return _json_response({'success': False, 'error': f'Missing required field: {field}'}, 400)
+
+            cruise = request.env['cruise.cruise'].sudo().browse(cruise_id)
+            if not cruise.exists():
+                return _json_response({'success': False, 'error': 'Cruise not found.'}, 404)
+
+            # Find or create partner
+            partner = request.env['res.partner'].sudo().search([
+                ('email', '=', guest_data['email'])
+            ], limit=1)
+
+            partner_vals = {
+                'name': f"{guest_data['first_name']} {guest_data['last_name']}",
+                'email': guest_data['email'],
+                'phone': guest_data['mobile'],
+                'country_id': int(guest_data['country_id']) if guest_data.get('country_id') else False,
+            }
+
+            if partner:
+                partner.sudo().write(partner_vals)
+            else:
+                partner = request.env['res.partner'].sudo().create(partner_vals)
+
+            # Build reservation lines
+            reservation_lines = []
+            for room_type_id, booking in bookings.items():
+                if not booking or booking.get('quantity', 0) <= 0:
+                    continue
+
+                quantity = int(booking.get('quantity', 1))
+                adults_distribution = booking.get('roomsAdultsDistribution', [])
+
+                if adults_distribution:
+                    # Create one line per room with its own person count
+                    for i, adults in enumerate(adults_distribution):
+                        persons = str(min(int(adults), 2))  # Model accepts '1' or '2'
+                        reservation_lines.append((0, 0, {
+                            'room_id': int(room_type_id),
+                            'number_of_persons': persons,
+                            'number_of_rooms': 1,
+                        }))
+                else:
+                    adults_per_room = str(min(int(booking.get('adultsPerRoom', 2)), 2))
+                    reservation_lines.append((0, 0, {
+                        'room_id': int(room_type_id),
+                        'number_of_persons': adults_per_room,
+                        'number_of_rooms': quantity,
+                    }))
+
+            if not reservation_lines:
+                return _json_response({'success': False, 'error': 'No rooms selected.'}, 400)
+
+            # Create reservation
+            reservation_vals = {
+                'cruise_id': cruise_id,
+                'guest_id': partner.id,
+                'reservation_state': 'draft',
+                'payment_state': 'not_paid',
+                'reservation_line_ids': reservation_lines,
+                'rate': cruise.batch_id.usd_egp_rate,
+            }
+
+            reservation = request.env['cruise.reservation'].sudo().create(reservation_vals)
+            print("Created reservation:", reservation)
+            # Store notes as internal note on chatter
+            notes = guest_data.get('notes', '')
+            if notes:
+                reservation.sudo().message_post(body=f"Guest Notes: {notes}", message_type='comment')
+
+            _logger.info("Reservation created: %s (ref=%s) total=%s", reservation.id, reservation.ref, reservation.total_amount)
+
+            # return _json_response({
+            #     'success': True,
+            #     'reservation_ref': reservation.ref,
+            #     'total_amount': reservation.total_amount,
+            #     'redirect': f'/cruises/{cruise_id}/checkout/success?ref={reservation.ref}',
+            # })
+
+        except Exception as e:
+            _logger.exception("Checkout confirm error: %s", str(e))
+            return _json_response({'success': False, 'error': str(e)}, 500)

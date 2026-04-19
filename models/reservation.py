@@ -26,13 +26,16 @@ class Reservation(models.Model):
     ], string='Payment State', default='not_paid', tracking=True)
     total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True, tracking=True)
     reservation_line_ids = fields.One2many('cruise.reservation_line', 'reservation_id', string='Reservation Lines')
+    rate=fields.Float(string='Rate', readonly=True)
+    currency_id = fields.Many2one('res.currency', string='Currency', related='batch_id.currency_id', readonly=True)
+    secondary_currency_id = fields.Many2one('res.currency', string='Secondary Currency', related='batch_id.secondary_currency_id', readonly=True,store=True)
 
     @api.depends("cruise_id","guest_id")
     def _compute_name(self):
         for reservation in self:
             if reservation.cruise_id and reservation.guest_id:
                 reservation.name = reservation.cruise_id.name+" - "+reservation.guest_id.name
-    
+
 
     @api.depends('reservation_line_ids.total_amount')
     def _compute_total_amount(self):
@@ -66,7 +69,13 @@ class ReservationLine(models.Model):
         ('1', '1 Person'),
         ('2', '2 Persons'),
     ], string='Number of Persons', required=True,default="1")
-    total_amount = fields.Float(string='Total Amount', compute='_compute_line_total_amount', store=True)
+
+    currency_id = fields.Many2one('res.currency', string='Currency', related='reservation_id.batch_id.currency_id', readonly=True)
+    secondary_currency_id = fields.Many2one('res.currency', string='Secondary Currency',
+                                            related='reservation_id.batch_id.secondary_currency_id', readonly=True, store=True)
+
+    total_amount = fields.Monetary(string='Total Amount', compute='_compute_line_total_amount', store=True,currency_field='currency_id')
+    total_amount_secondary = fields.Monetary(string='Total Amount in Secondary Currency', compute='_compute_line_total_amount', store=True,currency_field='secondary_currency_id')
     number_of_rooms=fields.Integer(string='Number of Rooms',default=1)
     number_of_nights=fields.Selection(string='Number of Nights',related='reservation_id.cruise_id.number_of_nights',store=True)
 
@@ -98,6 +107,7 @@ class ReservationLine(models.Model):
                     else:
                         record.total_amount = rate*int(record.number_of_persons)*record.number_of_rooms*int(record.number_of_nights)
 
+                    record.total_amount_secondary = record.total_amount * batch_id.usd_egp_rate if batch_id.usd_egp_rate else 0.0
 
             else:
 

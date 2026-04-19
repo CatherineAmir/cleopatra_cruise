@@ -23,7 +23,7 @@
                         <div class="col-lg-7">
                             <div class="checkout-card">
                                 <h3 class="checkout-card-title">Main Guest Details</h3>
-                                <form id="checkoutForm">
+                                <form id="checkoutForm" action="/paynow" method="post">
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <label class="form-label checkout-form-label">First Name <span class="text-danger">*</span></label>
@@ -99,16 +99,7 @@
                         <button type="button" class="btn-close-terms" onclick="closeTermsOverlay()">✕</button>
                     </div>
                     <div class="terms-body">
-                        <h5>1. Booking Policy</h5>
-                        <p>All reservations are subject to availability. A confirmed booking is only valid upon receipt of full payment.</p>
-                        <h5>2. Cancellation Policy</h5>
-                        <p>Cancellations made 30 days prior to departure receive a full refund. Cancellations within 14–30 days incur a 50% charge. No refunds for cancellations within 14 days.</p>
-                        <h5>3. Check-in / Check-out</h5>
-                        <p>Check-in begins at 12:00 PM. Check-out is at 11:00 AM. Late check-out is subject to availability.</p>
-                        <h5>4. Liability</h5>
-                        <p>The cruise operator is not liable for personal belongings. Guests are advised to use the in-cabin safe.</p>
-                        <h5>5. Privacy</h5>
-                        <p>Personal data is processed in accordance with our Privacy Policy and is not shared with third parties.</p>
+                       <t t-out="cruise.batch_id.terms_and_conditions"/>
                     </div>
                     <div class="terms-footer">
                         <button type="button" class="btn btn-accept-terms" onclick="acceptTermsFromOverlay()">I Accept</button>
