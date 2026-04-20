@@ -29,6 +29,7 @@ class Reservation(models.Model):
         ('not_paid', 'Not Paid'),
         ('partially_paid', 'Partially Paid'),
         ('paid', 'Paid'),
+        ('refunded', 'Refunded'),
     ], string='Payment State', default='not_paid', tracking=True)
     payment_transaction_state = fields.Selection(string='Payment State', tracking=True,
                                                  related="payment_transaction_id.state", store=True)
