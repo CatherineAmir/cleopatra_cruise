@@ -115,10 +115,6 @@ function incrementRoomQty(button, roomTypeId, maxAllowed) {
         console.log("Total booked persons: ", totalBooked);
         if (totalBooked >= requiredPersons) {
             alert(`✗ Maximum persons (${requiredPersons}) already booked. You cannot add more rooms.`);
-            // Disable the button
-            button.disabled = true;
-            button.style.opacity = '0.5';
-            button.style.cursor = 'not-allowed';
             return;
         }
     }
@@ -129,10 +125,6 @@ function incrementRoomQty(button, roomTypeId, maxAllowed) {
         console.log("Total rooms booked: ", totalRoomsBooked);
         if (totalRoomsBooked >= requiredRooms) {
             alert(`✗ Maximum rooms (${requiredRooms}) already booked. You cannot add more rooms.`);
-            // Disable the button
-            button.disabled = true;
-            button.style.opacity = '0.5';
-            button.style.cursor = 'not-allowed';
             return;
         }
     }
@@ -201,111 +193,7 @@ function incrementRoomQty(button, roomTypeId, maxAllowed) {
  * Update all button states based on persons limit
  */
 function updateAllButtonStates() {
-    const searchParams = getSearchParams();
-    const requiredPersons = parseInt(searchParams.personsCount) || 0;
-    const requiredRooms = parseInt(searchParams.roomsCount) || 0;
-
-    const totalBooked = getTotalBookedPersons();
-    const totalRoomsBooked = getTotalBookedRooms();
-
-    const personsLimitReached = requiredPersons > 0 && totalBooked >= requiredPersons;
-    console.log("totalBooked", totalBooked)
-    console.log("totalRoomsBooked", totalRoomsBooked)
-    console.log("personsLimitReached", personsLimitReached)
-
-    const roomsLimitReached = requiredRooms > 0 && totalRoomsBooked >= requiredRooms;
-    const limitReached = personsLimitReached || roomsLimitReached;
-    console.log("roomsLimitReached", roomsLimitReached)
-    console.log("limitReached", limitReached);
-    // Update all cabin cards
-    document.querySelectorAll('.cabin-card-horizontal').forEach(card => {
-        const plusBtn = card.querySelector('.qty-btn.plus');
-        const addBtn = card.querySelector('.btn-add-room');
-        const configBtn = card.querySelector('.btn-set-adults');
-        const minusBtn = card.querySelector('.qty-btn.minus');
-        const qtyInput = card.querySelector('.room-qty-input');
-
-        let limitMessage = '';
-        if (personsLimitReached && roomsLimitReached) {
-            limitMessage = `Max persons (${requiredPersons}) and rooms (${requiredRooms}) reached`;
-        } else if (personsLimitReached) {
-            limitMessage = `Max persons (${requiredPersons}) reached`;
-        } else if (roomsLimitReached) {
-            limitMessage = `Max rooms (${requiredRooms}) reached`;
-        }
-
-        console.log("limitReached: ", limitReached, " - ", limitMessage);
-        console.log("bookingState.bookings", bookingState.bookings);
-
-
-        if (limitReached) {
-            // todo
-            // Disable all buttons and interactions when limit is reached
-            // if (plusBtn) {
-            //     plusBtn.disabled = true;
-            //     plusBtn.style.opacity = '0.5';
-            //     plusBtn.style.cursor = 'not-allowed';
-            //     plusBtn.title = limitMessage;
-            //     plusBtn.style.pointerEvents = 'none';
-            // }
-            // if (addBtn) {
-            //     addBtn.disabled = true;
-            //     addBtn.style.opacity = '0.5';
-            //     addBtn.style.cursor = 'not-allowed';
-            //     addBtn.title = limitMessage;
-            //     addBtn.style.pointerEvents = 'none';
-            // }
-            // if (configBtn) {
-            //     configBtn.disabled = true;
-            //     configBtn.style.opacity = '0.5';
-            //     configBtn.style.cursor = 'not-allowed';
-            //     configBtn.title = limitMessage;
-            //     configBtn.style.pointerEvents = 'none';
-            // }
-            // // Keep minus button enabled to allow removal
-            // if (minusBtn) {
-            //     minusBtn.disabled = false;
-            //     minusBtn.style.opacity = '1';
-            //     minusBtn.style.cursor = 'pointer';
-            //     minusBtn.style.pointerEvents = 'auto';
-            // }
-            // if (qtyInput) {
-            //     qtyInput.style.opacity = '0.7';
-            //  }
-        } else {
-            // Enable buttons when limit not reached
-            if (plusBtn) {
-                plusBtn.disabled = false;
-                plusBtn.style.opacity = '1';
-                plusBtn.style.cursor = 'pointer';
-                plusBtn.style.pointerEvents = 'auto';
-                plusBtn.title = '';
-            }
-            if (addBtn) {
-                addBtn.disabled = false;
-                addBtn.style.opacity = '1';
-                addBtn.style.cursor = 'pointer';
-                addBtn.style.pointerEvents = 'auto';
-                addBtn.title = '';
-            }
-            if (configBtn) {
-                configBtn.disabled = false;
-                configBtn.style.opacity = '1';
-                configBtn.style.cursor = 'pointer';
-                configBtn.style.pointerEvents = 'auto';
-                configBtn.title = '';
-            }
-            if (minusBtn) {
-                minusBtn.disabled = false;
-                minusBtn.style.opacity = '1';
-                minusBtn.style.cursor = 'pointer';
-                minusBtn.style.pointerEvents = 'auto';
-            }
-            if (qtyInput) {
-                qtyInput.style.opacity = '1';
-            }
-        }
-    });
+    // Limits are enforced via alerts only, no button disabling
 }
 
 /**

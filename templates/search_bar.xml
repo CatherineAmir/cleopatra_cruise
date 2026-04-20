@@ -19,7 +19,7 @@
                             <div class="sf-label">From</div>
                             <div class="sf-value" id="sbFromVal">Select</div>
                             <div class="sf-sub" id="sbFromSub">Month · Year</div>
-                            <input type="hidden" name="date_from" id="dateFromInput" value=""/>
+                            <input type="hidden" name="date_from" id="dateFromInput" t-att-value="date_from or ''"/>
                             <div class="month-dropdown" id="mdFrom">
                                 <div class="md-year-row">
                                     <button class="md-yr-btn" type="button" onclick="event.preventDefault(); shiftYear('from',-1)">‹</button>
@@ -36,7 +36,7 @@
                             <div class="sf-label">To</div>
                             <div class="sf-value" id="sbToVal">Select</div>
                             <div class="sf-sub" id="sbToSub">Month · Year</div>
-                            <input type="hidden" name="date_to" id="dateToInput" value=""/>
+                            <input type="hidden" name="date_to" id="dateToInput" t-att-value="date_to or ''"/>
                             <div class="month-dropdown" id="mdTo">
                                 <div class="md-year-row">
                                     <button class="md-yr-btn" type="button" onclick="event.preventDefault(); shiftYear('to',-1)">‹</button>

@@ -181,9 +181,9 @@ function selectMonth(which, year, month) {
     if (valEl) valEl.textContent = label;
     if (subEl) subEl.textContent = 'Month · Year';
 
-    /* store first day of selected month */
-    var d = new Date(year, month, 1);
-    if (hidden) hidden.value = d.toISOString().slice(0, 10);
+    /* store first day of selected month (avoid UTC shift with toISOString) */
+    var mm = String(month + 1).padStart(2, '0');
+    if (hidden) hidden.value = year + '-' + mm + '-01';
 
     renderMonths(which);
     closeAllMonthDropdowns();
@@ -253,4 +253,28 @@ document.addEventListener('click', function (e) {
 document.addEventListener('DOMContentLoaded', function () {
     initYears();
     renderRooms();
+
+    // Restore month selections from hidden inputs (after form submit / page reload)
+    var dateFromVal = document.getElementById('dateFromInput') ? document.getElementById('dateFromInput').value : '';
+    var dateToVal = document.getElementById('dateToInput') ? document.getElementById('dateToInput').value : '';
+
+    if (dateFromVal) {
+        var parts = dateFromVal.split('-');
+        var y = parseInt(parts[0]);
+        var m = parseInt(parts[1]) - 1; // 0-based
+        fromYear = y;
+        var fy = document.getElementById('mdFromYear');
+        if (fy) fy.textContent = fromYear;
+        selectMonth('from', y, m);
+    }
+
+    if (dateToVal) {
+        var parts = dateToVal.split('-');
+        var y = parseInt(parts[0]);
+        var m = parseInt(parts[1]) - 1;
+        toYear = y;
+        var ty = document.getElementById('mdToYear');
+        if (ty) ty.textContent = toYear;
+        selectMonth('to', y, m);
+    }
 });
