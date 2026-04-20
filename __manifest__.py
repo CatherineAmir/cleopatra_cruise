@@ -31,6 +31,7 @@
         'templates/main_cruise_page.xml',
         'templates/search_bar.xml',
         'templates/checkout_page.xml',
+        'views/transaction.xml',
     ],
 
     'web.assets_frontend': [

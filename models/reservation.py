@@ -10,8 +10,10 @@ class Reservation(models.Model):
     _description = 'Cruise Reservation'
     _inherit = 'mail.thread'
     _rec_name = "ref"
+    _order="create_date desc"
+
     ref = fields.Char('Reservation', copy=False, readonly=True, default='New')
-    # name=fields.Char(string='Name',compute='_compute_name', readonly=True, copy=False)
+
     cruise_id = fields.Many2one('cruise.cruise', string='Cruise', required=True, tracking=True)
     batch_id = fields.Many2one('cruise.batch', string='Batch', related='cruise_id.batch_id', readonly=True)
     guest_id = fields.Many2one('res.partner', string='Guest', required=True, tracking=True)
@@ -68,6 +70,9 @@ class Reservation(models.Model):
                 elif record.payment_transaction_id.state == 'partially_paid':
                     record.payment_state = 'partially_paid'
                     record.reservation_state = 'confirmed'
+                elif record.payment_transaction_id.state in ['failed', 'cancelled']:
+                        record.payment_state = 'not_paid'
+                        record.reservation_state = 'cancelled'
                 else:
                     record.payment_state = 'not_paid'
             else:
@@ -114,13 +119,14 @@ class Reservation(models.Model):
 
             if account_manager:
                 transaction_vals = {
-                    "reservation_id": self.ref,
+                    "reservation_id": self.id,
                     "amount": amount,
                     "client_name": self.guest_id.name,
                     "client_email": self.guest_id.email,
                     "client_mobile": self.guest_id.phone,
-                    'link_validity': 24,
+                    'link_validity': 1,
                     "account_id": account_manager.id,
+                    "reservation_reference": self.id,
 
 
                 }
