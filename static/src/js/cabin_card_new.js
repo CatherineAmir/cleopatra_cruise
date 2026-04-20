@@ -149,29 +149,48 @@ function incrementRoomQty(button, roomTypeId, maxAllowed) {
             adultsSelector.style.display = currentQty > 0 ? 'block' : 'none';
         }
 
-        // Initialize adults per room if not already set
-        // todo changed here
+        // Determine default adults: 2 unless only 1 person remaining
+        let defaultAdults = 2;
+        if (requiredPersons > 0) {
+            const currentlyBooked = getTotalBookedPersons();
+            const remaining = requiredPersons - currentlyBooked;
+            if (remaining === 1) {
+                defaultAdults = 1;
+            }
+        }
 
-        // if (currentQty > 0 && !bookingState.bookings[roomTypeId]) {
-        //     bookingState.bookings[roomTypeId] = {
-        //         name: card.querySelector('.cabin-name').textContent.trim(),
-        //         quantity: currentQty,
-        //         roomsAdultsDistribution: Array(currentQty).fill(2), // Initialize with 2 adults per room
-        //         pricePerRoom: 0,
-        //         totalPrice: 0
-        //     };
-        // } else if (bookingState.bookings[roomTypeId]) {
-        //     // Update quantity and extend distribution array if needed
-        //     bookingState.bookings[roomTypeId].quantity = currentQty;
-        //     if (!bookingState.bookings[roomTypeId].roomsAdultsDistribution) {
-        //         bookingState.bookings[roomTypeId].roomsAdultsDistribution = Array(currentQty).fill(2);
-        //     } else if (bookingState.bookings[roomTypeId].roomsAdultsDistribution.length < currentQty) {
-        //         // Add new rooms with default 2 adults
-        //         while (bookingState.bookings[roomTypeId].roomsAdultsDistribution.length < currentQty) {
-        //             bookingState.bookings[roomTypeId].roomsAdultsDistribution.push(2);
-        //         }
-        //     }
-        // }
+        // Initialize adults per room if not already set
+        if (currentQty > 0 && !bookingState.bookings[roomTypeId]) {
+            bookingState.bookings[roomTypeId] = {
+                name: card.querySelector('.cabin-name').textContent.trim(),
+                quantity: currentQty,
+                adultsPerRoom: defaultAdults,
+                roomsAdultsDistribution: Array(currentQty).fill(defaultAdults),
+                pricePerRoom: 0,
+                totalPrice: 0
+            };
+        } else if (bookingState.bookings[roomTypeId]) {
+            // Update quantity and extend distribution array if needed
+            bookingState.bookings[roomTypeId].quantity = currentQty;
+            if (!bookingState.bookings[roomTypeId].roomsAdultsDistribution) {
+                bookingState.bookings[roomTypeId].adultsPerRoom = defaultAdults;
+                bookingState.bookings[roomTypeId].roomsAdultsDistribution = Array(currentQty).fill(defaultAdults);
+            } else if (bookingState.bookings[roomTypeId].roomsAdultsDistribution.length < currentQty) {
+                // Add new rooms with appropriate default adults
+                while (bookingState.bookings[roomTypeId].roomsAdultsDistribution.length < currentQty) {
+                    bookingState.bookings[roomTypeId].roomsAdultsDistribution.push(defaultAdults);
+                }
+            }
+        }
+
+        // Update adults info display to show default
+        const adultsInfo = card.querySelector('.selected-adults-info');
+        if (adultsInfo && bookingState.bookings[roomTypeId]) {
+            const dist = bookingState.bookings[roomTypeId].roomsAdultsDistribution;
+            const totalGuests = dist.reduce((a, b) => a + b, 0);
+            adultsInfo.innerHTML = `${currentQty} room(s) × ${defaultAdults} adult(s) = ${totalGuests} guest(s) <span style="color:#999;font-size:10px;">(default)</span>`;
+            adultsInfo.style.display = 'block';
+        }
 
         // Update all button states
         updateAllButtonStates();
