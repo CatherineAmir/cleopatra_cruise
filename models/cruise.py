@@ -29,8 +29,36 @@ class Cruise(models.Model):
     reservation_count = fields.Integer(string='Total Reservations', compute='_compute_reservation_count', store=True)
     fully_booked = fields.Boolean(string='Fully Booked', compute='_compute_fully_booked', store=True)
 
-    reservation_ids = fields.One2many("cruise.reservation","cruise_id", string='Reservations')
+    reservation_ids = fields.One2many("cruise.reservation","cruise_id", string='Reservations',domain="[('reservation_state','in',['confirmed','draft'])]")
     available_for_booking=fields.Boolean(string='Available For Booking', default=False, tracking=True)
+
+    def action_view_reservations(self):
+        return {
+            'name': 'Reservations',
+            'type': 'ir.actions.act_window',
+            'res_model': 'cruise.reservation',
+            'view_mode': 'list,form',
+            'domain': [('cruise_id', '=', self.id), ('reservation_state', 'in', ['confirmed','draft'])],
+        }
+
+
+    def update_booking_availability(self):
+        for cruise in self:
+            reservation_ids=cruise.reservation_ids.filtered(lambda r: r.reservation_state in ['confirmed','draft'])
+            reservation_model=self.env["cruise.reservation_line"].sudo()
+            reservation_lines=reservation_model.read_group(domain=[("reservation_id",'in',reservation_ids.ids)],fields=['room_id','number_of_rooms'],groupby=['room_id'])
+            for line in reservation_lines:
+                room_id=line['room_id'][0] if line['room_id'] else None
+                reserved_rooms=line['number_of_rooms']
+                room_availability=cruise.room_availability_ids.filtered(lambda r: r.room_id.id == room_id)
+                if room_availability:
+                    room_availability.reserved_rooms=reserved_rooms
+                    room_availability.available_rooms=room_availability.total_rooms-reserved_rooms
+                else:
+                    _logger.error("No room availability record found for room_id {} in cruise_id {}".format(room_id,cruise.id))
+
+
+
     @api.depends('start_date', 'city')
     def _compute_name(self):
         for record in self:

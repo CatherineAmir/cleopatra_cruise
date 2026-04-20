@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='internal_note']" position="after">
                     <field name="client_id" invisible="1"/>
-                    <field name="reservation_reference"/>
+                    <field name="reservation_reference" readonly="1" />
                 </xpath>
 
             </field>

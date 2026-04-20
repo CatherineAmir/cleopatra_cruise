@@ -98,6 +98,7 @@ class Reservation(models.Model):
     def create_transaction_link(self):
         try:
             self.ensure_one()
+            self.cruise_id.update_booking_availability()
             if self.payment_transaction_id:
                 return{
                     "state": "success",
@@ -162,7 +163,7 @@ class ReservationLine(models.Model):
     _name = 'cruise.reservation_line'
     _description = 'Cruise Reservation Line'
 
-    reservation_id = fields.Many2one('cruise.reservation', string='Reservation', required=True)
+    reservation_id = fields.Many2one('cruise.reservation', string='Reservation', required=True,ondelete='cascade')
     room_id = fields.Many2one('cruise.room_type', string='Room Type', required=True)
     number_of_persons = fields.Selection([
         ('1', '1 Person'),

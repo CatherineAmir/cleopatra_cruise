@@ -19,7 +19,9 @@
         <field name="name">cruise.reservation.list</field>
         <field name="model">cruise.reservation</field>
         <field name="arch" type="xml">
-            <list string="Reservations">
+            <list string="Reservations" decoration-info="reservation_state=='draft'"
+                      decoration-danger="reservation_state=='cancelled'" decoration-success="reservation_state=='confirmed'">
+
                 <field name="ref"/>
                 <field name="cruise_id"/>
                 <field name="batch_id"/>
@@ -41,10 +43,13 @@
         <field name="model">cruise.reservation</field>
         <field name="arch" type="xml">
             <form string="Reservation">
-                <button name="create_transaction_link" string="Create Payment Link" type="object" class="oe_highlight"/>
-           
+<!--                <header>-->
+
+<!--                <button name="create_transaction_link" string="Create Payment Link" type="object" class="oe_highlight"/>-->
+<!--                <button name="create_transaction_link" string="Create Payment Link" type="object" class="oe_highlight"/>-->
+<!--                </header>-->
                 <sheet>
-                 <field name="reservation_state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"/>
+                 <field name="reservation_state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled" />
                    
                     <h1>
                         <field name="ref" readonly="1"/>
