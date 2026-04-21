@@ -573,9 +573,10 @@ function addRoomToBooking(button, roomTypeId) {
     checkPersonsLimit();
     // Update summary
     updateBookingSummary();
+
+    // Move focus to updated selection summary only after successful add
+    scrollToBookingSummary();
 }
-
-
 function checkPersonsLimit() {
     const searchParams = getSearchParams();
     const requiredPersons = parseInt(searchParams.personsCount) || 0;
@@ -587,54 +588,38 @@ function checkPersonsLimit() {
     if (totalPersons > requiredPersons) {
         alert(`✗ Cannot add booking!\n\nRequired persons: ${requiredPersons}\nAlready booked: ${totalPersons}\n`);
 
-        // Attempting to add: ${newGuests}\nTotal would be: ${totalAfterBooking}\n\nPlease reduce the number of rooms or adults per room.`);
-        return;
+
     }
-    //
-    //
-    // if (requiredPersons > 0) {
-    //     const totalBooked = getTotalBookedPersons();
-    //     console.log("Total booked persons before adding: ", totalBooked);
-    //     const newGuests = bookingState.bookings[roomTypeId].roomsAdultsDistribution ?
-    //         bookingState.bookings[roomTypeId].roomsAdultsDistribution.reduce((a, b) => a + b, 0) :
-    //         (quantity * (bookingState.bookings[roomTypeId].adultsPerRoom || 2));
-    //     const totalAfterBooking = totalBooked + newGuests;
-    //
-    //     if (totalAfterBooking > requiredPersons) {
-    //         alert(`✗ Cannot add booking!\n\nRequired persons: ${requiredPersons}\nAlready booked: ${totalBooked}\nAttempting to add: ${newGuests}\nTotal would be: ${totalAfterBooking}\n\nPlease reduce the number of rooms or adults per room.`);
-    //         return;
-    //     }
-    // }
-    //
+
     if (requiredRooms > 0) {
         const totalRoomsBooked = getTotalBookedRooms();
-        // const totalRoomsAfterBooking = totalRoomsBooked + quantity;
+
 
         if (totalRoomsBooked > requiredRooms) {
             alert(`✗ Cannot add booking!\n\nRequired rooms: ${requiredRooms}\nAlready booked: ${totalRoomsBooked}\nAttempting to add: ${quantity}\nTotal would be: ${totalRoomsAfterBooking}\n\nPlease reduce the number of rooms.`);
-            return;
+
         }
     }
 
 }
-
 /**
- * Show notification feedback
+ * Scroll to booking summary and briefly highlight it so users notice the update
  */
-function showNotification(element, message) {
-    const btn = element;
-    const originalHTML = btn.innerHTML;
-    const originalBg = btn.style.background;
+function scrollToBookingSummary() {
+    const summaryWrapper = document.querySelector('.booking-summary-wrapper');
+    if (!summaryWrapper) return;
 
-    btn.innerHTML = '✓ ' + message;
-    btn.style.background = 'rgba(76, 175, 80, 0.8)';
-    btn.disabled = true;
+    summaryWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    const previousTransition = summaryWrapper.style.transition;
+    const previousBoxShadow = summaryWrapper.style.boxShadow;
+    summaryWrapper.style.transition = 'box-shadow 0.35s ease';
+    summaryWrapper.style.boxShadow = '0 0 0 3px rgba(201, 168, 76, 0.55)';
 
     setTimeout(() => {
-        btn.innerHTML = originalHTML;
-        btn.style.background = originalBg;
-        btn.disabled = false;
-    }, 2000);
+        summaryWrapper.style.boxShadow = previousBoxShadow || '';
+        summaryWrapper.style.transition = previousTransition || '';
+    }, 900);
 }
 
 /**

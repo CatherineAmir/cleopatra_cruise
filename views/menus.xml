@@ -3,7 +3,7 @@
     <!-- Cleopatra app main menu -->
     <menuitem id="menu_cleopatra_app"
               name="Cleopatra"
-              sequence="10"/>
+              sequence="0"/>
 
     <!-- Configuration submenu -->
     <menuitem id="menu_cleopatra_config"

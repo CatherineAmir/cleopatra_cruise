@@ -37,7 +37,10 @@ class CruisesController(http.Controller):
             _logger.info("Filtering cruises from date: %s", date_from_dt)
 
         date_to = kw.get('date_to', False)
+        _logger.info("date_to parameter: %s", date_to)
         if date_to:
+            # date_to[-2:]="30"
+
             date_to_dt = datetime.strptime(date_to, "%Y-%m-%d")
             domain = expression.AND([domain, [("start_date", "<=", date_to_dt)]])
             _logger.info("Filtering cruises to date: %s", date_to_dt)

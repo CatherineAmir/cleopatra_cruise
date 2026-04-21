@@ -23,6 +23,7 @@
                       decoration-danger="reservation_state=='cancelled'" decoration-success="reservation_state=='confirmed'">
 
                 <field name="ref"/>
+                <field name="create_date"/>
                 <field name="cruise_id"/>
                 <field name="batch_id"/>
                 <field name="guest_id"/>
@@ -112,11 +113,20 @@
             <search string="Reservations">
                 <field name="cruise_id" />
                 <field name="guest_id"/>
+
                 <field name="guest_email"/>
                 <field name="guest_phone"/>
+                <field name="payment_transaction_id"/>
                 <field name="guest_country"/>
                 <field name="reservation_state"/>
                 <field name="payment_state"/>
+
+                <filter name="filter_create_date" date="create_date"/>
+
+                <filter name="group_by_create_date" string="Creation Date" domain="[]" context="{'group_by': 'create_date:month'}"/>
+                <filter name="group_by_cruise_id" string="Cruise" context="{'group_by': 'cruise_id'}"/>
+                <filter name="group_by_guest_id" string="Guest" context="{'group_by': 'guest_id'}"/>
+
             </search>
         </field>
     </record>
