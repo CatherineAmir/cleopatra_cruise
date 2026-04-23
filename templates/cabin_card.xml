@@ -362,10 +362,11 @@
                     </div>
 
                     <div class="cabin-cards-header">
-                        <h2 class="section-title">Choose Your Cabin</h2>
+                        <h2 class="section-title">Choose Your Cabin in Cruise <t t-esc="cruise.city"/> From <t t-esc="cruise_start_date"/> To <t t-esc="cruise_end_date"/></h2>
                         <p class="section-subtitle">Select from our luxurious cabin types and customize your
                             experience
                         </p>
+                        <h2 class="section-subtitle">To Change The Cruise  Go To Cruise Page </h2>
                     </div>
 
                     <div class="row g-4" style="margin-top: 20px;">

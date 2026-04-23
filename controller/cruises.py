@@ -72,6 +72,7 @@ class CruisesController(http.Controller):
                 "rooms_count": rooms_count,
                 "rooms_data": rooms_data,
                 "currency": currency,
+                "no_date_search": False,
             }
             # todo no cruises found for this period
             return request.render('cleopatra_cruise.main_cruise_page', data)
@@ -114,7 +115,11 @@ class CruisesController(http.Controller):
             "rooms_data": rooms_data,
             "search_action": f"/cruises/{cruise_id}",
             "currency": currency,
+            "no_date_search":True,
+            "cruise_start_date": cruise.start_date.strftime("%d/%m/%Y") if cruise.start_date else '',
+            "cruise_end_date": cruise.end_date.strftime("%d/%m/%Y") if cruise.end_date else '',
         }
+
         _logger.info("Rendering cabin cards for cruise_id=%s", cruise_id)
         return request.render('cleopatra_cruise.cabin_cards_list', data)
 

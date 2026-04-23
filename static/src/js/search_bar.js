@@ -2,7 +2,7 @@
  * search_bar.js
  * Handles month-picker (From / To) and the Rooms + Adults modal overlay.
  */
-console.log('search_bar.js loaded');
+
 /* ─────────────────────────────────────────────
    ROOMS STATE
    rooms = [ adultsCount, adultsCount, … ]   (1 or 2 adults per room)
@@ -129,17 +129,6 @@ var selectedFrom = null; // { year, month }
 var selectedTo = null;
 var fromYear, toYear;
 
-function initYears() {
-    var now = new Date();
-    fromYear = now.getFullYear();
-    toYear = now.getFullYear();
-    var fy = document.getElementById('mdFromYear');
-    var ty = document.getElementById('mdToYear');
-    if (fy) fy.textContent = fromYear;
-    if (ty) ty.textContent = toYear;
-    renderMonths('from');
-    renderMonths('to');
-}
 
 function renderMonths(which) {
     var year = which === 'from' ? fromYear : toYear;
@@ -412,7 +401,7 @@ document.addEventListener('click', function (e) {
         var field = document.getElementById('sb' + which + 'Field');
         var panel = document.getElementById('md' + which);
         if (!field || !panel) return;
-
+        if (field.classList.contains('disabled')) return;
         field.addEventListener('click', function (e) {
             e.stopPropagation();
             closeRoomsOverlay();
