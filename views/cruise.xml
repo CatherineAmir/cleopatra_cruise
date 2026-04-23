@@ -30,19 +30,19 @@
             <form string="Cruise">
 
 
-
                 <sheet>
                     <div name="button_box" class="oe_button_box">
-                    <button name="action_view_reservations"
-                            class="oe_stat_button"
-                            icon="fa-calendar-check-o"
-                            string="Reservations"
-                            type="object">
+                        <button name="action_view_reservations"
+                                class="oe_stat_button"
+                                icon="fa-calendar-check-o"
+                                string="Reservations"
+                                type="object">
 
-                    </button>
-                </div>
+                        </button>
+                    </div>
                     <header>
-                        <button name="update_booking_availability" string="Update Availability" type="object" class="oe_highlight"/>
+                        <button name="update_booking_availability" string="Update Availability" type="object"
+                                class="oe_highlight"/>
                     </header>
 
                     <label for="name" string="Name"/>
@@ -76,7 +76,10 @@
                         <group string="Booking Information">
                             <field name="reservation_count" readonly="1"/>
                             <field name="fully_booked" readonly="1"/>
-                            <field name="available_for_booking" widget="boolean_toggle"/>
+
+                            <field name="available_for_booking" widget="boolean_toggle"
+                                  invisible="not batch_id"/>
+                            <field name="available_for_booking" readonly="1" invisible="batch_id"/>
                         </group>
                     </group>
                     <notebook>
@@ -87,7 +90,9 @@
                                     <field name="total_rooms"/>
                                     <field name="reserved_rooms"/>
                                     <field name="available_rooms"/>
+
                                     <field name="available_for_booking" widget="boolean_toggle"/>
+
                                 </list>
                             </field>
                         </page>

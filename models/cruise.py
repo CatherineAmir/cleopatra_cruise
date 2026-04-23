@@ -131,7 +131,8 @@ class Cruise(models.Model):
         for result in results:
             result.room_availability_ids = [Command.create({
                 "room_id": room["id"],
-                "total_rooms": room["total_number"]
+                "total_rooms": room["total_number"],
+                "available_rooms": room["total_number"],
             })
                 for room in rooms]
         return results
