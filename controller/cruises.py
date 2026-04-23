@@ -136,6 +136,8 @@ class CruisesController(http.Controller):
             'cruise': cruise if cruise.exists() else False,
             'cruise_id': cruise_id,
             'countries': countries,
+            "cruise_start_date": cruise.start_date.strftime("%d/%m/%Y") if cruise.start_date else '',
+            "cruise_end_date": cruise.end_date.strftime("%d/%m/%Y") if cruise.end_date else '',
         }
         return request.render('cleopatra_cruise.checkout_page', data)
 
