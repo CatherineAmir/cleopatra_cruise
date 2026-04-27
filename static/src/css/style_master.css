@@ -1,0 +1,17 @@
+.search-bar-wrapper {
+  background: #f1f1f1;
+}
+.container-fluid.py-5.my-5 {
+  background: #f1f1f1;
+  margin: 0px !important;
+}
+.o_top_fixed_element .o_main_nav img {
+  min-width: 100px;
+  min-height: 100px;
+}
+.o_header_is_scrolled .o_main_nav img {
+  min-height: 80px;
+}
+body {
+  padding: 0px;
+}

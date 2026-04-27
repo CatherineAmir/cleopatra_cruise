@@ -305,6 +305,7 @@
                   crossorigin="anonymous"/>
 
             <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/cabin_card.css"/>
+            <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/style_master.css"/>
             <div class="particles" id="particles"/>
             <t t-call="cleopatra_cruise.search_bar"/>
 

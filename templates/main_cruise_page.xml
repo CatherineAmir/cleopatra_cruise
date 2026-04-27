@@ -8,6 +8,7 @@
 
              <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/style.css"/>
              <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/cruise_card.css"/>
+             <link rel="stylesheet" href="/cleopatra_cruise/static/src/css/style_master.css"/>
 
         <div class="particles" id="particles"/>
 
